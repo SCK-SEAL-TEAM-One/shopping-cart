@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	connection, err := sqlx.Connect("mysql", "sealteam:sckshuhari@(store-tearup:3306)/toy")
+	connection, err := sqlx.Connect("mysql", "sealteam:sckshuhari@(store-database:3306)/toy")
 	if err != nil {
 		log.Fatalln("cannot connect to tearup", err)
 	}
