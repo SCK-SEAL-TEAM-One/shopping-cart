@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: store-service
+spec: 
+  selector:
+    app: store-service
+  port: 
+    - protocal: TCP
+      port: 8000
+      targetPort: 8000
