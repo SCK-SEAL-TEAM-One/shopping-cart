@@ -9,9 +9,9 @@ import (
 )
 
 func main() {
-	connection, err := sqlx.Connect("mysql", "sealteam:sckshuhari@(localhost:3306)/toy")
+	connection, err := sqlx.Connect("mysql", "sealteam:sckshuhari@(store-tearup:3306)/toy")
 	if err != nil {
-		log.Fatalln("cannot connect to database", err)
+		log.Fatalln("cannot connect to tearup", err)
 	}
 
 	route := gin.Default()
@@ -27,7 +27,7 @@ func GetUserNameFromDB(connection *sqlx.DB) User {
 	user := User{}
 	err := connection.Get(&user, "SELECT id,name FROM user WHERE ID=1")
 	if err != nil {
-		fmt.Printf("Get user name from database get error : %s", err.Error())
+		fmt.Printf("Get user name from tearup get error : %s", err.Error())
 		return User{}
 	}
 	return user
