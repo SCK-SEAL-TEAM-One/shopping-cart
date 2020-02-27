@@ -1,6 +1,6 @@
-# toy-store
+# Shopping cart
 ### ใช้สำหรับ Workshop ประกอบการสอน
-# โจทย์ร้านขายของเล่น Toy Store
+# โจทย์เว็บไซต์ e-commerce ขายของเล่น
 
 # Convention Web UI
 ## Common Convention
@@ -136,12 +136,14 @@ HOUR, MINUTE
 
 
 ## ข้อตกลง Commit Message ร่วมกัน
-`[Created]: สร้างไฟล์ใหม่สำหรับ...`
+```
+[Created]: สร้างไฟล์ใหม่สำหรับ...
 
-`[Edited]: แก้ไข code ในไฟล์เดิมที่มีอยู่แล้ว รวมถึงกรณี refactor code`
+[Edited]: แก้ไข code ในไฟล์เดิมที่มีอยู่แล้ว รวมถึงกรณี refactor code
 
-`[Added]: กรณีเพิ่ม function, function test ใหม่เข้ามา`
+[Added]: กรณีเพิ่ม function, function test ใหม่เข้ามา
 
-`[Deleted]: ลบไฟล์ออก 'ชื่อไฟล์' เนื่องจาก...`
+[Deleted]: ลบไฟล์ออก 'ชื่อไฟล์' เนื่องจาก...
 
 * ให้เขียนรายละเอียดด้วยว่าแก้ไขอะไรและทำที่ตรงไหน
+```
