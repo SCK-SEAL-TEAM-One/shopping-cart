@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: store-web
+  labels:
+    app: store-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: store-web
+  template:
+    metadata:
+      labels:
+        app: store-web
+    spec:
+      containers:
+      - name: store-web
+        image: sckseal/shoppingcart-web:latest
+        ports:
+        - containerPort: 3000
