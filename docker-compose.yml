@@ -3,6 +3,7 @@ version: "3.5"
 services:
   store-service:
     image: toy-store-service:0.0.1
+    container_name: store-service
     build:
       context: store-service
     ports:
@@ -13,6 +14,7 @@ services:
 
   store-database:
     image: mysql:5.7
+    container_name: store-database
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_USER=sealteam
@@ -22,3 +24,24 @@ services:
       - ./tearup/:/docker-entrypoint-initdb.d/
     ports:
       - "3306:3306"
+
+  store-ui:
+    image:  toy-store-ui:0.0.1
+    container_name: store-ui
+    build:
+      context: store-web
+    ports:
+      - "3000:3000"
+
+  store-nginx:
+    image: toy-store-nginx:0.0.1
+    container_name: store-nginx
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile.nginx
+    depends_on:
+      - store-service
+      - store-ui
+    ports:
+      - "80:80"
