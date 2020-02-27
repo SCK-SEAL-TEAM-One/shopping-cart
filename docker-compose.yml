@@ -1,0 +1,24 @@
+version: "3.5"
+
+services:
+  store-service:
+    image: toy-store-service:0.0.1
+    build:
+      context: store-service
+    ports:
+      - "8000:8000"
+    depends_on:
+      - store-database
+    restart: always
+
+  store-database:
+    image: mysql:5.7
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_USER=sealteam
+      - MYSQL_PASSWORD=sckshuhari
+      - MYSQL_DATABASE=toy
+    volumes:
+      - ./tearup/:/docker-entrypoint-initdb.d/
+    ports:
+      - "3306:3306"
