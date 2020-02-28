@@ -18,10 +18,10 @@ func calculateTotalPrice() //logic
 ```
 
 ## HTML Element ID 
-- ใช้รูปแบบตัวพิมพ์เล็กทั้งหมด คั่นระหว่างคำด้วย '-'
+- จะใช้รูปแบบการตั้งชื่อแบบ **camelCase ขึ้นต้นต้วยตัวพิมพ์เล็ก**
 ```
-button-add-to-card
-confirm
+receiverName
+totalAmount
 ```
 
 ## Directory Name
