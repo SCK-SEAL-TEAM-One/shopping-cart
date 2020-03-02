@@ -1,3 +1,5 @@
+ALTER DATABASE toy CHARACTER SET utf8 COLLATE utf8_general_ci;
+
 CREATE TABLE user (
     id int,
     name varchar(255)
