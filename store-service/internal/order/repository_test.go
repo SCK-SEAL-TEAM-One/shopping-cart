@@ -3,11 +3,12 @@
 package order_test
 
 import (
+	"store-service/internal/order"
+	"testing"
+
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
 	"github.com/stretchr/testify/assert"
-	"store-service/internal/order"
-	"testing"
 )
 
 func Test_OrderRepository(t *testing.T) {
@@ -32,21 +33,16 @@ func Test_OrderRepository(t *testing.T) {
 	t.Run("CreateOrderProduct_Input_OrderID_2_And_ProductID_2_Should_Be_No_Error", func(t *testing.T) {
 		orderId := 2
 		productId := 2
-		err := repository.CreateOrderProduct(orderId, productId)
+		quantity := 1
+		productPrice := 12.95
+		err := repository.CreateOrderProduct(orderId, productId, quantity, productPrice)
 
 		assert.Equal(t, nil, err)
 	})
 
 	t.Run("CreateShipping_Input_OrderID_8004359103_Should_Be_ShippingID_1_No_Error", func(t *testing.T) {
 		expectShippingID := 1
-		productList := []order.OrderProduct{
-			{
-				ProductID: 2,
-				Quantity:  1,
-			},
-		}
-		submittedOrder := order.SubmitedOrder{
-			Cart:                 productList,
+		submittedOrder := order.ShippingInfo{
 			ShippingMethod:       1,
 			ShippingAddress:      "405/35 ถ.มหิดล",
 			ShippingSubDistrict:  "ท่าศาลา",

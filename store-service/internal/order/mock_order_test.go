@@ -16,14 +16,14 @@ func (order *mockOrderRepository) CreateOrder(totalPrice float64) (int, error) {
 	return argument.Int(0), argument.Error(1)
 }
 
-func (order *mockOrderRepository) CreatedOrderProduct(orderID, productID, quantity int, productPrice float64) error {
+func (order *mockOrderRepository) CreateOrderProduct(orderID, productID, quantity int, productPrice float64) error {
 	argument := order.Called(orderID, productID, quantity, productPrice)
 	return argument.Error(0)
 }
 
-func (order *mockOrderRepository) CreatedShipping(orderID int, shippingInfo order.ShippingInfo) error {
+func (order *mockOrderRepository) CreateShipping(orderID int, shippingInfo order.ShippingInfo) (int, error) {
 	argument := order.Called(orderID, shippingInfo)
-	return argument.Error(0)
+	return argument.Int(0), argument.Error(1)
 }
 
 type mockProductRepository struct {
