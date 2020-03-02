@@ -6,6 +6,7 @@ import (
 	"store-service/internal/order"
 	"testing"
 
+	"github.com/jmoiron/sqlx"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -29,7 +30,13 @@ func Test_CreateShipping_Input_OrderID_8004359103_Should_Be_ShippingID_1_No_Erro
 		RecipientPhoneNumber: "0970804292",
 	}
 	orderID := 8004359103
-	orderRepository := order.OrderRepositoryMySQL{}
+	db, err := sqlx.Connect("mysql", "test:test@(localhost:3306)/test")
+	if err != nil {
+		assert.Equal(t, err, nil)
+	}
+	orderRepository := order.OrderRepositoryMySQL{
+		DBConnection: &db,
+	}
 
 	actualShippingID, err := orderRepository.CreateShipping(orderID, submittedOrder)
 	assert.Equal(t, expectShippingID, actualShippingID)
