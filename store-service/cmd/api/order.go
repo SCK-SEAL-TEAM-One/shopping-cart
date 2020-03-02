@@ -10,7 +10,7 @@ import (
 )
 
 type StoreAPI struct {
-	OrderDB order.OrderInterface
+	OrderService order.OrderInterface
 }
 
 type OrderConfirmation struct {
@@ -26,42 +26,10 @@ func (api StoreAPI) SubmitOrderHandler(context *gin.Context) {
 		return
 	}
 
-	totalPrice := GetTotalProductPrice(request.Cart)
-	orderID, err := api.OrderDB.CreateOrder(totalPrice)
-	if err != nil {
-		context.String(http.StatusInternalServerError, err.Error())
-		log.Printf("GetTotalProductPrice internal error %s", err.Error())
-		return
-	}
-
-	if err := api.OrderDB.CreatedOrderProduct(orderID, request.Cart); err != nil {
-		context.String(http.StatusInternalServerError, err.Error())
-		log.Printf("CreatedOrderProduct internal error %s", err.Error())
-		return
-	}
-
-	shippingInfo := order.ShippingInfo{
-		ShippingMethod:       request.ShippingMethod,
-		ShippingAddress:      request.ShippingAddress,
-		ShippingSubDistrict:  request.ShippingSubDistrict,
-		ShippingDistrict:     request.ShippingDistrict,
-		ShippingProvince:     request.ShippingProvince,
-		ShippingZipCode:      request.ShippingZipCode,
-		RecipientName:        request.RecipientName,
-		RecipientPhoneNumber: request.RecipientPhoneNumber,
-	}
-	if err := api.OrderDB.CreatedShipping(orderID, shippingInfo); err != nil {
-		context.String(http.StatusInternalServerError, err.Error())
-		log.Printf("CreatedShipping internal error %s", err.Error())
-		return
-	}
+	order := api.OrderService.CreateOrder(request)
 
 	context.JSON(http.StatusOK, OrderConfirmation{
-		OrderID:    orderID,
-		TotalPrice: totalPrice,
+		OrderID:    order.OrderID,
+		TotalPrice: order.TotalPrice,
 	})
-}
-
-func GetTotalProductPrice(orderProduct []order.OrderProduct) float64 {
-	return 12.95
 }
