@@ -29,6 +29,14 @@ func Test_OrderRepository(t *testing.T) {
 		assert.Equal(t, expectedId, actualId)
 	})
 
+	t.Run("CreateOrderProduct_Input_OrderID_2_And_ProductID_2_Should_Be_No_Error", func(t *testing.T) {
+		orderId := 2
+		productId := 2
+		err := repository.CreateOrderProduct(orderId, productId)
+
+		assert.Equal(t, nil, err)
+	})
+
 	t.Run("CreateShipping_Input_OrderID_8004359103_Should_Be_ShippingID_1_No_Error", func(t *testing.T) {
 		expectShippingID := 1
 		productList := []order.OrderProduct{

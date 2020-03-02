@@ -16,3 +16,10 @@ func (orderRepository OrderRepositoryMySQL) CreateOrder(totalPrice float64) (int
 	insertedId, err := sqlResult.LastInsertId()
 	return int(insertedId), err
 }
+
+func (orderRepository OrderRepositoryMySQL) CreateOrderProduct(orderID int, productID int) error {
+	tx := orderRepository.DBConnection.MustBegin()
+	sqlResult := tx.MustExec("INSERT INTO order_product (order_id, product_id) VALUE (?,?)", orderID, productID)
+	_, err := sqlResult.RowsAffected()
+	return err
+}
