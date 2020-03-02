@@ -10,18 +10,14 @@ type OrderService struct {
 	OrderRepository   OrderInterface
 }
 
-func (service OrderService) CreateOrder(submitedOrder SubmitedOrder) Order {
-	var orderProduct OrderProduct
+type ProductRepository interface {
+	GetProductByID(id int) product.Product
+}
 
-	productID, err := service.ProductRepository.GetProductByID(orderProduct.ProductID)
-	if err != nil {
-		log.Printf("GetProductByID internal error %s", err.Error())
-		return Order{}
-	}
+func (orderService OrderService) CreateOrder(submitedOrder SubmitedOrder) Order {
+	totalAmount := orderService.GetTotalAmount(submitedOrder)
 
-	totalAmount := GetTotalAmount(submitedOrder)
-
-	orderID, err := service.OrderRepository.CreateOrder(totalAmount)
+	orderID, err := orderService.OrderRepository.CreateOrder(totalAmount)
 	if err != nil {
 		log.Printf("OrderRepository.CreateOrder internal error %s", err.Error())
 		return Order{}
@@ -37,18 +33,31 @@ func (service OrderService) CreateOrder(submitedOrder SubmitedOrder) Order {
 		RecipientName:        submitedOrder.RecipientName,
 		RecipientPhoneNumber: submitedOrder.RecipientPhoneNumber,
 	}
-	err = service.OrderRepository.CreatedShipping(orderID, shippingInfo)
+	err = orderService.OrderRepository.CreatedShipping(orderID, shippingInfo)
 	if err != nil {
 		log.Printf("OrderRepository.CreatedShipping internal error %s", err.Error())
 		return Order{}
 	}
 
 	for _, selectedProduct := range submitedOrder.Cart {
-		err = service.OrderRepository.CreatedOrderProduct(orderID, selectedProduct.ProductID, selectedProduct.Quantity, selectedProduct.ProductPrice)
+		err = orderService.OrderRepository.CreatedOrderProduct(orderID, selectedProduct.ProductID, selectedProduct.Quantity, selectedProduct.ProductPrice)
 		if err != nil {
 			log.Printf("OrderRepository.CreatedOrderProduct internal error %s", err.Error())
 			return Order{}
 		}
 	}
 	return Order{}
+}
+
+func (orderService OrderService) GetTotalProductPrice(submitedOrder SubmitedOrder) float64 {
+	totalProductPrice := 0.00
+	for _, cartItem := range submitedOrder.Cart {
+		product, _ := orderService.ProductRepository.GetProductByID(cartItem.ProductID)
+		totalProductPrice += product.Price * float64(cartItem.Quantity)
+	}
+	return totalProductPrice
+}
+
+func (orderService OrderService) GetTotalAmount(order SubmitedOrder) float64 {
+	return orderService.GetTotalProductPrice(order) + order.GetShippingFee()
 }

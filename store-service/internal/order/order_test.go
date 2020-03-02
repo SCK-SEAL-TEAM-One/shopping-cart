@@ -15,12 +15,6 @@ func Test_CreateOrder_Input_Submitted_Order_Should_be_OrderID_8004359103_TotalPr
 	}
 
 	submittedOrder := order.SubmitedOrder{
-		Cart: []order.OrderProduct{
-			{
-				ProductID: 2,
-				Quantity:  1,
-			},
-		},
 		ShippingMethod:       1,
 		ShippingAddress:      "405/37 ถ.มหิดล",
 		ShippingSubDistrict:  "ท่าศาลา",
@@ -31,25 +25,25 @@ func Test_CreateOrder_Input_Submitted_Order_Should_be_OrderID_8004359103_TotalPr
 		RecipientPhoneNumber: "0970809292",
 	}
 
-	mockOrderDB := new(mockOrder)
+	mockProductRepository := new(mockProductRepository)
+	mockProductRepository.On("GetProductByID", 2).Return(product.Product{
+		ID:       2,
+		Name:     "43 Piece dinner Set",
+		Price:    12.95,
+		Quantity: 1,
+		Brand:    "Coolkidz",
+		Image:    "43PieceDinnerSet.jpg",
+	}, nil)
 
-	mockOrderDB.On("GetProductByID", 2).Return(product.Product{
-		ID:    2,
-		Name:  "43 Piece Dinner Set",
-		Price: 12.95,
-		Image: "43PieceDinnerSet.jpg",
-	})
-
+	mockOrderRepository := new(mockOrderRepository)
 	orderID := 8004359103
-	mockOrderDB.On("CreateOrder", 12.95).Return(orderID, nil)
-	listProduct := []order.OrderProduct{
-		{
-			ProductID: 2,
-			Quantity:  1,
-		},
-	}
+	productID := 2
+	quantity := 1
+	productPrice := 12.95
 
-	mockOrderDB.On("CreatedOrderProduct", orderID, listProduct).Return(nil)
+	mockOrderRepository.On("CreateOrder", productPrice).Return(orderID, nil)
+
+	mockOrderRepository.On("CreatedOrderProduct", orderID, productID, quantity, productPrice).Return(nil)
 
 	shippingInfo := order.ShippingInfo{
 		ShippingMethod:       1,
@@ -61,9 +55,82 @@ func Test_CreateOrder_Input_Submitted_Order_Should_be_OrderID_8004359103_TotalPr
 		RecipientName:        "ณัฐญา ชุติบุตร",
 		RecipientPhoneNumber: "0970809292",
 	}
-	mockOrderDB.On("CreatedShipping", orderID, shippingInfo).Return(nil)
+	mockOrderRepository.On("CreatedShipping", orderID, shippingInfo).Return(nil)
 
-	actual := CreateOrder(submittedOrder)
+	orderService := order.OrderService{
+		ProductRepository: mockProductRepository,
+		OrderRepository:   mockOrderRepository,
+	}
+
+	actual := orderService.CreateOrder(submittedOrder)
 
 	assert.Equal(t, expected, actual)
+}
+
+func Test_GetTotalProductPrice_Input_SummitedOrder_Cart_ProductID_2_Quantity_1_Should_Be_TotalProductPrice_12_dot_95(t *testing.T) {
+	expectedTotalProductPrice := 12.95
+	submitOrder := order.SubmitedOrder{
+		ShippingMethod: 1,
+		Cart: []order.OrderProduct{
+			{
+				ProductID: 2,
+				Quantity:  1,
+			},
+		},
+	}
+
+	mockProductRepository := new(mockProductRepository)
+	mockProductRepository.On("GetProductByID", 2).Return(product.Product{
+		ID:       2,
+		Name:     "43 Piece dinner Set",
+		Price:    12.95,
+		Quantity: 1,
+		Brand:    "Coolkidz",
+	}, nil)
+
+	orderService := order.OrderService{
+		ProductRepository: mockProductRepository,
+	}
+	actualTotalPrice := orderService.GetTotalProductPrice(submitOrder)
+
+	assert.Equal(t, expectedTotalProductPrice, actualTotalPrice)
+}
+
+func Test_GetTotalAmount_Input_SubmittedOrder__Should_Be__(t *testing.T) {
+	expectedTotalAmount := 14.95
+	productList := []order.OrderProduct{
+		{
+			ProductID: 2,
+			Quantity:  1,
+		},
+	}
+
+	submittedOrder := order.SubmitedOrder{
+		Cart:                 productList,
+		ShippingMethod:       1,
+		ShippingAddress:      "405/35 ถ.มหิดล",
+		ShippingSubDistrict:  "ท่าศาลา",
+		ShippingDistrict:     "เมือง",
+		ShippingProvince:     "เชียงใหม่",
+		ShippingZipCode:      "50000",
+		RecipientName:        "ณัฐญา ชุติบุตร",
+		RecipientPhoneNumber: "0970804292",
+	}
+
+	mockProductRepository := new(mockProductRepository)
+	mockProductRepository.On("GetProductByID", 2).Return(product.Product{
+		ID:       2,
+		Name:     "43 Piece dinner Set",
+		Price:    12.95,
+		Quantity: 1,
+		Brand:    "Coolkidz",
+	}, nil)
+
+	orderService := order.OrderService{
+		ProductRepository: mockProductRepository,
+	}
+
+	actualTotalAmount := orderService.GetTotalAmount(submittedOrder)
+
+	assert.Equal(t, expectedTotalAmount, actualTotalAmount)
 }

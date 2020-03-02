@@ -7,26 +7,30 @@ import (
 	"github.com/stretchr/testify/mock"
 )
 
-type mockOrder struct {
+type mockOrderRepository struct {
 	mock.Mock
 }
 
-func (order *mockOrder) CreateOrder(totalPrice float64) (int, error) {
+func (order *mockOrderRepository) CreateOrder(totalPrice float64) (int, error) {
 	argument := order.Called(totalPrice)
 	return argument.Int(0), argument.Error(1)
 }
 
-func (order *mockOrder) CreatedOrderProduct(orderID int, listProduct []order.OrderProduct) error {
-	argument := order.Called(orderID, listProduct)
+func (order *mockOrderRepository) CreatedOrderProduct(orderID, productID, quantity int, productPrice float64) error {
+	argument := order.Called(orderID, productID, quantity, productPrice)
 	return argument.Error(0)
 }
 
-func (order *mockOrder) CreatedShipping(orderID int, shippingInfo order.ShippingInfo) error {
+func (order *mockOrderRepository) CreatedShipping(orderID int, shippingInfo order.ShippingInfo) error {
 	argument := order.Called(orderID, shippingInfo)
 	return argument.Error(0)
 }
 
-func (order *mockOrder) GetProductByID(id int) product.Product {
-	argument := order.Called(id)
-	return argument.Get(0).(product.Product)
+type mockProductRepository struct {
+	mock.Mock
+}
+
+func (repository mockProductRepository) GetProductByID(id int) (product.Product, error) {
+	argument := repository.Called(id)
+	return argument.Get(0).(product.Product), argument.Error(1)
 }
