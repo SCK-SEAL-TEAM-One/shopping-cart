@@ -1,3 +1,5 @@
+ALTER DATABASE toy CHARACTER SET utf8 COLLATE utf8_general_ci;
+
 CREATE TABLE user (
     id int,
     name varchar(255)
@@ -23,9 +25,9 @@ INSERT INTO products (id,product_name,product_brand,quantity,product_price,image
 CREATE TABLE orders (
     id BIGINT AUTO_INCREMENT,
     total_price double,
-    transaction_id varchar(255),
+    transaction_id varchar(255) DEFAULT '',
     completed smallint(1) DEFAULT 0,
-    authorized timestamp,
+    authorized timestamp DEFAULT current_timestamp,
     updated timestamp DEFAULT current_timestamp,
     created timestamp DEFAULT current_timestamp ON UPDATE current_timestamp,
     PRIMARY KEY (id)

@@ -22,3 +22,10 @@ func (orderRepository OrderRepositoryMySQL) CreateShipping(orderID int, submitte
 	id, err := result.LastInsertId()
 	return int(id), err
 }
+
+func (orderRepository OrderRepositoryMySQL) CreateOrder(totalPrice float64) (int, error) {
+	tx := orderRepository.DBConnection.MustBegin()
+	sqlResult := tx.MustExec("INSERT INTO orders (total_price) VALUE (?)", totalPrice)
+	insertedId, err := sqlResult.LastInsertId()
+	return int(insertedId), err
+}
