@@ -7,7 +7,11 @@ import (
 
 type OrderService struct {
 	ProductRepository product.ProductRepository
-	OrderRepository   OrderInterface
+	OrderRepository   OrderRepository
+}
+
+type OrderInterface interface {
+	CreateOrder(submitedOrder SubmitedOrder) Order
 }
 
 type ProductRepository interface {
