@@ -38,7 +38,7 @@ func Test_CreateOrder_Input_Submitted_Order_Should_be_OrderID_8004359103_TotalPr
 		Price:    12.95,
 		Quantity: 1,
 		Brand:    "Coolkidz",
-		Image:    "43PieceDinnerSet.jpg",
+		Image:    "43_Piece_Dinner_Set.jpg",
 	}, nil)
 
 	mockOrderRepository := new(mockOrderRepository)
