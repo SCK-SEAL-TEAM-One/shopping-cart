@@ -30,6 +30,6 @@ build_backend:
 
 integration_test_backend:
 	docker-compose up -d store-database
-	sleep 10
+	sleep 15
 	cd store-service && go test -tags=integration ./...
 	docker-compose down
