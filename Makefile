@@ -29,7 +29,6 @@ build_backend:
 	docker-compose build store-service
 
 integration_test_backend:
-	docker-compose up -d store-database
-	sleep 15
+	cat tearup/init.sql | docker exec -i store-database /usr/bin/mysql -u sealteam --password=sckshuhari toy
 	cd store-service && go test -tags=integration ./...
 	docker-compose down
