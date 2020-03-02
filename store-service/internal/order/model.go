@@ -12,8 +12,9 @@ type ShippingInfo struct {
 }
 
 type OrderProduct struct {
-	ProductID int `json:"product_id"`
-	Quantity  int `json:"quantity"`
+	ProductID    int     `json:"product_id"`
+	Quantity     int     `json:"quantity"`
+	ProductPrice float64 `json:"product_price"`
 }
 
 type SubmitedOrder struct {
@@ -26,6 +27,11 @@ type SubmitedOrder struct {
 	ShippingZipCode      string         `json:"shipping_zip_code"`
 	RecipientName        string         `json:"recipient_name"`
 	RecipientPhoneNumber string         `json:"recipient_phone_number"`
+}
+
+type Order struct {
+	OrderID    int
+	TotalPrice float64
 }
 
 func (s SubmitedOrder) GetShippingFee() float64 {
