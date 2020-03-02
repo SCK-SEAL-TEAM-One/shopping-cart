@@ -1,5 +1,5 @@
 fontend: install_dependency_fontend code_analys_fontend run_unittest_fontend build_fontend
-backend: code_analys_backend run_unittest_backend build_backend
+backend: code_analys_backend run_unittest_backend build_backend run_integratetest_backend
 
 run_robot: 
 	robot atdd/ui/shopping_cart_success.robot
@@ -25,17 +25,19 @@ code_analys_backend:
 run_unittest_backend:
 	cd store-service && go test ./...
 
+# ทำการ docker-compose up store-database ก่อน
 run_integratetest_backend:
-	cd store-service && docker-compose up -d store-database
+	docker-compose up -d store-database
 	sleep 12
+	cat tearup/init.sql | docker exec -i store-database /usr/bin/mysql -u sealteam --password=sckshuhari toy
 	cd store-service && go test -tags=integration ./...
-	cd store-service && docker-compose down
+	docker-compose down
 
 build_backend:
 	docker-compose build store-service
 
-integration_test_backend:
-	docker-compose up -d store-database
-	sleep 15
-	cd store-service && go test -tags=integration ./...
+start_service:
+	docker-compose up -d
+
+stop_service:
 	docker-compose down
