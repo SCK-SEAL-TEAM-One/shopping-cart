@@ -6,7 +6,7 @@ CREATE TABLE user (
 INSERT INTO user VALUE (1,"sckshuhari");
 
 
-CREATE TABLE product (
+CREATE TABLE products (
     id int AUTO_INCREMENT,
     product_name varchar(255),
     product_brand varchar(255),
@@ -18,4 +18,15 @@ CREATE TABLE product (
     PRIMARY KEY (id)
 );
 
-INSERT INTO product(id,product_name,product_brand,quantity,product_price,image_url) VALUE (2,"43 Piece dinner Set","CoolKidz",10,12.95,"/43_Piece_dinner_Set.png");
+INSERT INTO products (id,product_name,product_brand,quantity,product_price,image_url) VALUE (2,"43 Piece dinner Set","CoolKidz",10,12.95,"/43_Piece_dinner_Set.png");
+
+CREATE TABLE orders (
+    id int AUTO_INCREMENT,
+    total_price double,
+    transaction_id varchar(255),
+    completed smallint(1) DEFAULT 0,
+    authorized timestamp,
+    updated timestamp DEFAULT current_timestamp,
+    created timestamp DEFAULT current_timestamp ON UPDATE current_timestamp,
+    PRIMARY KEY (id)
+);
