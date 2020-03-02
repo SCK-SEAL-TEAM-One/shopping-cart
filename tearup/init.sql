@@ -30,3 +30,10 @@ CREATE TABLE orders (
     created timestamp DEFAULT current_timestamp ON UPDATE current_timestamp,
     PRIMARY KEY (id)
 );
+
+CREATE TABLE order_product (
+    order_id int,
+    product_id int,
+    quantity int,
+    product_price double
+);
