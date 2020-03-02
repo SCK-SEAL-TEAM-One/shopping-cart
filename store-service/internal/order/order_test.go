@@ -39,11 +39,13 @@ func Test_GetTotalProductPrice_Input_SummitedOrder_Cart_ProductID_2_Quantity_1_S
 
 func Test_GetTotalAmount_Input_SubmittedOrder__Should_Be__(t *testing.T) {
 	expectedTotalAmount := 14.95
-	var productList = append([]OrderProduct{}, OrderProduct{
-		ProductID: 2,
-		Quantity:  1,
-	})
-	submittedOrder := SubmitedOrder{
+	productList := []order.OrderProduct{
+		{
+			ProductID: 2,
+			Quantity:  1,
+		},
+	}
+	submittedOrder := order.SubmitedOrder{
 		Cart:                 productList,
 		ShippingMethod:       1,
 		ShippingAddress:      "405/35 ถ.มหิดล",
@@ -54,7 +56,17 @@ func Test_GetTotalAmount_Input_SubmittedOrder__Should_Be__(t *testing.T) {
 		RecipientName:        "ณัฐญา ชุติบุตร",
 		RecipientPhoneNumber: "0970804292",
 	}
-	orderService := OrderService{}
+	mockProductRepository := new(mockProductRepository)
+	mockProductRepository.On("GetProductByID", 2).Return(product.Product{
+		ID:       2,
+		Name:     "43 Piece dinner Set",
+		Price:    12.95,
+		Quantity: 1,
+		Brand:    "Coolkidz",
+	})
+	orderService := order.OrderService{
+		ProductRepository: mockProductRepository,
+	}
 
 	actualTotalAmount := orderService.GetTotalAmount(submittedOrder)
 

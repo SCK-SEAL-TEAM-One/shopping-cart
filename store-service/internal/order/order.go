@@ -26,5 +26,5 @@ func (orderService OrderService) GetTotalProductPrice(submitedOrder SubmitedOrde
 }
 
 func (orderService OrderService) GetTotalAmount(order SubmitedOrder) float64 {
-	return service.GetTotalProductPrice(order) + order.GetShippingFee()
+	return orderService.GetTotalProductPrice(order) + order.GetShippingFee()
 }
