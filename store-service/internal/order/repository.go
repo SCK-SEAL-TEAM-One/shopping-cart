@@ -13,7 +13,20 @@ type OrderRepositoryMySQL struct {
 }
 
 func (orderRepository OrderRepositoryMySQL) CreateShipping(orderID int, submittedOrder SubmitedOrder) (int, error) {
-	return 0, nil
+	result := orderRepository.
+		DBConnection.
+		MustExec(`INSERT INTO shipping (order_id, address, sub_district, district, province, zip_code, recipient, phone_number) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+			orderID,
+			submittedOrder.ShippingAddress,
+			submittedOrder.ShippingSubDistrict,
+			submittedOrder.ShippingDistrict,
+			submittedOrder.ShippingProvince,
+			submittedOrder.ShippingZipCode,
+			submittedOrder.RecipientName,
+			submittedOrder.RecipientPhoneNumber,
+		)
+	id, err := result.LastInsertId()
+	return int(id), err
 }
 
 func (orderRepository OrderRepositoryMySQL) CreateOrder(totalPrice float64) (int, error) {
