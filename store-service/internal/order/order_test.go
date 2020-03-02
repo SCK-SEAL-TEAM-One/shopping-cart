@@ -2,6 +2,7 @@ package order_test
 
 import (
 	"store-service/internal/order"
+	"store-service/internal/product"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -21,17 +22,17 @@ func Test_GetTotalProductPrice_Input_SummitedOrder_Cart_ProductID_2_Quantity_1_S
 
 	mockProductRepository := new(mockProductRepository)
 	mockProductRepository.On("GetProductByID", 2).Return(product.Product{
-		ProductID:    2,
-		ProductName:  "43 Piece dinner Set",
-		ProductPrice: 12.95,
-		Quantity:     1,
-		ProductBrand: "Coolkidz",
+		ID:       2,
+		Name:     "43 Piece dinner Set",
+		Price:    12.95,
+		Quantity: 1,
+		Brand:    "Coolkidz",
 	})
 
 	orderService := order.OrderService{
 		ProductRepository: mockProductRepository,
 	}
-	actualTotalPrice := orderService.GetTotalPrice(submitOrder)
+	actualTotalPrice := orderService.GetTotalProductPrice(submitOrder)
 
 	assert.Equal(t, expectedTotalProductPrice, actualTotalPrice)
 }
