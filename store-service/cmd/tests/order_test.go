@@ -13,9 +13,10 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func Test_SubmitOrderHandler_Input_Order_One_Piece_Should_Be_Order_ID_1337620837_And_12_Dot_95(t *testing.T) {
-	expected := `{"order_id":1337620837,"total_price":12.95}
+func Test_SubmitOrderHandler_Input_Order_One_Piece_Should_Be_Order_ID_1337620837_And_14_Dot_95(t *testing.T) {
+	expected := `{"order_id":1337620837,"total_price":14.95}
 `
+
 	submittedOrder := order.SubmitedOrder{
 		Cart: []order.OrderProduct{
 			{
@@ -33,21 +34,19 @@ func Test_SubmitOrderHandler_Input_Order_One_Piece_Should_Be_Order_ID_1337620837
 		RecipientPhoneNumber: "0970809292",
 	}
 
-	requestJson, _ := json.Marshal(submittedOrder)
-	request := httptest.NewRequest("POST", "/api/v1/order", bytes.NewBuffer(requestJson))
+	requestJSON, _ := json.Marshal(submittedOrder)
+	request := httptest.NewRequest("POST", "/api/v1/order", bytes.NewBuffer(requestJSON))
 	write := httptest.NewRecorder()
 
 	mockOrderDB := new(mockOrderDB)
 	orderID := 1337620837
-	mockOrderDB.On("CreateOrder", 12.95).Return(orderID, nil)
-	listProduct := []order.OrderProduct{
-		{
-			ProductID: 2,
-			Quantity:  1,
+	mockOrderDB.On("CreateOrder", order.SubmitedOrder{
+		Cart: []order.OrderProduct{
+			{
+				ProductID: 2,
+				Quantity:  1,
+			},
 		},
-	}
-	mockOrderDB.On("CreatedOrderProduct", orderID, listProduct).Return(nil)
-	shippingInfo := order.ShippingInfo{
 		ShippingMethod:       1,
 		ShippingAddress:      "405/37 ถ.มหิดล",
 		ShippingSubDistrict:  "ท่าศาลา",
@@ -56,12 +55,15 @@ func Test_SubmitOrderHandler_Input_Order_One_Piece_Should_Be_Order_ID_1337620837
 		ShippingZipCode:      "50000",
 		RecipientName:        "ณัฐญา ชุติบุตร",
 		RecipientPhoneNumber: "0970809292",
-	}
-	mockOrderDB.On("CreatedShipping", orderID, shippingInfo).Return(nil)
+	}).Return(order.Order{
+		OrderID:    orderID,
+		TotalPrice: 14.95,
+	}, nil)
 
 	storeAPI := api.StoreAPI{
-		OrderDB: mockOrderDB,
+		OrderService: mockOrderDB,
 	}
+
 	mockRoute := gin.Default()
 	mockRoute.POST("/api/v1/order", storeAPI.SubmitOrderHandler)
 	mockRoute.ServeHTTP(write, request)
