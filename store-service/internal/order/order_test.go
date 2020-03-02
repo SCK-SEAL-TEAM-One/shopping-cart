@@ -37,7 +37,7 @@ func Test_GetTotalProductPrice_Input_SummitedOrder_Cart_ProductID_2_Quantity_1_S
 	assert.Equal(t, expectedTotalProductPrice, actualTotalPrice)
 }
 
-func Test_GetTotalAmount_Input_SubmittedOrder__Should_Be__(t *testing.T) {
+func Test_GetTotalAmount_Input_SubmittedOrder_ProductID_2_Quantity_1_Should_Be_TotalPrice_14_dot_95(t *testing.T) {
 	expectedTotalAmount := 14.95
 	productList := []order.OrderProduct{
 		{
