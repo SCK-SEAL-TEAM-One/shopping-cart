@@ -12,9 +12,8 @@ type ShippingInfo struct {
 }
 
 type OrderProduct struct {
-	ProductID    int     `json:"product_id"`
-	Quantity     int     `json:"quantity"`
-	ProductPrice float64 `json:"product_price"`
+	ProductID int `json:"product_id"`
+	Quantity  int `json:"quantity"`
 }
 
 type SubmitedOrder struct {
