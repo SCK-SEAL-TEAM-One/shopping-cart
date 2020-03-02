@@ -21,7 +21,7 @@ CREATE TABLE products (
 INSERT INTO products (id,product_name,product_brand,quantity,product_price,image_url) VALUE (2,"43 Piece dinner Set","CoolKidz",10,12.95,"/43_Piece_dinner_Set.png");
 
 CREATE TABLE orders (
-    id int AUTO_INCREMENT,
+    id BIGINT AUTO_INCREMENT,
     total_price double,
     transaction_id varchar(255),
     completed smallint(1) DEFAULT 0,
@@ -32,7 +32,7 @@ CREATE TABLE orders (
 );
 
 CREATE TABLE order_product (
-    order_id int,
+    order_id BIGINT,
     product_id int,
     quantity int,
     product_price double
@@ -40,10 +40,10 @@ CREATE TABLE order_product (
 
 CREATE TABLE shipping (
     id int AUTO_INCREMENT,
-    order_id int,
+    order_id BIGINT,
     address varchar(255),
     sub_district varchar(255),
-    distincts varchar(255),
+    district varchar(255),
     province varchar(255),
     zip_code varchar(5),
     recipient varchar(255),
