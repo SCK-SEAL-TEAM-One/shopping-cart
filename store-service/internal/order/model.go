@@ -16,7 +16,7 @@ type OrderProduct struct {
 	Quantity  int `json:"quantity"`
 }
 
-type SubmmitedOrder struct {
+type SubmitedOrder struct {
 	Cart                 []OrderProduct `json:"cart"`
 	ShippingMethod       int            `json:"shipping_method"`
 	ShippingAddress      string         `json:"shipping_address"`
@@ -26,4 +26,8 @@ type SubmmitedOrder struct {
 	ShippingZipCode      string         `json:"shipping_zip_code"`
 	RecipientName        string         `json:"recipient_name"`
 	RecipientPhoneNumber string         `json:"recipient_phone_number"`
+}
+
+func (s SubmitedOrder) GetShippingFee() float64 {
+	return 2.00
 }

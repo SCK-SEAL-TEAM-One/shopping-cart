@@ -19,7 +19,7 @@ type OrderConfirmation struct {
 }
 
 func (api StoreAPI) SubmitOrderHandler(context *gin.Context) {
-	var request SubmmitedOrder
+	var request order.SubmitedOrder
 	if err := context.BindJSON(&request); err != nil {
 		context.String(http.StatusBadRequest, err.Error())
 		log.Printf("bad request %s", err.Error())
