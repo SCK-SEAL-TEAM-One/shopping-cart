@@ -12,17 +12,6 @@ import (
 type StoreAPI struct {
 	OrderDB order.OrderInterface
 }
-type SubmmitedOrder struct {
-	Cart                 []order.OrderProduct `json:"cart"`
-	ShippingMethod       int                  `json:"shipping_method"`
-	ShippingAddress      string               `json:"shipping_address"`
-	ShippingSubDistrict  string               `json:"shipping_sub_disterict"`
-	ShippingDistrict     string               `json:"shipping_district"`
-	ShippingProvince     string               `json:"shipping_province"`
-	ShippingZipCode      string               `json:"shipping_zip_code"`
-	RecipientName        string               `json:"recipient_name"`
-	RecipientPhoneNumber string               `json:"recipient_phone_number"`
-}
 
 type OrderConfirmation struct {
 	OrderID    int     `json:"order_id"`
@@ -30,7 +19,7 @@ type OrderConfirmation struct {
 }
 
 func (api StoreAPI) SubmitOrderHandler(context *gin.Context) {
-	var request SubmmitedOrder
+	var request order.SubmitedOrder
 	if err := context.BindJSON(&request); err != nil {
 		context.String(http.StatusBadRequest, err.Error())
 		log.Printf("bad request %s", err.Error())
