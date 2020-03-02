@@ -26,16 +26,16 @@ run_unittest_backend:
 	cd store-service && go test ./...
 
 run_integratetest_backend:
-	cd store-service && docker-compose up -d store-database
+	docker-compose up -d store-database
 	sleep 12
 	cd store-service && go test -tags=integration ./...
-	cd store-service && docker-compose down
+	docker-compose down
 
 build_backend:
 	docker-compose build store-service
 
-integration_test_backend:
-	docker-compose up -d store-database
-	sleep 15
-	cd store-service && go test -tags=integration ./...
+start_service:
+	docker-compose up -d
+
+stop_service:
 	docker-compose down
