@@ -11,10 +11,16 @@ import (
 func Test_CreateOrder_Input_Submitted_Order_Should_be_OrderID_8004359103_TotalPrice_100_Dot_00(t *testing.T) {
 	expected := order.Order{
 		OrderID:    8004359103,
-		TotalPrice: 100.00,
+		TotalPrice: 14.95,
 	}
 
 	submittedOrder := order.SubmitedOrder{
+		Cart: []order.OrderProduct{
+			{
+				ProductID: 2,
+				Quantity:  1,
+			},
+		},
 		ShippingMethod:       1,
 		ShippingAddress:      "405/37 ถ.มหิดล",
 		ShippingSubDistrict:  "ท่าศาลา",
@@ -39,9 +45,10 @@ func Test_CreateOrder_Input_Submitted_Order_Should_be_OrderID_8004359103_TotalPr
 	orderID := 8004359103
 	productID := 2
 	quantity := 1
+	totalPrice := 14.95
 	productPrice := 12.95
 
-	mockOrderRepository.On("CreateOrder", productPrice).Return(orderID, nil)
+	mockOrderRepository.On("CreateOrder", totalPrice).Return(orderID, nil)
 
 	mockOrderRepository.On("CreatedOrderProduct", orderID, productID, quantity, productPrice).Return(nil)
 
