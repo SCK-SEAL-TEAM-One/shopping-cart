@@ -37,3 +37,18 @@ CREATE TABLE order_product (
     quantity int,
     product_price double
 );
+
+CREATE TABLE shipping (
+    id int AUTO_INCREMENT,
+    order_id int,
+    address varchar(255),
+    sub_district varchar(255),
+    distincts varchar(255),
+    province varchar(255),
+    zip_code varchar(5),
+    recipient varchar(255),
+    phone_number varchar(13),
+    updated timestamp DEFAULT current_timestamp,
+    created timestamp DEFAULT current_timestamp ON UPDATE current_timestamp,
+    PRIMARY KEY (id)
+);
