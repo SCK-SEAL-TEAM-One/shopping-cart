@@ -57,20 +57,13 @@ func Test_OrderRepository(t *testing.T) {
 			RecipientPhoneNumber: "0970804292",
 		}
 		orderID := 8004359103
-		orderRepository := order.OrderRepositoryMySQL{}
+		orderRepository := order.OrderRepositoryMySQL{
+			DBConnection: connection,
+		}
 
 		actualShippingID, err := orderRepository.CreateShipping(orderID, submittedOrder)
 		assert.Equal(t, expectShippingID, actualShippingID)
 		assert.Equal(t, err, nil)
-	})
-	t.Run("CreateOrder_Input_TotalPrice_14_dot_95_Should_Be_OrderID_1_No_Error", func(t *testing.T) {
-		expectedId := 1
-		totalPrice := 14.95
-
-		actualId, err := repository.CreateOrder(totalPrice)
-
-		assert.Equal(t, nil, err)
-		assert.Equal(t, expectedId, actualId)
 	})
 
 }
