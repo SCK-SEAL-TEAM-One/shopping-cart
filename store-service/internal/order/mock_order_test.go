@@ -30,7 +30,7 @@ type mockProductRepository struct {
 	mock.Mock
 }
 
-func (repository mockProductRepository) GetProductByID(id int) (product.Product, error) {
+func (repository *mockProductRepository) GetProductByID(id int) (product.Product, error) {
 	argument := repository.Called(id)
 	return argument.Get(0).(product.Product), argument.Error(1)
 }
