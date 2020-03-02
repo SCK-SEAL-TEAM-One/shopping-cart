@@ -15,8 +15,8 @@ func (order *mockOrderDB) CreateOrder(totalPrice float64) (int, error) {
 	return argument.Int(0), argument.Error(1)
 }
 
-func (order *mockOrderDB) CreatedOrderProduct(orderID int, listProduct []order.OrderProduct) error {
-	argument := order.Called(orderID, listProduct)
+func (order *mockOrderDB) CreatedOrderProduct(orderID, productID, quantity int, productPrice float64) error {
+	argument := order.Called(orderID, productID, quantity, productPrice)
 	return argument.Error(0)
 }
 

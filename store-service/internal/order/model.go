@@ -28,6 +28,11 @@ type SubmitedOrder struct {
 	RecipientPhoneNumber string         `json:"recipient_phone_number"`
 }
 
+type Order struct {
+	OrderID    int
+	TotalPrice float64
+}
+
 func (s SubmitedOrder) GetShippingFee() float64 {
 	return 2.00
 }
