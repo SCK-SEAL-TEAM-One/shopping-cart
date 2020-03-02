@@ -15,9 +15,9 @@ type ProductRepository interface {
 }
 
 func (orderService OrderService) CreateOrder(submitedOrder SubmitedOrder) Order {
-	totalAmount := orderService.GetTotalAmount(submitedOrder)
+	totalPrice := orderService.GetTotalAmount(submitedOrder)
 
-	orderID, err := orderService.OrderRepository.CreateOrder(totalAmount)
+	orderID, err := orderService.OrderRepository.CreateOrder(totalPrice)
 	if err != nil {
 		log.Printf("OrderRepository.CreateOrder internal error %s", err.Error())
 		return Order{}
@@ -40,13 +40,17 @@ func (orderService OrderService) CreateOrder(submitedOrder SubmitedOrder) Order 
 	}
 
 	for _, selectedProduct := range submitedOrder.Cart {
-		err = orderService.OrderRepository.CreatedOrderProduct(orderID, selectedProduct.ProductID, selectedProduct.Quantity, selectedProduct.ProductPrice)
+		product, err := orderService.ProductRepository.GetProductByID(selectedProduct.ProductID)
+		err = orderService.OrderRepository.CreatedOrderProduct(orderID, selectedProduct.ProductID, selectedProduct.Quantity, product.Price)
 		if err != nil {
 			log.Printf("OrderRepository.CreatedOrderProduct internal error %s", err.Error())
 			return Order{}
 		}
 	}
-	return Order{}
+	return Order{
+		OrderID:    orderID,
+		TotalPrice: totalPrice,
+	}
 }
 
 func (orderService OrderService) GetTotalProductPrice(submitedOrder SubmitedOrder) float64 {
