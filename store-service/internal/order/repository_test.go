@@ -13,7 +13,7 @@ import (
 func Test_OrderRepository(t *testing.T) {
 	connection, err := sqlx.Connect("mysql", "sealteam:sckshuhari@(localhost:3306)/toy")
 	if err != nil {
-		t.Fatal("cannot tearup data")
+		t.Fatalf("cannot tearup data err %s", err)
 	}
 	repository := order.OrderRepositoryMySQL{
 		DBConnection: connection,
@@ -63,4 +63,14 @@ func Test_OrderRepository(t *testing.T) {
 		assert.Equal(t, expectShippingID, actualShippingID)
 		assert.Equal(t, err, nil)
 	})
+	t.Run("CreateOrder_Input_TotalPrice_14_dot_95_Should_Be_OrderID_1_No_Error", func(t *testing.T) {
+		expectedId := 1
+		totalPrice := 14.95
+
+		actualId, err := repository.CreateOrder(totalPrice)
+
+		assert.Equal(t, nil, err)
+		assert.Equal(t, expectedId, actualId)
+	})
+
 }
