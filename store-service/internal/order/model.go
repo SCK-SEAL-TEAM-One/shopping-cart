@@ -36,3 +36,7 @@ type Order struct {
 func (s SubmitedOrder) GetShippingFee() float64 {
 	return 2.00
 }
+
+func (s SubmitedOrder) GetShippingMethodProvider() string {
+	return "Kerry"
+}
