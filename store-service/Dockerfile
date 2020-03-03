@@ -3,7 +3,7 @@ WORKDIR /module
 COPY ./go.mod /module/go.mod
 COPY ./go.sum /module/go.sum
 RUN go mod download
-COPY ./cmd/ /module/cmd
+COPY . /module
 RUN CGO_ENABLED=0 GOOS=linux go build -o ./bin/app ./cmd/main.go
 
 FROM alpine:3

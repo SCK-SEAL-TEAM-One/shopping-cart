@@ -11,7 +11,7 @@ INSERT INTO user VALUE (1,"sckshuhari");
 
 
 CREATE TABLE products (
-    id int AUTO_INCREMENT,
+    id BIGINT AUTO_INCREMENT,
     product_name varchar(255),
     product_brand varchar(255),
     quantity int,
@@ -37,7 +37,7 @@ CREATE TABLE orders (
 
 CREATE TABLE order_product (
     order_id BIGINT,
-    product_id int,
+    product_id BIGINT,
     quantity int,
     product_price double
 );

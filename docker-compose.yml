@@ -25,9 +25,9 @@ services:
     ports:
       - "3306:3306"
 
-  store-ui:
-    image:  toy-store-ui:0.0.1
-    container_name: store-ui
+  store-web:
+    image:  toy-store-web:0.0.1
+    container_name: store-web
     build:
       context: store-web
     ports:
@@ -42,6 +42,6 @@ services:
       dockerfile: Dockerfile.nginx
     depends_on:
       - store-service
-      - store-ui
+      - store-web
     ports:
       - "80:80"
