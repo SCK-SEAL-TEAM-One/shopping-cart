@@ -26,10 +26,10 @@ INSERT INTO products (id,product_name,product_brand,quantity,product_price,image
 
 CREATE TABLE orders (
     id BIGINT AUTO_INCREMENT,
+    shipping_method varchar(50),
     total_price double,
     transaction_id varchar(255) DEFAULT '',
-    shipping_method int,
-    completed smallint(1) DEFAULT 0,
+    status ENUM('created','completed','cancle','fail') DEFAULT 'created',
     authorized timestamp DEFAULT current_timestamp,
     updated timestamp DEFAULT current_timestamp,
     created timestamp DEFAULT current_timestamp ON UPDATE current_timestamp,
