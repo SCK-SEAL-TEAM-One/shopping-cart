@@ -1,4 +1,4 @@
-fontend: install_dependency_fontend code_analys_fontend run_unittest_fontend build_fontend
+frontend: install_dependency_frontend code_analys_frontend run_unittest_frontend build_frontend
 backend: code_analys_backend run_unittest_backend build_backend run_integratetest_backend
 
 run_robot: 
@@ -10,13 +10,13 @@ run_newman:
 install_dependency_frontend:
 	cd store-web && npm install
 
-code_analys_fontend:
+code_analys_frontend:
 	cd store-web && npm run lint
 
-run_unittest_fontend:
+run_unittest_frontend:
 	cd store-web && npm test
 
-build_fontend:
+build_frontend:
 	docker-compose build store-web
 
 code_analys_backend:
