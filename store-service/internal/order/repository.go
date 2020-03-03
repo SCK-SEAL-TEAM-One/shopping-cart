@@ -45,8 +45,8 @@ func (orderRepository OrderRepositoryMySQL) CreateOrderProduct(orderID int, prod
 }
 
 func (orderRepository OrderRepositoryMySQL) UpdateOrder(orderID int, transactionID string) error {
-	isCompleted := 1
-	sqlResult := orderRepository.DBConnection.MustExec("UPDATE orders SET transaction_id=? , status=? WHERE id = ?", transactionID, isCompleted, orderID)
+	status := "completed"
+	sqlResult := orderRepository.DBConnection.MustExec("UPDATE orders SET transaction_id=? , status=? WHERE id = ?", transactionID, status, orderID)
 	rowAffected, err := sqlResult.RowsAffected()
 	if rowAffected == 0 {
 		return fmt.Errorf("no any row affected , update not completed")
