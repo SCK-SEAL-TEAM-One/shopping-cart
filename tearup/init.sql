@@ -35,6 +35,8 @@ CREATE TABLE orders (
     PRIMARY KEY (id)
 );
 
+INSERT INTO orders (id, total_price) VALUE (8004359103,14.59);
+
 CREATE TABLE order_product (
     order_id BIGINT,
     product_id BIGINT,
