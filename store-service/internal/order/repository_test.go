@@ -20,9 +20,9 @@ func Test_OrderRepository(t *testing.T) {
 		DBConnection: connection,
 	}
 
-	t.Run("CreateOrder_Input_TotalPrice_14_dot_95_ShippingMethod_1_Should_Be_OrderID_No_Error", func(t *testing.T) {
+	t.Run("CreateOrder_Input_TotalPrice_14_dot_95_ShippingMethod_Kerry_Should_Be_OrderID_No_Error", func(t *testing.T) {
 		totalPrice := 14.95
-		shippingMethod := 1
+		shippingMethod := "Kerry"
 
 		actualId, err := repository.CreateOrder(totalPrice, shippingMethod)
 

@@ -47,7 +47,7 @@ func Test_CreateOrder_Input_Submitted_Order_Should_be_OrderID_8004359103_TotalPr
 	quantity := 1
 	totalPrice := 14.95
 	productPrice := 12.95
-	shippingMethod := 1
+	shippingMethod := "Kerry"
 
 	mockOrderRepository.On("CreateOrder", totalPrice, shippingMethod).Return(orderID, nil)
 

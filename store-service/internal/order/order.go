@@ -21,7 +21,7 @@ type ProductRepository interface {
 func (orderService OrderService) CreateOrder(submitedOrder SubmitedOrder) Order {
 	totalPrice := orderService.GetTotalAmount(submitedOrder)
 
-	orderID, err := orderService.OrderRepository.CreateOrder(totalPrice, submitedOrder.ShippingMethod)
+	orderID, err := orderService.OrderRepository.CreateOrder(totalPrice, submitedOrder.GetShippingMethodProvider())
 	if err != nil {
 		log.Printf("OrderRepository.CreateOrder internal error %s", err.Error())
 		return Order{}
