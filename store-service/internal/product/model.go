@@ -1,6 +1,6 @@
 package product
 
-type Product struct {
+type ProductDetail struct {
 	ID       int     `json:"id"`
 	Name     string  `json:"product_name"`
 	Price    float64 `json:"product_price"`
