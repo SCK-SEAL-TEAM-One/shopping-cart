@@ -47,11 +47,10 @@ services:
       - "80:80"
 
   bank-gateway:
-    image: golfapipol/stubby4j-openjdk8-alpine:6.0.1
+    image: toy-store-bankgateway:0.0.1
+    build: 
+      context: thirdparty
     container_name: bank-gateway
-    command: java -jar /app/stubby4j-6.0.1.jar -l 0.0.0.0 -d /data/visa.yml
     restart: always
     ports:
       - "8882:8882"
-    volumes:
-    - ./thirdparty/bank-gateway/visa.yml:/data/visa.yml
