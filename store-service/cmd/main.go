@@ -2,10 +2,14 @@ package main
 
 import (
 	"fmt"
+	"log"
+	"store-service/cmd/api"
+	"store-service/internal/order"
+	"store-service/internal/product"
+
 	"github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
-	"log"
 )
 
 func main() {
@@ -13,8 +17,23 @@ func main() {
 	if err != nil {
 		log.Fatalln("cannot connect to tearup", err)
 	}
+	productRepository := product.ProductRepositoryMySQL{
+		DBConnection: connection,
+	}
+	orderRepository := order.OrderRepositoryMySQL{
+		DBConnection: connection,
+	}
+	orderService := order.OrderService{
+		ProductRepository: &productRepository,
+		OrderRepository:   &orderRepository,
+	}
+	storeAPI := api.StoreAPI{
+		OrderService: &orderService,
+	}
 
 	route := gin.Default()
+	route.POST("/api/v1/order", storeAPI.SubmitOrderHandler)
+
 	route.GET("/api/v1/health", func(context *gin.Context) {
 		context.JSON(200, gin.H{
 			"message": GetUserNameFromDB(connection),

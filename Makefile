@@ -5,7 +5,7 @@ run_robot:
 	robot atdd/ui/shopping_cart_success.robot
 
 run_newman: 
-	newman run atdd/api/shopping_cart_success.json
+	newman run atdd/api/shopping_cart_success.json -e atdd/api/environment/local_environment.json -d atdd/api/data/shopping_cart_success.json
 
 install_dependency_fontend:
 	cd store-web && npm install
@@ -27,9 +27,17 @@ run_unittest_backend:
 
 # ทำการ docker-compose up store-database ก่อน
 run_integratetest_backend:
+	docker-compose up -d store-database
+	sleep 12
 	cat tearup/init.sql | docker exec -i store-database /usr/bin/mysql -u sealteam --password=sckshuhari toy
 	cd store-service && go test -tags=integration ./...
 	docker-compose down
 
 build_backend:
 	docker-compose build store-service
+
+start_service:
+	docker-compose up -d
+
+stop_service:
+	docker-compose down

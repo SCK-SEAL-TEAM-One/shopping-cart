@@ -38,7 +38,7 @@ func Test_CreateOrder_Input_Submitted_Order_Should_be_OrderID_8004359103_TotalPr
 		Price:    12.95,
 		Quantity: 1,
 		Brand:    "Coolkidz",
-		Image:    "43PieceDinnerSet.jpg",
+		Image:    "43_Piece_Dinner_Set.jpg",
 	}, nil)
 
 	mockOrderRepository := new(mockOrderRepository)
@@ -50,7 +50,7 @@ func Test_CreateOrder_Input_Submitted_Order_Should_be_OrderID_8004359103_TotalPr
 
 	mockOrderRepository.On("CreateOrder", totalPrice).Return(orderID, nil)
 
-	mockOrderRepository.On("CreatedOrderProduct", orderID, productID, quantity, productPrice).Return(nil)
+	mockOrderRepository.On("CreateOrderProduct", orderID, productID, quantity, productPrice).Return(nil)
 
 	shippingInfo := order.ShippingInfo{
 		ShippingMethod:       1,
@@ -62,7 +62,7 @@ func Test_CreateOrder_Input_Submitted_Order_Should_be_OrderID_8004359103_TotalPr
 		RecipientName:        "ณัฐญา ชุติบุตร",
 		RecipientPhoneNumber: "0970809292",
 	}
-	mockOrderRepository.On("CreatedShipping", orderID, shippingInfo).Return(nil)
+	mockOrderRepository.On("CreateShipping", orderID, shippingInfo).Return(1, nil)
 
 	orderService := order.OrderService{
 		ProductRepository: mockProductRepository,
