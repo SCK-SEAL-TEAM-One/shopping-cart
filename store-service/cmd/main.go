@@ -5,6 +5,7 @@ import (
 	"log"
 	"store-service/cmd/api"
 	"store-service/internal/order"
+	"store-service/internal/payment"
 	"store-service/internal/product"
 
 	"github.com/gin-gonic/gin"
@@ -23,16 +24,26 @@ func main() {
 	orderRepository := order.OrderRepositoryMySQL{
 		DBConnection: connection,
 	}
+	paymentRepository := payment.PaymentRepositoryMySQL{
+		DBConnection: connection,
+	}
 	orderService := order.OrderService{
 		ProductRepository: &productRepository,
 		OrderRepository:   &orderRepository,
 	}
+	paymentService := payment.PaymentService{
+		PaymentRepository: &paymentRepository,
+	}
 	storeAPI := api.StoreAPI{
 		OrderService: &orderService,
+	}
+	paymentAPI := api.PaymentAPI{
+		PaymentService: &paymentService,
 	}
 
 	route := gin.Default()
 	route.POST("/api/v1/order", storeAPI.SubmitOrderHandler)
+	route.POST("/api/v1/confirmPayment", paymentAPI.ConfirmPaymentHandler)
 
 	route.GET("/api/v1/health", func(context *gin.Context) {
 		context.JSON(200, gin.H{
