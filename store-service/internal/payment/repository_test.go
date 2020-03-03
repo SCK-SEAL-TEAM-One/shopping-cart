@@ -1,3 +1,5 @@
+//+build integration
+
 package payment_test
 
 import (
