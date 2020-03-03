@@ -37,17 +37,17 @@ func (orderService OrderService) CreateOrder(submitedOrder SubmitedOrder) Order 
 		RecipientName:        submitedOrder.RecipientName,
 		RecipientPhoneNumber: submitedOrder.RecipientPhoneNumber,
 	}
-	err = orderService.OrderRepository.CreatedShipping(orderID, shippingInfo)
+	_, err = orderService.OrderRepository.CreateShipping(orderID, shippingInfo)
 	if err != nil {
-		log.Printf("OrderRepository.CreatedShipping internal error %s", err.Error())
+		log.Printf("OrderRepository.CreateShipping internal error %s", err.Error())
 		return Order{}
 	}
 
 	for _, selectedProduct := range submitedOrder.Cart {
 		product, err := orderService.ProductRepository.GetProductByID(selectedProduct.ProductID)
-		err = orderService.OrderRepository.CreatedOrderProduct(orderID, selectedProduct.ProductID, selectedProduct.Quantity, product.Price)
+		err = orderService.OrderRepository.CreateOrderProduct(orderID, selectedProduct.ProductID, selectedProduct.Quantity, product.Price)
 		if err != nil {
-			log.Printf("OrderRepository.CreatedOrderProduct internal error %s", err.Error())
+			log.Printf("OrderRepository.CreateOrderProduct internal error %s", err.Error())
 			return Order{}
 		}
 	}

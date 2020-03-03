@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "b379075d-cca2-4ffa-9773-7f335f241f98",
+		"_postman_id": "b7818643-3570-4380-ad41-fda985453f46",
 		"name": "shopping cart success",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -74,6 +74,7 @@
 							"    var jsonData = pm.response.json();",
 							"    pm.expect(jsonData.order_id).to.eql(data[\"order_id\"]);",
 							"});",
+							"",
 							"pm.test(\"Total price \" + data[\"total_price\"], function () {",
 							"    var jsonData = pm.response.json();",
 							"    pm.expect(jsonData.total_price).to.eql(data[\"total_price\"]);",

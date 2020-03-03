@@ -5,7 +5,7 @@ run_robot:
 	robot atdd/ui/shopping_cart_success.robot
 
 run_newman: 
-	newman run atdd/api/shopping_cart_success.json
+	newman run atdd/api/shopping_cart_success.json -e atdd/api/environment/local_environment.json -d atdd/api/data/shopping_cart_success.json
 
 install_dependency_fontend:
 	cd store-web && npm install
