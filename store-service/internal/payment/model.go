@@ -4,7 +4,7 @@ type PaymentInformation struct {
 	PaymentType  string  `json:"payment_type"`
 	Type         string  `json:"type"`
 	CardNumber   string  `json:"card_number"`
-	CVV          int     `json:"cvv"`
+	CVV          string  `json:"cvv"`
 	ExpiredMonth int     `json:"expired_month"`
 	ExpiredYear  int     `json:"expired_year"`
 	CardName     string  `json:"card_name"`
@@ -12,8 +12,8 @@ type PaymentInformation struct {
 }
 
 type PaymentDetail struct {
-	CardNumber   int     `json:"card_number"`
-	CVV          int     `json:"cvv"`
+	CardNumber   string  `json:"card_number"`
+	CVV          string  `json:"cvv"`
 	ExpiredMonth int     `json:"expired_month"`
 	ExpiredYear  int     `json:"expired_year"`
 	CardName     string  `json:"card_name"`
