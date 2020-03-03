@@ -23,6 +23,7 @@ CREATE TABLE products (
 );
 
 INSERT INTO products (id,product_name,product_brand,quantity,product_price,image_url) VALUE (2,"43 Piece dinner Set","CoolKidz",10,12.95,"/43_Piece_dinner_Set.png");
+INSERT INTO products (id,product_name,product_brand,quantity,product_price,image_url) VALUE (1,"Balance Training Bicycle","SportsFun",5,119.95,"/Balance_Training_Bicycle.png");
 
 CREATE TABLE orders (
     id BIGINT AUTO_INCREMENT,
