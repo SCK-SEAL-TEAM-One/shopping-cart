@@ -1,38 +1,59 @@
 pipeline {
   agent any
   stages {
-    stage('install dependency frontend') {
+    stage('install dependency') {
       steps {
         sh 'make install_dependency_frontend'
       }
     }
     stage('code analysis') {
-      steps {
-        sh 'make code_analys_frontend' 
-        sh 'make code_analys_backend' 
+      parallel {
+        stage('code analysis frontend') {
+          steps {
+            sh 'make code_analys_frontend' 
+          }
+        }
+        stage('code analysis backend') {
+          steps {
+            sh 'make code_analys_backend' 
+          }
+        }
       }
     }
     stage('run unit test') {
-      steps {
-        sh 'make run_unittest_frontend'
-        sh 'make run_unittest_backend'
+      parallel {
+        stage('code analysis frontend') {
+          steps {
+            sh 'make run_unittest_frontend'
+          }
+        }
+        stage('code analysis backend') {
+          steps {
+            sh 'make run_unittest_backend'
+          }
+        }
       }
     }
     stage('run integration test') {
       steps {
         sh 'make run_integratetest_backend'
       }
-
-      post {
-
-      }
     }
     
     stage('build') {
-      steps {
-        sh 'make build_frontend'
-        sh 'make build_backend'
-      }
+      parallel {
+        stage('build frontend') {
+          steps {
+            sh 'make build_frontend'
+          }
+        }
+
+        stage('build backend') {
+          steps {
+            sh 'make build_backend'
+          }
+        }
+      }      
     }
     stage('run ATDD') {
       steps {
@@ -42,19 +63,12 @@ pipeline {
         sh 'make stop_service'
       }
     }
-    
   }
+
   post { 
     always { 
       sh "make stop_service"
       sh "docker volume prune -f"
     }
-
-    success {	
-      slackSend (color: '#00FF00', message: "SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")	
-    }	
-    failure {	
-      slackSend (color: '#FF0000', message: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")	
-    }	
   }
 }

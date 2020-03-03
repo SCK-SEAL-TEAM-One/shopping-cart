@@ -1,0 +1,10 @@
+- request:
+    method: POST
+    url: /shipping/kerry
+
+  response:
+    status: 200
+    headers:
+      content-type: application/json
+    body: >
+      {"tracking_id":"1785261900"}
