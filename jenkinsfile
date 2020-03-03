@@ -3,8 +3,7 @@ pipeline {
   stages {
     stage('install dependency frontend') {
       steps {
-        sh 'make install_dependency_frontend' 
-        sh 'make code_analys_backend' 
+        sh 'make install_dependency_frontend'
       }
     }
     stage('code analysis') {
