@@ -38,9 +38,9 @@ func Test_SubmitOrderHandler_Input_Order_One_Piece_Should_Be_Order_ID_1337620837
 	request := httptest.NewRequest("POST", "/api/v1/order", bytes.NewBuffer(requestJSON))
 	write := httptest.NewRecorder()
 
-	mockOrderDB := new(mockOrderDB)
+	mockOrderService := new(mockOrderService)
 	orderID := 1337620837
-	mockOrderDB.On("CreateOrder", order.SubmitedOrder{
+	mockOrderService.On("CreateOrder", order.SubmitedOrder{
 		Cart: []order.OrderProduct{
 			{
 				ProductID: 2,
@@ -61,7 +61,7 @@ func Test_SubmitOrderHandler_Input_Order_One_Piece_Should_Be_Order_ID_1337620837
 	}, nil)
 
 	storeAPI := api.StoreAPI{
-		OrderService: mockOrderDB,
+		OrderService: mockOrderService,
 	}
 
 	mockRoute := gin.Default()
