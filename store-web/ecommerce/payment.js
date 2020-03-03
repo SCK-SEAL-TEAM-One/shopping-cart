@@ -1,3 +1,5 @@
 export default function checkPaymentMethod(cardNumber) {
-    return ""
+    if (cardNumber.startsWith('5')) {
+        return "MASTER"
+    }
 }
