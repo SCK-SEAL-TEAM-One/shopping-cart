@@ -12,7 +12,7 @@ type BankGateway struct {
 	BankEndpoint string
 }
 
-type BankGatewayReponse struct {
+type BankGatewayResponse struct {
 	Status          string  `json:"status"`
 	Fee             float64 `json:"fee"`
 	AvailableBlance float64 `json:"available_balance"`
@@ -34,11 +34,11 @@ func (gateway BankGateway) Payment(paymentDetail PaymentDetail) (string, error) 
 		return "", err
 	}
 
-	var bankGatewayReponse BankGatewayReponse
-	err = json.Unmarshal(responseData, &bankGatewayReponse)
+	var BankGatewayResponse BankGatewayResponse
+	err = json.Unmarshal(responseData, &BankGatewayResponse)
 	if err != nil {
 		return "", err
 	}
 
-	return bankGatewayReponse.TransactionID, nil
+	return BankGatewayResponse.TransactionID, nil
 }
