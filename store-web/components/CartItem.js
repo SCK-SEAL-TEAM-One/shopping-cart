@@ -1,27 +1,42 @@
 import React from 'react'
-import {Container, Row, Button} from 'react-bootstrap'
+import PropTypes from 'prop-types'
 
-function CartItem(props) {
 
-  const table = props.item.map((obj,index) => {
-    const key = index+1
-    return ( 
-      <tr>
+function CartItem({ item }) {
+  const table = item.map(({
+    productImage, productName, quantity, productPrice,
+  }, index) => {
+    const key = index + 1
+    return (
+      <tr key={key}>
         <td>{key}</td>
-        <td id={`productImage-${key}`}><img src={obj.productImage}/></td>
-        <td id={`productName-${key}`}>{obj.productName}</td>
-        <td id={`productQuantity-${key}`}>{obj.quantity}</td>
-        <td id={`productPrice-${key}`}>{obj.productPrice}</td>
+        <td id={`productImage-${key}`}><img src={productImage} alt="" /></td>
+        <td id={`productName-${key}`}>{productName}</td>
+        <td id={`productQuantity-${key}`}>{quantity}</td>
+        <td id={`productPrice-${key}`}>{productPrice}</td>
       </tr>
     )
   })
-    
+
   return (
     <div>
-        <table>
-            {table}
-        </table>
+      <table>
+        {table}
+      </table>
     </div>
   )
-}  
+}
+CartItem.propTypes = {
+  item: {
+    productImage: PropTypes.string,
+    productName: PropTypes.string,
+    quantity: PropTypes.number,
+    productPrice: PropTypes.string,
+  },
+}
+
+CartItem.defaultProps = {
+  item: {},
+}
+
 export default CartItem
