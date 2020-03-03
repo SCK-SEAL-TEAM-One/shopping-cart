@@ -22,6 +22,10 @@ pipeline {
       steps {
         sh 'make run_integratetest_backend'
       }
+
+      post {
+
+      }
     }
     
     stage('build') {
@@ -39,5 +43,18 @@ pipeline {
       }
     }
     
+  }
+  post { 
+    always { 
+      sh "make stop_service"
+      sh "docker volume prune -f"
+    }
+
+    success {	
+      slackSend (color: '#00FF00', message: "SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")	
+    }	
+    failure {	
+      slackSend (color: '#FF0000', message: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")	
+    }	
   }
 }

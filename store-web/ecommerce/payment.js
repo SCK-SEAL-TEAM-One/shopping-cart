@@ -6,4 +6,6 @@ export default function checkPaymentMethod(cardNumber) {
   if (cardNumber.startsWith('4')) {
     return 'VISA'
   }
+
+  return ''
 }
