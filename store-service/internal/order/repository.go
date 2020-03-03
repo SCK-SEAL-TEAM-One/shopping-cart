@@ -6,7 +6,7 @@ import (
 )
 
 type OrderRepository interface {
-	CreateOrder(totalPrice float64) (int, error)
+	CreateOrder(totalPrice float64, shippingMethod int) (int, error)
 	CreateOrderProduct(orderID, productID, quantity int, productPrice float64) error
 	CreateShipping(orderID int, shippingInfo ShippingInfo) (int, error)
 }
@@ -32,8 +32,8 @@ func (orderRepository OrderRepositoryMySQL) CreateShipping(orderID int, shipping
 	return int(id), err
 }
 
-func (orderRepository OrderRepositoryMySQL) CreateOrder(totalPrice float64) (int, error) {
-	sqlResult := orderRepository.DBConnection.MustExec("INSERT INTO orders (total_price) VALUE (?)", totalPrice)
+func (orderRepository OrderRepositoryMySQL) CreateOrder(totalPrice float64, shippingMethod int) (int, error) {
+	sqlResult := orderRepository.DBConnection.MustExec("INSERT INTO orders (total_price, shipping_method) VALUE (?,?)", totalPrice, shippingMethod)
 	insertedId, err := sqlResult.LastInsertId()
 	return int(insertedId), err
 }

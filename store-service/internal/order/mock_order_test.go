@@ -11,8 +11,8 @@ type mockOrderRepository struct {
 	mock.Mock
 }
 
-func (order *mockOrderRepository) CreateOrder(totalPrice float64) (int, error) {
-	argument := order.Called(totalPrice)
+func (order *mockOrderRepository) CreateOrder(totalPrice float64, shippingMethod int) (int, error) {
+	argument := order.Called(totalPrice, shippingMethod)
 	return argument.Int(0), argument.Error(1)
 }
 

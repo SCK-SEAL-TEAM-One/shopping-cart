@@ -28,6 +28,7 @@ CREATE TABLE orders (
     id BIGINT AUTO_INCREMENT,
     total_price double,
     transaction_id varchar(255) DEFAULT '',
+    shipping_method int,
     completed smallint(1) DEFAULT 0,
     authorized timestamp DEFAULT current_timestamp,
     updated timestamp DEFAULT current_timestamp,
