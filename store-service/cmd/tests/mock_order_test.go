@@ -6,11 +6,11 @@ import (
 	"github.com/stretchr/testify/mock"
 )
 
-type mockOrderDB struct {
+type mockOrderService struct {
 	mock.Mock
 }
 
-func (orderService *mockOrderDB) CreateOrder(submitedOrder order.SubmitedOrder) order.Order {
+func (orderService *mockOrderService) CreateOrder(submitedOrder order.SubmitedOrder) order.Order {
 	argument := orderService.Called(submitedOrder)
 	return argument.Get(0).(order.Order)
 }
