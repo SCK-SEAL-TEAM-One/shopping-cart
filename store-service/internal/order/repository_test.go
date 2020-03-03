@@ -3,12 +3,12 @@
 package order_test
 
 import (
-	"store-service/internal/order"
-	"testing"
-
+	"fmt"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
 	"github.com/stretchr/testify/assert"
+	"store-service/internal/order"
+	"testing"
 )
 
 func Test_OrderRepository(t *testing.T) {
@@ -20,14 +20,14 @@ func Test_OrderRepository(t *testing.T) {
 		DBConnection: connection,
 	}
 
-	t.Run("CreateOrder_Input_TotalPrice_14_dot_95_Should_Be_OrderID_1_No_Error", func(t *testing.T) {
-		expectedId := 1
+	t.Run("CreateOrder_Input_TotalPrice_14_dot_95_ShippingMethod_Kerry_Should_Be_OrderID_No_Error", func(t *testing.T) {
 		totalPrice := 14.95
+		shippingMethod := "Kerry"
 
-		actualId, err := repository.CreateOrder(totalPrice)
+		actualId, err := repository.CreateOrder(totalPrice, shippingMethod)
 
 		assert.Equal(t, nil, err)
-		assert.Equal(t, expectedId, actualId)
+		assert.NotEmpty(t, actualId)
 	})
 
 	t.Run("CreateOrderProduct_Input_OrderID_2_And_ProductID_2_Should_Be_No_Error", func(t *testing.T) {
@@ -41,7 +41,6 @@ func Test_OrderRepository(t *testing.T) {
 	})
 
 	t.Run("CreateShipping_Input_OrderID_8004359103_Should_Be_ShippingID_1_No_Error", func(t *testing.T) {
-		expectShippingID := 1
 		submittedOrder := order.ShippingInfo{
 			ShippingMethod:       1,
 			ShippingAddress:      "405/35 ถ.มหิดล",
@@ -58,8 +57,27 @@ func Test_OrderRepository(t *testing.T) {
 		}
 
 		actualShippingID, err := orderRepository.CreateShipping(orderID, submittedOrder)
-		assert.Equal(t, expectShippingID, actualShippingID)
+		assert.NotEmpty(t, actualShippingID)
 		assert.Equal(t, err, nil)
+	})
+
+	t.Run("UpdateOrder_Input_ToyID_TOY202002021525_OrderID_8004359103_Should_No_Error", func(t *testing.T) {
+		transactionID := "TOY202002021525"
+		orderID := 8004359104
+
+		err := repository.UpdateOrder(orderID, transactionID)
+
+		assert.Equal(t, nil, err)
+	})
+
+	t.Run("UpdateOrder_Input_ToyID_TOY202002021525_OrderID_11111111119_Should_Get_Error_No_Row_Affected", func(t *testing.T) {
+		expectedError := fmt.Errorf("no any row affected , update not completed")
+		transactionID := "TOY202002021525"
+		orderID := 11111111119
+
+		err := repository.UpdateOrder(orderID, transactionID)
+
+		assert.Equal(t, expectedError, err)
 	})
 
 }

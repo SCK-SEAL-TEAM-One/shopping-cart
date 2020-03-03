@@ -4,6 +4,7 @@ import (
 	"store-service/internal/order"
 	"store-service/internal/product"
 	"testing"
+	"time"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -47,8 +48,9 @@ func Test_CreateOrder_Input_Submitted_Order_Should_be_OrderID_8004359103_TotalPr
 	quantity := 1
 	totalPrice := 14.95
 	productPrice := 12.95
+	shippingMethod := "Kerry"
 
-	mockOrderRepository.On("CreateOrder", totalPrice).Return(orderID, nil)
+	mockOrderRepository.On("CreateOrder", totalPrice, shippingMethod).Return(orderID, nil)
 
 	mockOrderRepository.On("CreateOrderProduct", orderID, productID, quantity, productPrice).Return(nil)
 
@@ -140,4 +142,17 @@ func Test_GetTotalAmount_Input_SubmittedOrder_ProductID_2_Quantity_1_Should_Be_T
 	actualTotalAmount := orderService.GetTotalAmount(submittedOrder)
 
 	assert.Equal(t, expectedTotalAmount, actualTotalAmount)
+}
+
+func Test_SendNotification_Input_OrderID_8004359103_Should_Be_Notification_Message(t *testing.T) {
+	expectedMessage := "วันเวลาที่ชำระเงิน 1/3/2563 13:30:00 หมายเลขคำสั่งซื้อ 8004359103 คุณสามารถติดตามสินค้าผ่านช่องทาง Kerry หมายเลข Tracking 1785261900"
+	orderID := 8004359103
+	shippingMethod := "Kerry"
+	trackingNumber := 1785261900
+	fixedTime, _ := time.Parse("2/1/2006T15:04:05", "1/3/2563T13:30:00")
+
+	orderService := order.OrderService{}
+	actualMessage := orderService.SendNotification(orderID, trackingNumber, fixedTime, shippingMethod)
+
+	assert.Equal(t, expectedMessage, actualMessage)
 }

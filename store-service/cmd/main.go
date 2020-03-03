@@ -15,7 +15,7 @@ import (
 func main() {
 	connection, err := sqlx.Connect("mysql", "sealteam:sckshuhari@(store-database:3306)/toy")
 	if err != nil {
-		log.Fatalln("cannot connect to tearup", err)
+		log.Fatalln("cannot connect to database", err)
 	}
 	productRepository := product.ProductRepositoryMySQL{
 		DBConnection: connection,
