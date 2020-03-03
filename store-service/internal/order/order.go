@@ -15,7 +15,7 @@ type OrderInterface interface {
 }
 
 type ProductRepository interface {
-	GetProductByID(id int) product.Product
+	GetProductByID(id int) product.ProductDetail
 }
 
 func (orderService OrderService) CreateOrder(submitedOrder SubmitedOrder) Order {

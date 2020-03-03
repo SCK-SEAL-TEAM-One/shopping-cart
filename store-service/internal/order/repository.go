@@ -30,15 +30,15 @@ func (orderRepository OrderRepositoryMySQL) CreateShipping(orderID int, shipping
 }
 
 func (orderRepository OrderRepositoryMySQL) CreateOrder(totalPrice float64) (int, error) {
-	tx := orderRepository.DBConnection.MustBegin()
-	sqlResult := tx.MustExec("INSERT INTO orders (total_price) VALUE (?)", totalPrice)
+	transaction := orderRepository.DBConnection.MustBegin()
+	sqlResult := transaction.MustExec("INSERT INTO orders (total_price) VALUE (?)", totalPrice)
 	insertedId, err := sqlResult.LastInsertId()
 	return int(insertedId), err
 }
 
 func (orderRepository OrderRepositoryMySQL) CreateOrderProduct(orderID int, productID, quantity int, productPrice float64) error {
-	tx := orderRepository.DBConnection.MustBegin()
-	sqlResult := tx.MustExec("INSERT INTO order_product (order_id, product_id) VALUE (?,?)", orderID, productID)
+	transaction := orderRepository.DBConnection.MustBegin()
+	sqlResult := transaction.MustExec("INSERT INTO order_product (order_id, product_id) VALUE (?,?)", orderID, productID)
 	_, err := sqlResult.RowsAffected()
 	return err
 }
