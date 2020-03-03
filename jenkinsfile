@@ -42,7 +42,6 @@ pipeline {
         sh 'make stop_service'
       }
     }
-    
   }
 
   post { 
