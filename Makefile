@@ -27,7 +27,7 @@ run_unittest_backend:
 
 # ทำการ docker-compose up store-database ก่อน
 run_integratetest_backend:
-	docker-compose up -d store-database
+	docker-compose up -d store-database bank-gateway
 	sleep 12
 	cat tearup/init.sql | docker exec -i store-database /usr/bin/mysql -u sealteam --password=sckshuhari toy
 	cd store-service && go test -tags=integration ./...
