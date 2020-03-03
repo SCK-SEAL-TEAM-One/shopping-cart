@@ -1,6 +1,12 @@
 pipeline {
   agent any
   stages {
+    stage('install dependency frontend') {
+      steps {
+        sh 'make install_dependency_frontend' 
+        sh 'make code_analys_backend' 
+      }
+    }
     stage('code analysis') {
       steps {
         sh 'make code_analys_fontend' 
