@@ -1,0 +1,38 @@
+pipeline {
+  agent any
+  stages {
+    stage('code analysis') {
+      steps {
+        sh 'make code_analys_fontend' 
+        sh 'make code_analys_backend' 
+      }
+    }
+    stage('run unit test') {
+      steps {
+        sh 'make run_unittest_fontend'
+        sh 'make run_unittest_backend'
+      }
+    }
+    stage('run integration test') {
+      steps {
+        sh 'make run_integratetest_backend'
+      }
+    }
+    
+    stage('build') {
+      steps {
+        sh 'make build_fontend'
+        sh 'make build_backend'
+      }
+    }
+    stage('run ATDD') {
+      steps {
+        sh 'make start_service'
+        sh 'make run_robot'
+        sh 'make run_newman'
+        sh 'make stop_service'
+      }
+    }
+    
+  }
+}
