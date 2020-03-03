@@ -49,8 +49,17 @@ services:
   bank-gateway:
     image: toy-store-bankgateway:0.0.1
     build: 
-      context: thirdparty
+      context: thirdparty/bank-gateway
     container_name: bank-gateway
     restart: always
     ports:
       - "8882:8882"
+
+  shipping-gateway:
+    image: toy-store-shippinggateway:0.0.1
+    build:
+      context: thirdparty/shipping-gateway
+    container_name: shipping-gateway
+    restart: always
+    ports:
+      - "8883:8882"
