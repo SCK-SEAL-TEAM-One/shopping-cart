@@ -44,9 +44,6 @@ export default class ConfirmOrder extends React.Component {
       }),
     })
       .then((r) => r.json())
-      .then((data) => {
-        console.log(data)
-      })
   }
 
   render() {
@@ -90,7 +87,14 @@ export default class ConfirmOrder extends React.Component {
         <div>
           <Button id="editAddress">แก้ไขที่อยู่จัดส่ง</Button>
           createCookies
-          <Button id="confirmPayment" onClick={() => this.submitOrder()}>ยืนยันคำสั่งซื้อและชำระเงิน</Button>
+          <Button
+            id="confirmPayment"
+            onClick={() => {
+              this.submitOrder()
+            }}
+          >
+            ยืนยันคำสั่งซื้อและชำระเงิน
+          </Button>
         </div>
       </Container>
     )
