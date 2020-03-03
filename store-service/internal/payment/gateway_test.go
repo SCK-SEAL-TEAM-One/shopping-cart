@@ -1,3 +1,5 @@
+//+build integration
+
 package payment_test
 
 import (
@@ -21,7 +23,7 @@ func Test_Payment_Input_PaymentDetail_CardNumber_4719700591590995_Should_Be_Tran
 	}
 
 	gateway := payment.BankGateway{
-		BankEndpoint: "http://bank-gateway:8882",
+		BankEndpoint: "http://localhost:8882/payment/visa",
 	}
 	actualTransactionID, err := gateway.Payment(paymentDetail)
 

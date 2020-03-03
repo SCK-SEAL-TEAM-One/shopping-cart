@@ -1,8 +1,10 @@
 package order
 
 import (
+	"fmt"
 	"log"
 	"store-service/internal/product"
+	"time"
 )
 
 type OrderService struct {
@@ -12,6 +14,7 @@ type OrderService struct {
 
 type OrderInterface interface {
 	CreateOrder(submitedOrder SubmitedOrder) Order
+	SendNotification(orderID, trackingID int, dateTime time.Time, shippingMethod string) string
 }
 
 type ProductRepository interface {
@@ -68,4 +71,8 @@ func (orderService OrderService) GetTotalProductPrice(submitedOrder SubmitedOrde
 
 func (orderService OrderService) GetTotalAmount(order SubmitedOrder) float64 {
 	return orderService.GetTotalProductPrice(order) + order.GetShippingFee()
+}
+
+func (orderService OrderService) SendNotification(orderID, trackingID int, dateTime time.Time, shippingMethod string) string {
+	return fmt.Sprintf("วันเวลาที่ชำระเงิน %s หมายเลขคำสั่งซื้อ %d คุณสามารถติดตามสินค้าผ่านช่องทาง %s หมายเลข Tracking %d", dateTime.Format("2/1/2006 15:04:05"), orderID, shippingMethod, trackingID)
 }
