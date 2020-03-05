@@ -11,12 +11,12 @@ type User struct {
 	Name string `db:"name"`
 }
 
-func GetUserNameFromDB(connection *sqlx.DB) User {
+func GetUserNameFromDB(connection *sqlx.DB) (User, error) {
 	user := User{}
 	err := connection.Get(&user, "SELECT id,name FROM user WHERE ID=1")
 	if err != nil {
 		fmt.Printf("Get user name from tearup get error : %s", err.Error())
-		return User{}
+		return User{}, err
 	}
-	return user
+	return user, nil
 }

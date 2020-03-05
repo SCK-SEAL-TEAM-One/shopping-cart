@@ -41,8 +41,15 @@ func main() {
 	route.POST("/api/v1/confirmPayment", paymentAPI.ConfirmPaymentHandler)
 
 	route.GET("/api/v1/health", func(context *gin.Context) {
+		user, err := healthcheck.GetUserNameFromDB(connection)
+		if err != nil {
+			context.JSON(500, gin.H{
+				"error": err.Error(),
+			})
+			return
+		}
 		context.JSON(200, gin.H{
-			"message": healthcheck.GetUserNameFromDB(connection),
+			"message": user,
 		})
 	})
 	log.Fatal(route.Run(":8000"))
