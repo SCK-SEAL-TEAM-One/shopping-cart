@@ -6,16 +6,16 @@ import checkPaymentMethod from '../ecommerce/payment'
 
 export default class Payment extends React.Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
-      value: '',
+      paymentType: '',
       cardNumber: '',
       expiredMonth: '',
       expiredYear: '',
       cvv: '',
       cardName: '',
-    };
-    this.confrimPayment = this.confrimPayment.bind(this)
+    }
+    this.handleChangePaymentType = this.handleChangePaymentType.bind(this)
     this.handleChangeCardNumber = this.handleChangeCardNumber.bind(this)
     this.handleChangeExpiredMonth = this.handleChangeExpiredMonth.bind(this)
     this.handleChangeExpiredYear = this.handleChangeExpiredYear.bind(this)
@@ -24,84 +24,113 @@ export default class Payment extends React.Component {
   }
 
   confrimPayment() {
-    const cradType = checkPaymentMethod(this.state.cardNumber)
+    const {
+      paymentType, cardNumber, expiredMonth, expiredYear, cvv, cardName,
+    } = this.state
+    const cradType = checkPaymentMethod(cardNumber)
+    const order = Cookies.getJSON('order')
+    const totalPrice = order ? order.total_price : 0
+    const orderId = order ? order.order_id : 0
 
-    const mockRequest = {
-      payment_type: this.state.payment_type,
+    const request = {
+      payment_type: paymentType,
       type: cradType,
-      card_number: this.state.cardNumber,
-      cvv: this.state.cvv,
-      expired_month: parseInt(this.state.expiredMonth),
-      expired_year: parseInt(this.state.expiredYear),
-      card_name: this.state.cardNumber,
-      total_price: 14.95,
+      card_number: cardNumber,
+      cvv,
+      expired_month: parseInt(expiredMonth, 2),
+      expired_year: parseInt(expiredYear, 2),
+      card_name: cardName,
+      total_price: totalPrice,
+      order_id: orderId,
     }
     fetch('/api/v1/confirmPayment', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        ...mockRequest,
+        ...request,
       }),
     })
       .then((r) => r.json())
-      .then((data) => {
-        console.log(data)
-      })
   }
 
-  handleChange(event) {
-    this.setState({ value: event.target.value });
+  handleChangePaymentType(event) {
+    this.setState({ paymentType: event.target.value })
   }
 
   handleChangeCardNumber(event) {
-    this.setState({ cardNumber: event.target.value });
+    this.setState({ cardNumber: event.target.value })
   }
+
   handleChangeExpiredMonth(event) {
-    this.setState({ expiredMonth: event.target.value });
+    this.setState({ expiredMonth: event.target.value })
   }
+
   handleChangeExpiredYear(event) {
-    this.setState({ expiredYear: event.target.value });
+    this.setState({ expiredYear: event.target.value })
   }
+
   handleChangeCVV(event) {
-    this.setState({ cvv: event.target.value });
+    this.setState({ cvv: event.target.value })
   }
+
   handleChangeCardName(event) {
-    this.setState({ cardName: event.target.value });
+    this.setState({ cardName: event.target.value })
   }
+
   render() {
-    const { cardNumber, expiredMonth, expiredYear, cvv, cardName } = this.state
+    const {
+      cardNumber, expiredMonth, expiredYear, cvv, cardName,
+    } = this.state
     const order = Cookies.getJSON('order')
     return (
       <Container>
         <Row>
           <form onSubmit={this.confrimPayment}>
             <div>
-              <input type="radio" value="credit" id="CreditCradPayment" checked="checked" defaultChecked={true} onChange={this.handleChange} />Credit Crad
-              <input type="radio" value="credit" id="DebitCradType" disabled />Debit Crad
-              <input type="radio" value="credit" id="LinePayType" disabled />Line Pay
+              <input type="radio" value="credit" id="CreditCradPayment" checked="checked" defaultChecked onChange={this.handleChangePaymentType} />
+              Credit Crad
+              <input type="radio" value="debit" id="DebitCradType" disabled />
+              Debit Crad
+              <input type="radio" value="linePay" id="LinePayType" disabled />
+              Line Pay
             </div>
             <div>
-              <label>เลขบัตร: </label>
-              <input type="text" id="cardNumber" onChange={this.handleChangeCardNumber} value={cardNumber} />
+              <label htmlFor="cardNumber" id="labelCardNumber">
+                เลขบัตร:
+                <input type="text" id="cardNumber" onChange={this.handleChangeCardNumber} value={cardNumber} />
+              </label>
             </div>
             <div>
-              <label>วันหมดอายุ: </label>
-              <input type="text" id="expiredMonth" onChange={this.handleChangeExpiredMonth} value={expiredMonth} />/
+              <label htmlFor="expiredMonth" id="labelExpiredMonth">
+                วันหมดอายุ:
+                <input type="text" id="expiredMonth" onChange={this.handleChangeExpiredMonth} value={expiredMonth} />
+              </label>
+              /
               <input type="text" id="expiredYear" onChange={this.handleChangeExpiredYear} value={expiredYear} />
             </div>
             <div>
-              <label>CVV: </label>
-              <input type="text" id="cvv" onChange={this.handleChangeCVV} value={cvv} />
+              <label htmlFor="cvv" id="labelCvv">
+                CVV:
+                <input type="text" id="cvv" onChange={this.handleChangeCVV} value={cvv} />
+              </label>
             </div>
             <div>
-              <label>ชื่อ: </label>
-              <input type="text" id="cardName" onChange={this.handleChangeCardName} value={cardName} />
+              <label htmlFor="cardName" id="labelCardName">
+                ชื่อ:
+                <input type="text" id="cardName" onChange={this.handleChangeCardName} value={cardName} />
+              </label>
             </div>
             <div>
-              <label>ยอกชำระ: </label>
-              <span id="totalPrice">{order? order.total_price:""} USD</span>
+              <label htmlFor="totalPrice" id="labelTotalPrice">
+                ยอกชำระ:
+                <span id="totalPrice">
+                  {order ? order.total_price : ''}
+                  {' '}
+                  USD
+                </span>
+              </label>
             </div>
-            <input id="confirmPayment" type="submit" value="ยืนยันการชำระเงิน"></input>
+            <input id="confirmPayment" type="submit" value="ยืนยันการชำระเงิน" />
           </form>
         </Row>
       </Container>
