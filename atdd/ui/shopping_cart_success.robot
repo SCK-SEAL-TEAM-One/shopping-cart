@@ -2,7 +2,7 @@
 Library    SeleniumLibrary
 
 *** Variable ***
-${url}   http://localhost:3000/Confirm-order
+${url}   http://localhost/Confirm-order
 # ${url}   http://localhost:3000/products/2
 ${productName}       43 Piece dinner Set
 ${productPrice}       12.95 USD
