@@ -78,7 +78,7 @@ type mockShippingRepository struct {
 	mock.Mock
 }
 
-func (repository mockShippingRepository) GetShippingByOrderID(orderID int) (order.ShippingInfo, error) {
+func (repository *mockShippingRepository) GetShippingByOrderID(orderID int) (order.ShippingInfo, error) {
 	argument := repository.Called(orderID)
 	return argument.Get(0).(order.ShippingInfo), argument.Error(1)
 }
