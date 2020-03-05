@@ -79,7 +79,7 @@ func Test_CreateOrder_Input_Submitted_Order_Should_be_OrderID_8004359103_TotalPr
 func Test_GetTotalProductPrice_Input_SummitedOrder_Cart_ProductID_2_Quantity_1_Should_Be_TotalProductPrice_12_dot_95(t *testing.T) {
 	expectedTotalProductPrice := 12.95
 	submitOrder := order.SubmitedOrder{
-		ShippingMethod: 1,
+		ShippingMethod: "Kerry",
 		Cart: []order.OrderProduct{
 			{
 				ProductID: 2,
@@ -148,11 +148,10 @@ func Test_SendNotification_Input_OrderID_8004359103_Should_Be_Notification_Messa
 	expectedMessage := "วันเวลาที่ชำระเงิน 1/3/2563 13:30:00 หมายเลขคำสั่งซื้อ 8004359103 คุณสามารถติดตามสินค้าผ่านช่องทาง Kerry หมายเลข Tracking 1785261900"
 	orderID := 8004359103
 	shippingMethod := "Kerry"
-	trackingNumber := 1785261900
+	trackingNumber := "1785261900"
 	fixedTime, _ := time.Parse("2/1/2006T15:04:05", "1/3/2563T13:30:00")
 
-	orderService := order.OrderService{}
-	actualMessage := orderService.SendNotification(orderID, trackingNumber, fixedTime, shippingMethod)
+	actualMessage := order.SendNotification(orderID, trackingNumber, fixedTime, shippingMethod)
 
 	assert.Equal(t, expectedMessage, actualMessage)
 }
