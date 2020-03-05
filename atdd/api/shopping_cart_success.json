@@ -6,60 +6,6 @@
 	},
 	"item": [
 		{
-			"name": "product detail",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "88ae52e4-bceb-42bb-b3cf-fdd0fa5e8f06",
-						"exec": [
-							"pm.test(\"Status code is 200\", function () {",
-							"    pm.response.to.have.status(200);",
-							"});",
-							"pm.test(\"Product name is \" + data[\"product_name\"], function () {",
-							"    var jsonData = pm.response.json();",
-							"    pm.expect(jsonData.product_name).to.eql(data[\"product_name\"]);",
-							"});",
-							"pm.test(\"Product price is \"+ data[\"product_price\"], function () {",
-							"    var jsonData = pm.response.json();",
-							"    pm.expect(jsonData.product_price).to.eql(data[\"product_price\"]);",
-							"});",
-							"pm.test(\"Product quantity is \" + data[\"product_quantity\"], function () {",
-							"    var jsonData = pm.response.json();",
-							"    pm.expect(jsonData.product_quantity).to.eql(data[\"product_quantity\"]);",
-							"});",
-							"pm.test(\"Product brand is \"+ data[\"product_brand\"], function () {",
-							"    var jsonData = pm.response.json();",
-							"    pm.expect(jsonData.product_brand).to.eql(data[\"product_brand\"]);",
-							"});",
-							"pm.test(\"Product image is \" + data[\"product_image\"], function () {",
-							"    var jsonData = pm.response.json();",
-							"    pm.expect(jsonData.product_image).to.eql(data[\"product_image\"]);",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{url}}/api/v1/product/{{id}}",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"api",
-						"v1",
-						"product",
-						"{{id}}"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "submit order",
 			"event": [
 				{
@@ -98,7 +44,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"cart\":[\n\t\t{\n\t\t\t\"product_id\": {{product_id}},\n\t\t\t\"quantity\": {{quantity}}\n\t\t}\n\t],\n\t\"shipping_method\": {{shipping_method}},\n\t\"shipping_address\": \"{{shipping_address}}\",\n\t\"shipping_sub_district\": \"{{shipping_sub_district}}\",\n\t\"shipping_district\": \"{{shipping_district}}\",\n\t\"shipping_province\": \"{{shipping_province}}\",\n\t\"shipping_zip_code\": \"{{shipping_zip_code}}\",\n\t\"recipient_name\": \"{{recipient_name}}\",\n\t\"recipient_phone_number\": \"{{recipient_phone_number}}\"\n}",
+					"raw": "{\n\t\"cart\":[\n\t\t{\n\t\t\t\"product_id\": {{product_id}},\n\t\t\t\"quantity\": {{quantity}}\n\t\t}\n\t],\n\t\"shipping_method\": \"{{shipping_method}}\",\n\t\"shipping_address\": \"{{shipping_address}}\",\n\t\"shipping_sub_district\": \"{{shipping_sub_district}}\",\n\t\"shipping_district\": \"{{shipping_district}}\",\n\t\"shipping_province\": \"{{shipping_province}}\",\n\t\"shipping_zip_code\": \"{{shipping_zip_code}}\",\n\t\"recipient_name\": \"{{recipient_name}}\",\n\t\"recipient_phone_number\": \"{{recipient_phone_number}}\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -151,7 +97,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"order_id\": {{order_id}},\n\t\"payment_type\": \"{{payment_type}}\",\n\t\"type\": \"{{type}}\",\n\t\"card_number\": {{card_number}},\n\t\"cvv\": {{cvv}},\n\t\"expired_month\": {{expired_month}},\n\t\"expired_year\": {{expired_year}},\n\t\"card_name\": {{card_name}},\n\t\"total_price\": {{total_price}}\n}",
+					"raw": "{\n\t\"order_id\": {{order_id}},\n\t\"payment_type\": \"{{payment_type}}\",\n\t\"type\": \"{{type}}\",\n\t\"card_number\": \"{{card_number}}\",\n\t\"cvv\": \"{{cvv}}\",\n\t\"expired_month\": {{expired_month}},\n\t\"expired_year\": {{expired_year}},\n\t\"card_name\": \"{{card_name}}\",\n\t\"total_price\": {{total_price}}\n}",
 					"options": {
 						"raw": {
 							"language": "json"
