@@ -14,7 +14,7 @@ func Test_ShipByKerry_Input_ShippingInfo_Should_Be_Tracking_Number_1785261900_An
 	expectedTrackingNumber := "1785261900"
 
 	shippingInfo := order.ShippingInfo{
-		ShippingMethod:       1,
+		ShippingMethod:       "Kerry",
 		ShippingAddress:      "405/35 ถ.มหิดล",
 		ShippingSubDistrict:  "ท่าศาลา",
 		ShippingDistrict:     "เมือง",

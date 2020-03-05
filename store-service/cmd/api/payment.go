@@ -29,7 +29,7 @@ func (api PaymentAPI) ConfirmPaymentHandler(context *gin.Context) {
 		TotalPrice:   request.TotalPrice,
 	}
 
-	payment := api.PaymentService.ConfirmPayment(confirm)
+	payment := api.PaymentService.ConfirmPayment(request.OrderID, confirm)
 
 	context.JSON(http.StatusOK, gin.H{
 		"notify_message": payment,

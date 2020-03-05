@@ -17,6 +17,7 @@ func Test_ConfirmPaymentHandler_Input_PaymentInformation_Should_Be_ResponsePayme
 	expected := `{"notify_message":"วันเวลาที่ชำระเงิน 1/3/2563 13:30:00 หมายเลขคำสั่งซื้อ 8004359103 คุณสามารถติดตามสินค้าผ่านช่องทาง Kerry หมายเลข Tracking 1785261900"}
 `
 	paymentInformation := payment.PaymentInformation{
+		OrderID:      1337620837,
 		PaymentType:  "credit",
 		Type:         "visa",
 		CardNumber:   "4719700591590995",
@@ -31,8 +32,9 @@ func Test_ConfirmPaymentHandler_Input_PaymentInformation_Should_Be_ResponsePayme
 	request := httptest.NewRequest("POST", "/api/v1/confirmPayment", bytes.NewBuffer(requestJSON))
 	write := httptest.NewRecorder()
 
+	orderID := 1337620837
 	mockPaymentService := new(mockPaymentService)
-	mockPaymentService.On("ConfirmPayment", payment.PaymentDetail{
+	mockPaymentService.On("ConfirmPayment", orderID, payment.PaymentDetail{
 		CardNumber:   "4719700591590995",
 		CVV:          "752",
 		ExpiredMonth: 7,

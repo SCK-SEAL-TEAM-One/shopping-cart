@@ -42,7 +42,7 @@ func Test_OrderRepository(t *testing.T) {
 
 	t.Run("CreateShipping_Input_OrderID_8004359103_Should_Be_ShippingID_1_No_Error", func(t *testing.T) {
 		submittedOrder := order.ShippingInfo{
-			ShippingMethod:       1,
+			ShippingMethod:       "Kerry",
 			ShippingAddress:      "405/35 ถ.มหิดล",
 			ShippingSubDistrict:  "ท่าศาลา",
 			ShippingDistrict:     "เมือง",

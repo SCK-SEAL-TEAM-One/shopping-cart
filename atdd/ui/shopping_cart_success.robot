@@ -78,10 +78,10 @@ ${notify}    วันเวลาที่ชำระเงิน  1/3/2563 13
     Element Text Should Be       id=totalAmount          ${totalAmount}
 
 ตรวจสอบตะกร้าสินค้า
-    Element Text Should Be       id=productName-1     ${productName}
-    Element Text Should Be       id=productPrice-1     ${productPrice}
-    Element Text Should Be       id=productQuantity-1     ${productQuantity}
-    Element Text Should Be       id=productBrand-1     ${productBrand}
+    Element Text Should Be       id=cartProductName     ${productName}
+    Element Text Should Be       id=cartProductPrice     ${productPrice}
+    Element Text Should Be       id=cartProductQuantity     ${productQuantity}
+    Element Text Should Be       id=cartProductBrand     ${productBrand}
 
 ยืนยันคำสั่งซื้อ
     Click Element        id=confirmPayment
