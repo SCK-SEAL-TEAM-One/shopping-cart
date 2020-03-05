@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "b7818643-3570-4380-ad41-fda985453f46",
+		"_postman_id": "9061e8e1-5c61-41c7-8755-7e5b8a121073",
 		"name": "shopping cart success",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -96,7 +96,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"cart\":[\n\t\t{\n\t\t\t\"product_id\": {{product_id}},\n\t\t\t\"quantity\": {{quantity}}\n\t\t}\n\t],\n\t\"shipping_method\": {{shipping_method}},\n\t\"shipping_address\": \"{{shipping_address}}\",\n\t\"shipping_sub_district\": \"{{shipping_sub_district}}\",\n\t\"shipping_dustrict\": \"{{shipping_dustrict}}\",\n\t\"shipping_province\": \"{{shipping_province}}\",\n\t\"shipping_zip_code\": \"{{shipping_zip_code}}\",\n\t\"recipient_name\": \"{{recipient_name}}\",\n\t\"recipient_phone_number\": \"{{recipient_phone_number}}\"\n}",
+					"raw": "{\n\t\"cart\":[\n\t\t{\n\t\t\t\"product_id\": {{product_id}},\n\t\t\t\"quantity\": {{quantity}}\n\t\t}\n\t],\n\t\"shipping_method\": {{shipping_method}},\n\t\"shipping_address\": \"{{shipping_address}}\",\n\t\"shipping_sub_district\": \"{{shipping_sub_district}}\",\n\t\"shipping_district\": \"{{shipping_district}}\",\n\t\"shipping_province\": \"{{shipping_province}}\",\n\t\"shipping_zip_code\": \"{{shipping_zip_code}}\",\n\t\"recipient_name\": \"{{recipient_name}}\",\n\t\"recipient_phone_number\": \"{{recipient_phone_number}}\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -149,7 +149,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"payment_type\": \"{{payment_type}}\",\n\t\"type\": \"{{type}}\",\n\t\"card_number\": {{card_number}},\n\t\"cvv\": {{cvv}},\n\t\"expired_month\": {{expired_month}},\n\t\"expired_year\": {{expired_year}},\n\t\"card_name\": {{karnwat wongudom}},\n\t\"total_price\": {{total_price}}\n}",
+					"raw": "{\n\t\"payment_type\": \"{{payment_type}}\",\n\t\"type\": \"{{type}}\",\n\t\"card_number\": {{card_number}},\n\t\"cvv\": {{cvv}},\n\t\"expired_month\": {{expired_month}},\n\t\"expired_year\": {{expired_year}},\n\t\"card_name\": {{card_name}},\n\t\"total_price\": {{total_price}}\n}",
 					"options": {
 						"raw": {
 							"language": "json"
