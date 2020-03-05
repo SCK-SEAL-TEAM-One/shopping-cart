@@ -58,7 +58,7 @@ export default class ConfirmOrder extends React.Component {
             {' '}
             <span id="receiverName">ณัฐญา ชุติบุตร</span>
             <span id="recevierAddress">405/37 ถ.มหิดล ต.ท่าศาลา อ.เมือง จ.เชียงใหม่ 50000</span>
-            <spcn id="recevierPhonenumber">0970809292</spcn>
+            <span id="recevierPhonenumber">0970809292</span>
           </div>
         </Row>
         <div>

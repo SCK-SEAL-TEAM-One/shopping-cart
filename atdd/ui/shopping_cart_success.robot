@@ -2,7 +2,8 @@
 Library    SeleniumLibrary
 
 *** Variable ***
-${url}   http://localhost:3000/products/2
+${url}   http://localhost:3000/ConfirmOrder
+# ${url}   http://localhost:3000/products/2
 ${productName}       43 Piece dinner Set
 ${productPrice}       12.95 USD
 ${productQuantity}       1
@@ -27,14 +28,14 @@ ${notify}    วันเวลาที่ชำระเงิน  1/3/2563 13
 
 *** Test Cases ***
 ซื้อสินค้า 1 ชิ้น เลือกจัดส่งแบบ kerry เลือกตัดเงินผ่าน บัตรเครดิต visa ได้รับ notofication ผ่าน in-app
-    Open Browser    about:blank    chrome
+    Open Browser    about:blank    headlesschrome
     Go To           ${url}
-    ตรวจสอบข้อมูลสินค้า 
-    เพิ่มสินค้าในตะกร้า
-    กรอกที่อยู่จัดส่ง
-    ตรวจสอบคำสั่งซื้อ
-    ตรวจสอบที่อยู่ในการจัดส่ง
-    ตรวจสอบสรุปรายการสั่งซื้อ
+    # ตรวจสอบข้อมูลสินค้า 
+    # เพิ่มสินค้าในตะกร้า
+    # กรอกที่อยู่จัดส่ง
+    # ตรวจสอบคำสั่งซื้อ
+    # ตรวจสอบที่อยู่ในการจัดส่ง
+    # ตรวจสอบสรุปรายการสั่งซื้อ
     ตรวจสอบตะกร้าสินค้า
     ยืนยันคำสั่งซื้อ
     ชำระค่าสินค้า
