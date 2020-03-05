@@ -1,6 +1,7 @@
 package payment
 
 type PaymentInformation struct {
+	OrderID      int     `json:"order_id"`
 	PaymentType  string  `json:"payment_type"`
 	Type         string  `json:"type"`
 	CardNumber   string  `json:"card_number"`
