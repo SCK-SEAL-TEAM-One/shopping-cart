@@ -9,7 +9,7 @@ import (
 )
 
 func Test_ConfirmPayment_Input_OrderID_8004359103_And_PaymentDetail_Should_Be_NotificationMessage(t *testing.T) {
-	expectedMessage := "วันเวลาที่ชำระเงิน 1/3/2563 13:30:00 หมายเลขคำสั่งซื้อ 8004359103 คุณสามารถติดตามสินค้าผ่านช่องทาง Kerry หมายเลข Tracking 1785261900"
+	expectedMessage := "วันเวลาที่ชำระเงิน 1/3/2020 13:30:00 หมายเลขคำสั่งซื้อ 8004359103 คุณสามารถติดตามสินค้าผ่านช่องทาง Kerry หมายเลข Tracking 1785261900"
 	orderId := 8004359103
 	mockBankGateway := new(mockBankGateway)
 	mockBankGateway.On("Payment", payment.PaymentDetail{
@@ -41,6 +41,7 @@ func Test_ConfirmPayment_Input_OrderID_8004359103_And_PaymentDetail_Should_Be_No
 			Quantity:  1,
 		},
 	}, nil)
+	mockOrderRepository.On("UpdateOrder", orderId, "TOY202002021525").Return(nil)
 
 	mockProductRepository := new(mockProductRepository)
 	mockProductRepository.On("UpdateStock", 2, 1).Return(nil)
@@ -57,7 +58,7 @@ func Test_ConfirmPayment_Input_OrderID_8004359103_And_PaymentDetail_Should_Be_No
 		RecipientPhoneNumber: "0970804292",
 	}, nil)
 
-	fixedTime, _ := time.Parse("2/1/2006T15:04:05", "1/3/2563T13:30:00")
+	fixedTime, _ := time.Parse("2/1/2006T15:04:05", "1/3/2020T13:30:00")
 
 	paymentService := payment.PaymentService{
 		BankGateway:        mockBankGateway,

@@ -2,15 +2,16 @@ package main
 
 import (
 	"fmt"
+	"github.com/gin-gonic/gin"
+	_ "github.com/go-sql-driver/mysql"
+	"github.com/jmoiron/sqlx"
 	"log"
 	"store-service/cmd/api"
 	"store-service/internal/order"
 	"store-service/internal/payment"
 	"store-service/internal/product"
-
-	"github.com/gin-gonic/gin"
-	_ "github.com/go-sql-driver/mysql"
-	"github.com/jmoiron/sqlx"
+	"store-service/internal/shipping"
+	"time"
 )
 
 func main() {
@@ -28,12 +29,24 @@ func main() {
 		ProductRepository: &productRepository,
 		OrderRepository:   &orderRepository,
 	}
-	paymentService := payment.PaymentService{}
+	bankGateway := payment.BankGateway{
+		BankEndpoint: "",
+	}
+	shippingGateway := shipping.ShippingGateway{
+		KerryEndpoint: "",
+	}
+	paymentService := payment.PaymentService{
+		BankGateway:       &bankGateway,
+		ShippingGateway:   &shippingGateway,
+		OrderRepository:   orderRepository,
+		ProductRepository: productRepository,
+		Time:              time.Now(),
+	}
 	storeAPI := api.StoreAPI{
 		OrderService: &orderService,
 	}
 	paymentAPI := api.PaymentAPI{
-		PaymentService: &paymentService,
+		PaymentService: paymentService,
 	}
 
 	route := gin.Default()
