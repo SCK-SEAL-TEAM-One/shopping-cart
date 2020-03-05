@@ -10,7 +10,7 @@ type mockPaymentService struct {
 	mock.Mock
 }
 
-func (paymentService *mockPaymentService) ConfirmPayment(paymentDetail payment.PaymentDetail) string {
-	argument := paymentService.Called(paymentDetail)
+func (paymentService *mockPaymentService) ConfirmPayment(orderID int, paymentDetail payment.PaymentDetail) string {
+	argument := paymentService.Called(orderID, paymentDetail)
 	return argument.String(0)
 }

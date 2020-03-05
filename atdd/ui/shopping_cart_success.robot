@@ -2,7 +2,8 @@
 Library    SeleniumLibrary
 
 *** Variable ***
-${url}   http://localhost:3000/products/2
+${url}   http://localhost:3000/ConfirmOrder
+# ${url}   http://localhost:3000/products/2
 ${productName}       43 Piece dinner Set
 ${productPrice}       12.95 USD
 ${productQuantity}       1
@@ -27,14 +28,14 @@ ${notify}    วันเวลาที่ชำระเงิน  1/3/2563 13
 
 *** Test Cases ***
 ซื้อสินค้า 1 ชิ้น เลือกจัดส่งแบบ kerry เลือกตัดเงินผ่าน บัตรเครดิต visa ได้รับ notofication ผ่าน in-app
-    Open Browser    about:blank    chrome
+    Open Browser    about:blank    headlesschrome
     Go To           ${url}
-    ตรวจสอบข้อมูลสินค้า 
-    เพิ่มสินค้าในตะกร้า
-    กรอกที่อยู่จัดส่ง
-    ตรวจสอบคำสั่งซื้อ
-    ตรวจสอบที่อยู่ในการจัดส่ง
-    ตรวจสอบสรุปรายการสั่งซื้อ
+    # ตรวจสอบข้อมูลสินค้า 
+    # เพิ่มสินค้าในตะกร้า
+    # กรอกที่อยู่จัดส่ง
+    # ตรวจสอบคำสั่งซื้อ
+    # ตรวจสอบที่อยู่ในการจัดส่ง
+    # ตรวจสอบสรุปรายการสั่งซื้อ
     ตรวจสอบตะกร้าสินค้า
     ยืนยันคำสั่งซื้อ
     ชำระค่าสินค้า
@@ -77,10 +78,10 @@ ${notify}    วันเวลาที่ชำระเงิน  1/3/2563 13
     Element Text Should Be       id=totalAmount          ${totalAmount}
 
 ตรวจสอบตะกร้าสินค้า
-    Element Text Should Be       id=productName-1     ${productName}
-    Element Text Should Be       id=productPrice-1     ${productPrice}
-    Element Text Should Be       id=productQuantity-1     ${productQuantity}
-    Element Text Should Be       id=productBrand-1     ${productBrand}
+    Element Text Should Be       id=cartProductName     ${productName}
+    Element Text Should Be       id=cartProductPrice     ${productPrice}
+    Element Text Should Be       id=cartProductQuantity     ${productQuantity}
+    Element Text Should Be       id=cartProductBrand     ${productBrand}
 
 ยืนยันคำสั่งซื้อ
     Click Element        id=confirmPayment

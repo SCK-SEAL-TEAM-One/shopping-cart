@@ -11,18 +11,28 @@ type mockOrderRepository struct {
 	mock.Mock
 }
 
-func (order *mockOrderRepository) CreateOrder(totalPrice float64, shippingMethod string) (int, error) {
-	argument := order.Called(totalPrice, shippingMethod)
+func (repo *mockOrderRepository) GetOrderByShippingMethodByOrderID(orderID int) (string, error) {
+	argument := repo.Called(orderID)
+	return argument.String(0), argument.Error(1)
+}
+
+func (repo *mockOrderRepository) CreateOrder(totalPrice float64, shippingMethod string) (int, error) {
+	argument := repo.Called(totalPrice, shippingMethod)
 	return argument.Int(0), argument.Error(1)
 }
 
-func (order *mockOrderRepository) CreateOrderProduct(orderID, productID, quantity int, productPrice float64) error {
-	argument := order.Called(orderID, productID, quantity, productPrice)
+func (repo *mockOrderRepository) CreateOrderProduct(orderID, productID, quantity int, productPrice float64) error {
+	argument := repo.Called(orderID, productID, quantity, productPrice)
 	return argument.Error(0)
 }
 
-func (order *mockOrderRepository) CreateShipping(orderID int, shippingInfo order.ShippingInfo) (int, error) {
-	argument := order.Called(orderID, shippingInfo)
+func (repo *mockOrderRepository) GetOrderProduct(orderID int) ([]order.OrderProduct, error) {
+	argument := repo.Called(orderID)
+	return argument.Get(0).([]order.OrderProduct), argument.Error(1)
+}
+
+func (repo *mockOrderRepository) CreateShipping(orderID int, shippingInfo order.ShippingInfo) (int, error) {
+	argument := repo.Called(orderID, shippingInfo)
 	return argument.Int(0), argument.Error(1)
 }
 
@@ -33,4 +43,9 @@ type mockProductRepository struct {
 func (repository *mockProductRepository) GetProductByID(id int) (product.ProductDetail, error) {
 	argument := repository.Called(id)
 	return argument.Get(0).(product.ProductDetail), argument.Error(1)
+}
+
+func (repository *mockProductRepository) UpdateStock(productId, quantity int) error {
+	argument := repository.Called(productId, quantity)
+	return argument.Error(0)
 }

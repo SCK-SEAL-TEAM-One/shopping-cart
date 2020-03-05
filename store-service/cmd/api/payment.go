@@ -20,16 +20,8 @@ func (api PaymentAPI) ConfirmPaymentHandler(context *gin.Context) {
 		return
 	}
 
-	confirm := payment.PaymentDetail{
-		CardNumber:   request.CardNumber,
-		CVV:          request.CVV,
-		ExpiredMonth: request.ExpiredMonth,
-		ExpiredYear:  request.ExpiredYear,
-		CardName:     request.CardName,
-		TotalPrice:   request.TotalPrice,
-	}
-
-	payment := api.PaymentService.ConfirmPayment(confirm)
+	paymentDetail := payment.NewShippingInfo(request)
+	payment := api.PaymentService.ConfirmPayment(request.OrderID, paymentDetail)
 
 	context.JSON(http.StatusOK, gin.H{
 		"notify_message": payment,

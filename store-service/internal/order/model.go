@@ -2,7 +2,7 @@ package order
 
 type SubmitedOrder struct {
 	Cart                 []OrderProduct `json:"cart"`
-	ShippingMethod       int            `json:"shipping_method"`
+	ShippingMethod       string         `json:"shipping_method"`
 	ShippingAddress      string         `json:"shipping_address"`
 	ShippingSubDistrict  string         `json:"shipping_sub_disterict"`
 	ShippingDistrict     string         `json:"shipping_district"`
@@ -13,19 +13,19 @@ type SubmitedOrder struct {
 }
 
 type ShippingInfo struct {
-	ShippingMethod       int
-	ShippingAddress      string
-	ShippingSubDistrict  string
-	ShippingDistrict     string
-	ShippingProvince     string
-	ShippingZipCode      string
-	RecipientName        string
-	RecipientPhoneNumber string
+	ShippingMethod       string `db:"method"`
+	ShippingAddress      string `db:"address"`
+	ShippingSubDistrict  string `db:"sub_district"`
+	ShippingDistrict     string `db:"district"`
+	ShippingProvince     string `db:"province"`
+	ShippingZipCode      string `db:"zip_code"`
+	RecipientName        string `db:"recipient"`
+	RecipientPhoneNumber string `db:"phone_number"`
 }
 
 type OrderProduct struct {
-	ProductID int `json:"product_id"`
-	Quantity  int `json:"quantity"`
+	ProductID int `json:"product_id" db:"product_id"`
+	Quantity  int `json:"quantity" db:"quantity"`
 }
 
 type Order struct {

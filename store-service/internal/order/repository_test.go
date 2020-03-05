@@ -4,11 +4,12 @@ package order_test
 
 import (
 	"fmt"
+	"store-service/internal/order"
+	"testing"
+
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
 	"github.com/stretchr/testify/assert"
-	"store-service/internal/order"
-	"testing"
 )
 
 func Test_OrderRepository(t *testing.T) {
@@ -42,7 +43,7 @@ func Test_OrderRepository(t *testing.T) {
 
 	t.Run("CreateShipping_Input_OrderID_8004359103_Should_Be_ShippingID_1_No_Error", func(t *testing.T) {
 		submittedOrder := order.ShippingInfo{
-			ShippingMethod:       1,
+			ShippingMethod:       "Kerry",
 			ShippingAddress:      "405/35 ถ.มหิดล",
 			ShippingSubDistrict:  "ท่าศาลา",
 			ShippingDistrict:     "เมือง",
@@ -80,4 +81,23 @@ func Test_OrderRepository(t *testing.T) {
 		assert.Equal(t, expectedError, err)
 	})
 
+	t.Run("GetOrderProduct_Input_OrderID_1_Should_Be_OrderProducts", func(t *testing.T) {
+		expectedOrderProducts := []order.OrderProduct{
+			{
+				ProductID: 2,
+				Quantity:  10,
+			},
+			{
+				ProductID: 1,
+				Quantity:  10,
+			},
+		}
+
+		orderID := 1
+
+		actualOrderProducts, err := repository.GetOrderProduct(orderID)
+
+		assert.Equal(t, expectedOrderProducts, actualOrderProducts)
+		assert.Equal(t, nil, err)
+	})
 }

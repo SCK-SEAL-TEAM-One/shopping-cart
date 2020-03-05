@@ -1,6 +1,7 @@
 package payment
 
 type PaymentInformation struct {
+	OrderID      int     `json:"order_id"`
 	PaymentType  string  `json:"payment_type"`
 	Type         string  `json:"type"`
 	CardNumber   string  `json:"card_number"`
@@ -19,4 +20,15 @@ type PaymentDetail struct {
 	CardName     string  `json:"card_name"`
 	TotalPrice   float64 `json:"total_price"`
 	MerchantID   int     `json:"MerchantID"`
+}
+
+func NewShippingInfo(payment PaymentInformation) PaymentDetail {
+	return PaymentDetail{
+		CardNumber:   payment.CardNumber,
+		CVV:          payment.CVV,
+		ExpiredMonth: payment.ExpiredMonth,
+		ExpiredYear:  payment.ExpiredYear,
+		CardName:     payment.CardName,
+		TotalPrice:   payment.TotalPrice,
+	}
 }

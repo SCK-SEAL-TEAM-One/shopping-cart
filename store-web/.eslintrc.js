@@ -3,6 +3,7 @@ module.exports = {
     browser: true,
     commonjs: true,
     es6: true,
+    "jest/globals": true
   },
   extends: [
     'plugin:react/recommended',
@@ -20,9 +21,11 @@ module.exports = {
   },
   plugins: [
     'react',
+    'jest'
   ],
   rules: {
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
-    "semi": ["error", "never"]
+    "semi": ["error", "never"],
+    "class-methods-use-this": [0],
   },
 };

@@ -10,7 +10,7 @@ import (
 func Test_GetShippingFee_Input_SubmitedOrder_ShippingMethod_1_Should_Be_Fee_2(t *testing.T) {
 	expectedFee := 2.00
 	submitOrder := order.SubmitedOrder{
-		ShippingMethod: 1,
+		ShippingMethod: "Kerry",
 	}
 	actualFee := submitOrder.GetShippingFee()
 
