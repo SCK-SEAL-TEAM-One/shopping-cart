@@ -11,6 +11,7 @@ type OrderRepository interface {
 	CreateOrderProduct(orderID, productID, quantity int, productPrice float64) error
 	GetOrderProduct(orderID int) ([]OrderProduct, error)
 	CreateShipping(orderID int, shippingInfo ShippingInfo) (int, error)
+	UpdateOrder(orderID int, transactionID string) error
 }
 
 type OrderRepositoryMySQL struct {

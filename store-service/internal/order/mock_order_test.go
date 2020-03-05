@@ -36,6 +36,11 @@ func (repo *mockOrderRepository) CreateShipping(orderID int, shippingInfo order.
 	return argument.Int(0), argument.Error(1)
 }
 
+func (repo *mockOrderRepository) UpdateOrder(orderID int, transactionID string) error {
+	argument := repo.Called(orderID, transactionID)
+	return argument.Error(1)
+}
+
 type mockProductRepository struct {
 	mock.Mock
 }
