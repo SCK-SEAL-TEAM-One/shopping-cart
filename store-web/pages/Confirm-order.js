@@ -2,22 +2,29 @@ import React from 'react'
 import { Container, Row, Button } from 'react-bootstrap'
 import fetch from 'isomorphic-unfetch'
 import Cookies from 'js-cookie'
+import Route from 'next/router'
 import CartItem from '../components/CartItem'
 
 
 export default class ConfirmOrder extends React.Component {
+  constructor(props) {
+    super(props)
+
+    this.submitOrder = this.submitOrder.bind(this)
+  }
+
   createCookies() {
     const cart = [{
       id: 1,
       productName: '43 Piecee Dinner Set',
-      productPrice: 10.00,
-      productImage: '.jpg',
+      productPrice: 12.95,
+      productImage: 'https://i.pinimg.com/474x/17/43/2f/17432f12ec88c0d0ea3d0cffc69d25ce.jpg',
       quantity: 1,
     }]
     Cookies.set('cart', JSON.stringify(cart), { expires: 7, path: '' })
 
     const shipping = {
-      shipping_method: 1,
+      shipping_method: 'kerry',
       shipping_address: '405/37 ถ.มหิดล',
       shipping_sub_district: 'ท่าศาลา',
       shipping_district: 'เมือง',
@@ -43,11 +50,18 @@ export default class ConfirmOrder extends React.Component {
         ...shipping,
       }),
     })
-      .then((r) => r.json())
+      .then((response) => response.json())
+      .then((order) => {
+        if (order.order_id) {
+          Cookies.set('order', JSON.stringify(order), { expires: 7, path: '' })
+          Route.push('/Payment')
+        }
+      })
   }
 
   render() {
-    const productList = Cookies.getJSON('cartCookie')
+    this.createCookies()
+    const productList = Cookies.getJSON('cart')
     return (
       <Container>
         <Row>ยืนยันคำสั่งซื้อ</Row>
@@ -66,7 +80,7 @@ export default class ConfirmOrder extends React.Component {
           <table>
             <tr>
               <td>ค่าสินค้า</td>
-              <td id="totalProductPrice">100.00 USD</td>
+              <td id="totalProductPrice">12.95 USD</td>
             </tr>
             <tr>
               <td>ค่าจัดส่ง</td>
@@ -74,7 +88,7 @@ export default class ConfirmOrder extends React.Component {
             </tr>
             <tr>
               <td>รวมทั้งสิ้น</td>
-              <td id="totalAmount">102.00 USD</td>
+              <td id="totalAmount">14.95 USD</td>
             </tr>
           </table>
         </div>
@@ -86,15 +100,7 @@ export default class ConfirmOrder extends React.Component {
         </div>
         <div>
           <Button id="editAddress">แก้ไขที่อยู่จัดส่ง</Button>
-          createCookies
-          <Button
-            id="confirmPayment"
-            onClick={() => {
-              this.submitOrder()
-            }}
-          >
-            ยืนยันคำสั่งซื้อและชำระเงิน
-          </Button>
+          <Button id="confirmPayment" onClick={() => this.submitOrder()}>ยืนยันคำสั่งซื้อและชำระเงิน</Button>
         </div>
       </Container>
     )
