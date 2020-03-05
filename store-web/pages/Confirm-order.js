@@ -17,14 +17,14 @@ export default class ConfirmOrder extends React.Component {
     const cart = [{
       id: 1,
       productName: '43 Piecee Dinner Set',
-      productPrice: 10.00,
-      productImage: '/43 Piecee Dinner Set.jpg',
+      productPrice: 12.95,
+      productImage: 'https://i.pinimg.com/474x/17/43/2f/17432f12ec88c0d0ea3d0cffc69d25ce.jpg',
       quantity: 1,
     }]
     Cookies.set('cart', JSON.stringify(cart), { expires: 7, path: '' })
 
     const shipping = {
-      shipping_method: 1,
+      shipping_method: 'kerry',
       shipping_address: '405/37 ถ.มหิดล',
       shipping_sub_district: 'ท่าศาลา',
       shipping_district: 'เมือง',
@@ -58,12 +58,9 @@ export default class ConfirmOrder extends React.Component {
         }
       })
   }
-
-  componentDidMount() {
-    this.createCookies()
-  }
-
+  
   render() {
+    this.createCookies()
     const productList = Cookies.getJSON('cart')
     return (
       <Container>
@@ -83,7 +80,7 @@ export default class ConfirmOrder extends React.Component {
           <table>
             <tr>
               <td>ค่าสินค้า</td>
-              <td id="totalProductPrice">100.00 USD</td>
+              <td id="totalProductPrice">12.95 USD</td>
             </tr>
             <tr>
               <td>ค่าจัดส่ง</td>
@@ -91,7 +88,7 @@ export default class ConfirmOrder extends React.Component {
             </tr>
             <tr>
               <td>รวมทั้งสิ้น</td>
-              <td id="totalAmount">102.00 USD</td>
+              <td id="totalAmount">14.95 USD</td>
             </tr>
           </table>
         </div>
