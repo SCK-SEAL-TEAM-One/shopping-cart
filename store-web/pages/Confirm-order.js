@@ -3,6 +3,7 @@ import { Container, Row, Button } from 'react-bootstrap'
 import fetch from 'isomorphic-unfetch'
 import Cookies from 'js-cookie'
 import CartItem from '../components/CartItem'
+import Route from 'next/router'
 
 
 export default class ConfirmOrder extends React.Component {
@@ -12,11 +13,12 @@ export default class ConfirmOrder extends React.Component {
     this.submitOrder = this.submitOrder.bind(this)
   }
   createCookies() {
+    console.log("func createCookies")
     const cart = [{
       id: 1,
       productName: '43 Piecee Dinner Set',
       productPrice: 10.00,
-      productImage: '.jpg',
+      productImage: '/43 Piecee Dinner Set.jpg',
       quantity: 1,
     }]
     Cookies.set('cart', JSON.stringify(cart), { expires: 7, path: '' })
@@ -37,7 +39,6 @@ export default class ConfirmOrder extends React.Component {
 
   submitOrder() {
     const cartItems = Cookies.getJSON('cart')
-    console.log("It is carts",cartItems)
     const cart = cartItems.map(({ id, quantity }) => ({ id, quantity }))
     const shipping = Cookies.getJSON('shipping')
 
@@ -49,12 +50,21 @@ export default class ConfirmOrder extends React.Component {
         ...shipping,
       }),
     })
-      .then((r) => r.json())
+      .then((response) => response.json())
+      .then((order) => {
+        if (order.order_id) {
+          Cookies.set('order', JSON.stringify(order), { expires: 7, path: '' })
+          Route.push("/Payment")
+        }
+      })
+  }
+
+  componentDidMount() {
+    this.createCookies()
   }
 
   render() {
-    this.createCookies()
-    const productList = Cookies.getJSON('cartCookie')
+    const productList = Cookies.getJSON('cart')
     return (
       <Container>
         <Row>ยืนยันคำสั่งซื้อ</Row>
