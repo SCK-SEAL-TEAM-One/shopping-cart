@@ -1,9 +1,9 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"store-service/cmd/api"
+	"store-service/internal/healthcheck"
 	"store-service/internal/order"
 	"store-service/internal/payment"
 	"store-service/internal/product"
@@ -42,23 +42,8 @@ func main() {
 
 	route.GET("/api/v1/health", func(context *gin.Context) {
 		context.JSON(200, gin.H{
-			"message": GetUserNameFromDB(connection),
+			"message": healthcheck.GetUserNameFromDB(connection),
 		})
 	})
 	log.Fatal(route.Run(":8000"))
-}
-
-func GetUserNameFromDB(connection *sqlx.DB) User {
-	user := User{}
-	err := connection.Get(&user, "SELECT id,name FROM user WHERE ID=1")
-	if err != nil {
-		fmt.Printf("Get user name from tearup get error : %s", err.Error())
-		return User{}
-	}
-	return user
-}
-
-type User struct {
-	ID   int    `db:"id"`
-	Name string `db:"name"`
 }

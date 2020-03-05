@@ -2,12 +2,14 @@ package order
 
 import (
 	"fmt"
+
 	"github.com/jmoiron/sqlx"
 )
 
 type OrderRepository interface {
 	CreateOrder(totalPrice float64, shippingMethod string) (int, error)
 	CreateOrderProduct(orderID, productID, quantity int, productPrice float64) error
+	GetOrderProduct(orderID int) ([]OrderProduct, error)
 	CreateShipping(orderID int, shippingInfo ShippingInfo) (int, error)
 }
 
@@ -52,4 +54,10 @@ func (orderRepository OrderRepositoryMySQL) UpdateOrder(orderID int, transaction
 		return fmt.Errorf("no any row affected , update not completed")
 	}
 	return err
+}
+
+func (repository OrderRepositoryMySQL) GetOrderProduct(orderID int) ([]OrderProduct, error) {
+	var orderProducts []OrderProduct
+	err := repository.DBConnection.Select(&orderProducts, "SELECT product_id, quantity FROM order_product WHERE order_id = ?", orderID)
+	return orderProducts, err
 }
