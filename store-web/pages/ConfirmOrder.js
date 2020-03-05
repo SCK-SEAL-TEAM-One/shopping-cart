@@ -6,6 +6,11 @@ import CartItem from '../components/CartItem'
 
 
 export default class ConfirmOrder extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.submitOrder = this.submitOrder.bind(this)
+  }
   createCookies() {
     const cart = [{
       id: 1,
@@ -32,6 +37,7 @@ export default class ConfirmOrder extends React.Component {
 
   submitOrder() {
     const cartItems = Cookies.getJSON('cart')
+    console.log("It is carts",cartItems)
     const cart = cartItems.map(({ id, quantity }) => ({ id, quantity }))
     const shipping = Cookies.getJSON('shipping')
 
@@ -50,6 +56,7 @@ export default class ConfirmOrder extends React.Component {
   }
 
   render() {
+    this.createCookies()
     const productList = Cookies.getJSON('cartCookie')
     return (
       <Container>
@@ -89,7 +96,6 @@ export default class ConfirmOrder extends React.Component {
         </div>
         <div>
           <Button id="editAddress">แก้ไขที่อยู่จัดส่ง</Button>
-          createCookies
           <Button id="confirmPayment" onClick={() => this.submitOrder()}>ยืนยันคำสั่งซื้อและชำระเงิน</Button>
         </div>
       </Container>
