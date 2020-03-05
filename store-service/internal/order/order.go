@@ -14,7 +14,6 @@ type OrderService struct {
 
 type OrderInterface interface {
 	CreateOrder(submitedOrder SubmitedOrder) Order
-	SendNotification(orderID, trackingID int, dateTime time.Time, shippingMethod string) string
 }
 
 type ProductRepository interface {
