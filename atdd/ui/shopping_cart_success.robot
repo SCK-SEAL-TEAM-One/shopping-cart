@@ -27,7 +27,7 @@ ${notify}    วันเวลาที่ชำระเงิน  1/3/2563 13
 
 *** Test Cases ***
 ซื้อสินค้า 1 ชิ้น เลือกจัดส่งแบบ kerry เลือกตัดเงินผ่าน บัตรเครดิต visa ได้รับ notofication ผ่าน in-app
-    Open Browser    about:blank    chrome
+    Open Browser    about:blank    headlesschrome
     Go To           ${url}
     ตรวจสอบข้อมูลสินค้า 
     เพิ่มสินค้าในตะกร้า
