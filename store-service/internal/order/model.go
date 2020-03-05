@@ -2,7 +2,7 @@ package order
 
 type SubmitedOrder struct {
 	Cart                 []OrderProduct `json:"cart"`
-	ShippingMethod       int            `json:"shipping_method"`
+	ShippingMethod       string         `json:"shipping_method"`
 	ShippingAddress      string         `json:"shipping_address"`
 	ShippingSubDistrict  string         `json:"shipping_sub_disterict"`
 	ShippingDistrict     string         `json:"shipping_district"`
@@ -13,7 +13,7 @@ type SubmitedOrder struct {
 }
 
 type ShippingInfo struct {
-	ShippingMethod       int
+	ShippingMethod       string
 	ShippingAddress      string
 	ShippingSubDistrict  string
 	ShippingDistrict     string
