@@ -22,7 +22,7 @@ func Test_CreateOrder_Input_Submitted_Order_Should_be_OrderID_8004359103_TotalPr
 				Quantity:  1,
 			},
 		},
-		ShippingMethod:       1,
+		ShippingMethod:       "Kerry",
 		ShippingAddress:      "405/37 ถ.มหิดล",
 		ShippingSubDistrict:  "ท่าศาลา",
 		ShippingDistrict:     "เมือง",
@@ -55,7 +55,7 @@ func Test_CreateOrder_Input_Submitted_Order_Should_be_OrderID_8004359103_TotalPr
 	mockOrderRepository.On("CreateOrderProduct", orderID, productID, quantity, productPrice).Return(nil)
 
 	shippingInfo := order.ShippingInfo{
-		ShippingMethod:       1,
+		ShippingMethod:       "Kerry",
 		ShippingAddress:      "405/37 ถ.มหิดล",
 		ShippingSubDistrict:  "ท่าศาลา",
 		ShippingDistrict:     "เมือง",
@@ -116,7 +116,7 @@ func Test_GetTotalAmount_Input_SubmittedOrder_ProductID_2_Quantity_1_Should_Be_T
 
 	submittedOrder := order.SubmitedOrder{
 		Cart:                 productList,
-		ShippingMethod:       1,
+		ShippingMethod:       "Kerry",
 		ShippingAddress:      "405/35 ถ.มหิดล",
 		ShippingSubDistrict:  "ท่าศาลา",
 		ShippingDistrict:     "เมือง",
