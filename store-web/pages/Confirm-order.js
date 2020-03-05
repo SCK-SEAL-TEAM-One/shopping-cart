@@ -2,18 +2,18 @@ import React from 'react'
 import { Container, Row, Button } from 'react-bootstrap'
 import fetch from 'isomorphic-unfetch'
 import Cookies from 'js-cookie'
-import CartItem from '../components/CartItem'
 import Route from 'next/router'
+import CartItem from '../components/CartItem'
 
 
 export default class ConfirmOrder extends React.Component {
   constructor(props) {
-    super(props);
+    super(props)
 
     this.submitOrder = this.submitOrder.bind(this)
   }
+
   createCookies() {
-    console.log("func createCookies")
     const cart = [{
       id: 1,
       productName: '43 Piecee Dinner Set',
@@ -54,11 +54,11 @@ export default class ConfirmOrder extends React.Component {
       .then((order) => {
         if (order.order_id) {
           Cookies.set('order', JSON.stringify(order), { expires: 7, path: '' })
-          Route.push("/Payment")
+          Route.push('/Payment')
         }
       })
   }
-  
+
   render() {
     this.createCookies()
     const productList = Cookies.getJSON('cart')

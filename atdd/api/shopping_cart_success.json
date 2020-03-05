@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "9061e8e1-5c61-41c7-8755-7e5b8a121073",
+		"_postman_id": "7d1d8dff-fa64-4a63-8822-37e77eec6555",
 		"name": "shopping cart success",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -70,9 +70,11 @@
 							"pm.test(\"Status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
 							"});",
-							"pm.test(\"OrderId \" + data[\"order_id\"], function () {",
+							"pm.test(\"OrderId is existed\", function () {",
 							"    var jsonData = pm.response.json();",
-							"    pm.expect(jsonData.order_id).to.eql(data[\"order_id\"]);",
+							"    pm.expect(jsonData.order_id).to.exist;",
+							"    ",
+							"    pm.environment.set(\"order_id\", jsonData.order_id);",
 							"});",
 							"",
 							"pm.test(\"Total price \" + data[\"total_price\"], function () {",
@@ -149,7 +151,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"payment_type\": \"{{payment_type}}\",\n\t\"type\": \"{{type}}\",\n\t\"card_number\": {{card_number}},\n\t\"cvv\": {{cvv}},\n\t\"expired_month\": {{expired_month}},\n\t\"expired_year\": {{expired_year}},\n\t\"card_name\": {{card_name}},\n\t\"total_price\": {{total_price}}\n}",
+					"raw": "{\n\t\"order_id\": {{order_id}},\n\t\"payment_type\": \"{{payment_type}}\",\n\t\"type\": \"{{type}}\",\n\t\"card_number\": {{card_number}},\n\t\"cvv\": {{cvv}},\n\t\"expired_month\": {{expired_month}},\n\t\"expired_year\": {{expired_year}},\n\t\"card_name\": {{card_name}},\n\t\"total_price\": {{total_price}}\n}",
 					"options": {
 						"raw": {
 							"language": "json"
