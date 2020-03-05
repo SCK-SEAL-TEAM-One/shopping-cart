@@ -4,9 +4,12 @@ import (
 	"fmt"
 	"log"
 	"store-service/cmd/api"
+	"store-service/internal/healthcheck"
 	"store-service/internal/order"
 	"store-service/internal/payment"
 	"store-service/internal/product"
+	"store-service/internal/shipping"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql"
@@ -29,10 +32,10 @@ func main() {
 		OrderRepository:   &orderRepository,
 	}
 	bankGateway := payment.BankGateway{
-		BankEndpoint: "",
+		BankEndpoint: "bank-gateway:8882",
 	}
 	shippingGateway := shipping.ShippingGateway{
-		KerryEndpoint: "",
+		KerryEndpoint: "shipping-gateway:8882",
 	}
 	paymentService := payment.PaymentService{
 		BankGateway:       &bankGateway,
