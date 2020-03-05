@@ -24,16 +24,11 @@ func main() {
 	orderRepository := order.OrderRepositoryMySQL{
 		DBConnection: connection,
 	}
-	paymentRepository := payment.PaymentRepositoryMySQL{
-		DBConnection: connection,
-	}
 	orderService := order.OrderService{
 		ProductRepository: &productRepository,
 		OrderRepository:   &orderRepository,
 	}
-	paymentService := payment.PaymentService{
-		PaymentRepository: &paymentRepository,
-	}
+	paymentService := payment.PaymentService{}
 	storeAPI := api.StoreAPI{
 		OrderService: &orderService,
 	}
