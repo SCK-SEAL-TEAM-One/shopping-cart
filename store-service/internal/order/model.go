@@ -13,14 +13,14 @@ type SubmitedOrder struct {
 }
 
 type ShippingInfo struct {
-	ShippingMethod       string
-	ShippingAddress      string
-	ShippingSubDistrict  string
-	ShippingDistrict     string
-	ShippingProvince     string
-	ShippingZipCode      string
-	RecipientName        string
-	RecipientPhoneNumber string
+	ShippingMethod       string `db:"method"`
+	ShippingAddress      string `db:"address"`
+	ShippingSubDistrict  string `db:"sub_district"`
+	ShippingDistrict     string `db:"district"`
+	ShippingProvince     string `db:"province"`
+	ShippingZipCode      string `db:"zip_code"`
+	RecipientName        string `db:"recipient"`
+	RecipientPhoneNumber string `db:"phone_number"`
 }
 
 type OrderProduct struct {
