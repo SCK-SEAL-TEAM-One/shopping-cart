@@ -10,7 +10,7 @@ console.log(this.test)
 ```
 
 ## Function And Parameter Naming Conventions
-- ส่วนที่เกี่ยวข้องกับ UI จะใช้รูปแบบการตั้งชื่อแบบ **camelCase ขึ้นต้นต้วยตัวพิมพ์ใหญ๋**
+- ส่วนที่เกี่ยวข้องกับ UI จะใช้รูปแบบการตั้งชื่อแบบ **camelCase ขึ้นต้นต้วยตัวพิมพ์ใหญ่**
 - ส่วนที่เป็นการคำนวน จะใช้รูปแบบการตั้งชื่อแบบ **camelCase ขึ้นต้นต้วยตัวพิมพ์เล็ก**
 ```
 func Homepage() //UI
@@ -78,7 +78,7 @@ HOUR, MINUTE
 
 # Convention Web Service
 ## Function And Parameter Naming Conventions
-- ใช้รูปแบบการตั้งชื่อฟังก์ชั่นแบบ **camelCase ขึ้นต้นต้วยตัวพิมพ์ใหญ๋**
+- ใช้รูปแบบการตั้งชื่อฟังก์ชั่นแบบ **camelCase ขึ้นต้นต้วยตัวพิมพ์ใหญ่**
 ```
 func CalculateTotalPrice()
 ```
@@ -146,4 +146,49 @@ HOUR, MINUTE
 [Deleted]: ลบไฟล์ออก 'ชื่อไฟล์' เนื่องจาก...
 
 * ให้เขียนรายละเอียดด้วยว่าแก้ไขอะไรและทำที่ตรงไหน
+```
+
+## How to run Acceptance test (API and UI)
+### API test
+1. ติดตั้ง newman
+```
+npm install -g newman
+```
+2. คำสั่งที่ใช้ run newman
+```
+newman run atdd/api/shopping_cart_success.json -e atdd/api/environment/local_environment.json -d atdd/api/data/shopping_cart_success.json
+```
+หรือใช้คำสั่งย่อ
+```
+make run_newman
+```
+
+### UI test
+1. ติดตั้ง Robot framework
+```
+download Python2.7.xx (www.python.org)
+```
+2. ติดตั้ง PIP
+```
+sudo easy_install pip
+```
+3. ติดตั้ง Robot framework
+```
+pip install robotframework
+```
+4. ติดตั้ง selenium2library
+```
+pip install robotframework-selenium2library
+```
+5. ติดตั้ง chrome driver
+```
+brew install chromedriver
+```
+6. run robot framework
+```
+robot atdd/ui/shopping_cart_success.robot
+```
+หรือใช้คำสั่งย่อ
+```
+make run_robot
 ```
