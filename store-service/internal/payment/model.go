@@ -21,3 +21,14 @@ type PaymentDetail struct {
 	TotalPrice   float64 `json:"total_price"`
 	MerchantID   int     `json:"MerchantID"`
 }
+
+func NewShippingInfo(payment PaymentInformation) PaymentDetail {
+	return PaymentDetail{
+		CardNumber:   payment.CardNumber,
+		CVV:          payment.CVV,
+		ExpiredMonth: payment.ExpiredMonth,
+		ExpiredYear:  payment.ExpiredYear,
+		CardName:     payment.CardName,
+		TotalPrice:   payment.TotalPrice,
+	}
+}
