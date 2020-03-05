@@ -10,7 +10,7 @@ function CartItem({ item }) {
     return (
       <tr key={key}>
         <td>{key}</td>
-        <td id={`productImage-${key}`}><img src={productImage} alt="" /></td>
+        <td id={`productImage-${key}`}><img height="150" src={productImage} alt="" /></td>
         <td id={`productName-${key}`}>{productName}</td>
         <td id={`productQuantity-${key}`}>{quantity}</td>
         <td id={`productPrice-${key}`}>{productPrice}</td>
