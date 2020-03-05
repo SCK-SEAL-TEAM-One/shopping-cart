@@ -21,7 +21,7 @@ func Test_PaymentRepository(t *testing.T) {
 	}
 
 	t.Run("UpdateStock_Input_Product_ID_2_No_Error", func(t *testing.T) {
-		productID := 2
+		productID := 1
 		quantity := 1
 		err := repository.UpdateStock(productID, quantity)
 
