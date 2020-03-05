@@ -147,3 +147,48 @@ HOUR, MINUTE
 
 * ให้เขียนรายละเอียดด้วยว่าแก้ไขอะไรและทำที่ตรงไหน
 ```
+
+## How to run Acceptance test (API and UI)
+### API test
+1. ติดตั้ง newman
+```
+npm install -g newman
+```
+2. คำสั่งที่ใช้ run newman
+```
+newman run atdd/api/shopping_cart_success.json -e atdd/api/environment/local_environment.json -d atdd/api/data/shopping_cart_success.json
+```
+หรือใช้คำสั่งย่อ
+```
+make run_newman
+```
+
+### UI test
+1. ติดตั้ง Robot framework
+```
+download Python2.7.xx (www.python.org)
+```
+2. ติดตั้ง PIP
+```
+sudo easy_install pip
+```
+3. ติดตั้ง Robot framework
+```
+pip install robotframework
+```
+4. ติดตั้ง selenium2library
+```
+pip install robotframework-selenium2library
+```
+5. ติดตั้ง chrome driver
+```
+brew install chromedriver
+```
+6. run robot framework
+```
+robot atdd/ui/shopping_cart_success.robot
+```
+หรือใช้คำสั่งย่อ
+```
+make run_robot
+```
