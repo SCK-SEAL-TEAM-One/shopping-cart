@@ -4,9 +4,12 @@ import (
 	"fmt"
 	"log"
 	"store-service/cmd/api"
+	"store-service/internal/healthcheck"
 	"store-service/internal/order"
 	"store-service/internal/payment"
 	"store-service/internal/product"
+	"store-service/internal/shipping"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql"
@@ -28,7 +31,19 @@ func main() {
 		ProductRepository: &productRepository,
 		OrderRepository:   &orderRepository,
 	}
-	paymentService := payment.PaymentService{}
+	bankGateway := payment.BankGateway{
+		BankEndpoint: "bank-gateway:8882",
+	}
+	shippingGateway := shipping.ShippingGateway{
+		KerryEndpoint: "shipping-gateway:8882",
+	}
+	paymentService := payment.PaymentService{
+		BankGateway:       &bankGateway,
+		ShippingGateway:   &shippingGateway,
+		OrderRepository:   orderRepository,
+		ProductRepository: productRepository,
+		Time:              time.Now(),
+	}
 	storeAPI := api.StoreAPI{
 		OrderService: &orderService,
 	}
@@ -41,8 +56,15 @@ func main() {
 	route.POST("/api/v1/confirmPayment", paymentAPI.ConfirmPaymentHandler)
 
 	route.GET("/api/v1/health", func(context *gin.Context) {
+		user, err := healthcheck.GetUserNameFromDB(connection)
+		if err != nil {
+			context.JSON(500, gin.H{
+				"error": err.Error(),
+			})
+			return
+		}
 		context.JSON(200, gin.H{
-			"message": GetUserNameFromDB(connection),
+			"message": user,
 		})
 	})
 	log.Fatal(route.Run(":8000"))

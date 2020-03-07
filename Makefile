@@ -25,7 +25,6 @@ code_analys_backend:
 run_unittest_backend:
 	cd store-service && go test ./...
 
-# ทำการ docker-compose up store-database ก่อน
 run_integratetest_backend:
 	docker-compose up -d store-database bank-gateway shipping-gateway
 	sleep 15
@@ -38,6 +37,9 @@ build_backend:
 
 start_service:
 	docker-compose up -d
+
+seed:
+	cat tearup/init.sql | docker exec -i store-database /usr/bin/mysql -u sealteam --password=sckshuhari --default-character-set=utf8  toy
 
 stop_service:
 	docker-compose down

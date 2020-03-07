@@ -6,6 +6,10 @@ import (
 	"github.com/jmoiron/sqlx"
 )
 
+type ShippingRepository interface {
+	GetShippingByOrderID(orderID int) (order.ShippingInfo, error)
+}
+
 type ShippingRepositoryMySQL struct {
 	DBConnection *sqlx.DB
 }

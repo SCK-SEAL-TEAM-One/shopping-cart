@@ -48,6 +48,11 @@ CREATE TABLE order_product (
     product_price double
 ) CHARACTER SET utf8 COLLATE utf8_general_ci;
 
+INSERT INTO order_product (order_id, product_id, quantity, product_price) 
+VALUE (1, 2, 10, 1199.5);
+INSERT INTO order_product (order_id, product_id, quantity, product_price) 
+VALUE (1, 1, 10, 129.5);
+
 CREATE TABLE shipping (
     id int AUTO_INCREMENT,
     order_id BIGINT,
