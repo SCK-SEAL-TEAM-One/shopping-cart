@@ -25,7 +25,7 @@ func Test_ShipByKerry_Input_ShippingInfo_Should_Be_Tracking_Number_1785261900_An
 	}
 
 	service := shipping.ShippingGateway{
-		KerryEndpoint: "http://localhost:8883/shipping/kerry",
+		KerryEndpoint: "http://localhost:8883",
 	}
 	actualTrackingNumber, err := service.ShipByKerry(shippingInfo)
 

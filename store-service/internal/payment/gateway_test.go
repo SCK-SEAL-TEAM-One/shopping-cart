@@ -23,7 +23,7 @@ func Test_Payment_Input_PaymentDetail_CardNumber_4719700591590995_Should_Be_Tran
 	}
 
 	gateway := payment.BankGateway{
-		BankEndpoint: "http://localhost:8882/payment/visa",
+		BankEndpoint: "http://localhost:8882",
 	}
 	actualTransactionID, err := gateway.Payment(paymentDetail)
 
