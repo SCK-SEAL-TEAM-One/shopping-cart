@@ -42,7 +42,7 @@ func (orderRepository OrderRepositoryMySQL) CreateOrder(totalPrice float64, ship
 }
 
 func (orderRepository OrderRepositoryMySQL) CreateOrderProduct(orderID int, productID, quantity int, productPrice float64) error {
-	sqlResult := orderRepository.DBConnection.MustExec("INSERT INTO order_product (order_id, product_id) VALUE (?,?)", orderID, productID)
+	sqlResult := orderRepository.DBConnection.MustExec("INSERT INTO order_product (order_id, product_id, quantity, product_price) VALUE (?,?,?,?)", orderID, productID, quantity, productPrice)
 	_, err := sqlResult.RowsAffected()
 	return err
 }
