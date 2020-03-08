@@ -1,11 +1,11 @@
 [
   {
-    "product_id" : 2,
-    "product_name" : "43 Piece dinner Set",
-    "product_price" : 12.95,
-    "product_quantity" : 1,
-    "peodyct_brand" : "Coolkidz",
-    "product_image" : "/43PieceDinnerSet.png",
+    "product_id": 2,
+    "product_name": "43 Piece dinner Set",
+    "product_price": 12.95,
+    "product_quantity": 1,
+    "peodyct_brand": "Coolkidz",
+    "product_image": "/43PieceDinnerSet.png",
     "quantity": 1,
     "shipping_method": "Kerry",
     "shipping_address": "405/37 ถ.มหิดล",
@@ -23,11 +23,7 @@
     "expired_year": 20,
     "card_name": "Karnwat Wongudom",
     "total_price": 14.95,
-    "order_id": 8004359103,
-    "notify_message": "วันเวลาที่ชำระเงิน 1/3/2563 13:30:00 หมายเลขคำสั่งซื้อ 8004359103 คุณสามารถติดตามสินค้าผ่านช่องทาง Kerry ด้วยหมายเลข 1785261900" 
+    "order_id": 8004359104,
+    "notify_message": "วันเวลาที่ชำระเงิน 1/3/2563 13:30:00 หมายเลขคำสั่งซื้อ 8004359104 คุณสามารถติดตามสินค้าผ่านช่องทาง Kerry ด้วยหมายเลข 1785261900"
   }
 ]
-
-
-
-	
