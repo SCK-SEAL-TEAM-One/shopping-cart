@@ -27,22 +27,26 @@ func main() {
 	orderRepository := order.OrderRepositoryMySQL{
 		DBConnection: connection,
 	}
+	shippingRepository := shipping.ShippingRepositoryMySQL{
+		DBConnection: connection,
+	}
 	orderService := order.OrderService{
 		ProductRepository: &productRepository,
 		OrderRepository:   &orderRepository,
 	}
 	bankGateway := payment.BankGateway{
-		BankEndpoint: "bank-gateway:8882",
+		BankEndpoint: "http://bank-gateway:8882",
 	}
 	shippingGateway := shipping.ShippingGateway{
-		KerryEndpoint: "shipping-gateway:8882",
+		KerryEndpoint: "http://shipping-gateway:8882",
 	}
 	paymentService := payment.PaymentService{
-		BankGateway:       &bankGateway,
-		ShippingGateway:   &shippingGateway,
-		OrderRepository:   orderRepository,
-		ProductRepository: productRepository,
-		Time:              time.Now(),
+		BankGateway:        &bankGateway,
+		ShippingGateway:    &shippingGateway,
+		OrderRepository:    orderRepository,
+		ProductRepository:  productRepository,
+		ShippingRepository: shippingRepository,
+		Time:               time.Now(),
 	}
 	storeAPI := api.StoreAPI{
 		OrderService: &orderService,
