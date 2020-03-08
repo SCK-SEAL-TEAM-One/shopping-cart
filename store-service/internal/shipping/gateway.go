@@ -23,14 +23,15 @@ type ShippingGatewayResponse struct {
 
 func (gateway ShippingGateway) ShipByKerry(shippingInfo order.ShippingInfo) (string, error) {
 	data, _ := json.Marshal(shippingInfo)
-	resp, err := http.Post(gateway.KerryEndpoint, "application/json", bytes.NewBuffer(data))
+	endPoint := gateway.KerryEndpoint + "/shipping/kerry"
+	response, err := http.Post(endPoint, "application/json", bytes.NewBuffer(data))
 	if err != nil {
 		return "", err
 	}
-	if resp.StatusCode != 200 {
-		return "", fmt.Errorf("response is not ok but it's %d", resp.StatusCode)
+	if response.StatusCode != 200 {
+		return "", fmt.Errorf("response is not ok but it's %d", response.StatusCode)
 	}
-	responseData, err := ioutil.ReadAll(resp.Body)
+	responseData, err := ioutil.ReadAll(response.Body)
 	if err != nil {
 		return "", err
 	}

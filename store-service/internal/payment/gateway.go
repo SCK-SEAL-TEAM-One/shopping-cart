@@ -22,7 +22,8 @@ type BankGatewayResponse struct {
 
 func (gateway BankGateway) Payment(paymentDetail PaymentDetail) (string, error) {
 	data, _ := json.Marshal(paymentDetail)
-	response, err := http.Post(gateway.BankEndpoint, "application/json", bytes.NewBuffer(data))
+	endPoint := gateway.BankEndpoint + "/payment/visa"
+	response, err := http.Post(endPoint, "application/json", bytes.NewBuffer(data))
 	if err != nil {
 		return "", err
 	}
