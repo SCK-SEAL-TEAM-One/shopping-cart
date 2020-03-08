@@ -22,14 +22,14 @@ type BankGatewayResponse struct {
 
 func (gateway BankGateway) Payment(paymentDetail PaymentDetail) (string, error) {
 	data, _ := json.Marshal(paymentDetail)
-	resp, err := http.Post(gateway.BankEndpoint, "application/json", bytes.NewBuffer(data))
+	response, err := http.Post(gateway.BankEndpoint, "application/json", bytes.NewBuffer(data))
 	if err != nil {
 		return "", err
 	}
-	if resp.StatusCode != 200 {
-		return "", fmt.Errorf("response is not ok but it's %d", resp.StatusCode)
+	if response.StatusCode != 200 {
+		return "", fmt.Errorf("response is not ok but it's %d", response.StatusCode)
 	}
-	responseData, err := ioutil.ReadAll(resp.Body)
+	responseData, err := ioutil.ReadAll(response.Body)
 	if err != nil {
 		return "", err
 	}
