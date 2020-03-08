@@ -19,7 +19,7 @@ type PaymentDetail struct {
 	ExpiredYear  int     `json:"expired_year"`
 	CardName     string  `json:"card_name"`
 	TotalPrice   float64 `json:"total_price"`
-	MerchantID   int     `json:"MerchantID"`
+	MerchantID   int     `json:"merchant_id"`
 }
 
 func NewShippingInfo(payment PaymentInformation) PaymentDetail {
