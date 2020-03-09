@@ -73,5 +73,5 @@ func (orderService OrderService) GetTotalAmount(order SubmitedOrder) float64 {
 }
 
 func SendNotification(orderID int, trackingNumber string, dateTime time.Time, shippingMethod string) string {
-	return fmt.Sprintf("วันเวลาที่ชำระเงิน %s หมายเลขคำสั่งซื้อ %d คุณสามารถติดตามสินค้าผ่านช่องทาง %s หมายเลข Tracking %s", dateTime.Format("2/1/2006 15:04:05"), orderID, shippingMethod, trackingNumber)
+	return fmt.Sprintf("วันเวลาที่ชำระเงิน %s หมายเลขคำสั่งซื้อ %d คุณสามารถติดตามสินค้าผ่านช่องทาง %s หมายเลข %s", dateTime.Format("2/1/2006 15:04:05"), orderID, shippingMethod, trackingNumber)
 }

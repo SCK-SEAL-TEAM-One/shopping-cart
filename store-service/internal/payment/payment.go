@@ -26,7 +26,7 @@ type PaymentService struct {
 	OrderRepository    order.OrderRepository
 	ProductRepository  product.ProductRepository
 	ShippingRepository shipping.ShippingRepository
-	Time               time.Time
+	Time               func() time.Time
 }
 
 func (service PaymentService) ConfirmPayment(orderID int, paymentdetail PaymentDetail) string {
@@ -63,5 +63,5 @@ func (service PaymentService) ConfirmPayment(orderID int, paymentdetail PaymentD
 		return ""
 	}
 
-	return order.SendNotification(orderID, trackingID, service.Time, shippingInfo.ShippingMethod)
+	return order.SendNotification(orderID, trackingID, service.Time(), shippingInfo.ShippingMethod)
 }

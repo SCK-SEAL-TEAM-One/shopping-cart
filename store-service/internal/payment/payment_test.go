@@ -1,15 +1,16 @@
 package payment_test
 
 import (
-	"github.com/stretchr/testify/assert"
 	"store-service/internal/order"
 	"store-service/internal/payment"
 	"testing"
 	"time"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func Test_ConfirmPayment_Input_OrderID_8004359103_And_PaymentDetail_Should_Be_NotificationMessage(t *testing.T) {
-	expectedMessage := "วันเวลาที่ชำระเงิน 1/3/2020 13:30:00 หมายเลขคำสั่งซื้อ 8004359103 คุณสามารถติดตามสินค้าผ่านช่องทาง Kerry หมายเลข Tracking 1785261900"
+	expectedMessage := "วันเวลาที่ชำระเงิน 1/3/2020 13:30:00 หมายเลขคำสั่งซื้อ 8004359103 คุณสามารถติดตามสินค้าผ่านช่องทาง Kerry หมายเลข 1785261900"
 	orderId := 8004359103
 	mockBankGateway := new(mockBankGateway)
 	mockBankGateway.On("Payment", payment.PaymentDetail{
@@ -66,7 +67,9 @@ func Test_ConfirmPayment_Input_OrderID_8004359103_And_PaymentDetail_Should_Be_No
 		OrderRepository:    mockOrderRepository,
 		ProductRepository:  mockProductRepository,
 		ShippingRepository: mockShippingRepository,
-		Time:               fixedTime,
+		Time: func() time.Time {
+			return fixedTime
+		},
 	}
 
 	paymentDetail := payment.PaymentDetail{

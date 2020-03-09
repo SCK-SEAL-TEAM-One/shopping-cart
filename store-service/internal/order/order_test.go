@@ -145,7 +145,7 @@ func Test_GetTotalAmount_Input_SubmittedOrder_ProductID_2_Quantity_1_Should_Be_T
 }
 
 func Test_SendNotification_Input_OrderID_8004359103_Should_Be_Notification_Message(t *testing.T) {
-	expectedMessage := "วันเวลาที่ชำระเงิน 1/3/2563 13:30:00 หมายเลขคำสั่งซื้อ 8004359103 คุณสามารถติดตามสินค้าผ่านช่องทาง Kerry หมายเลข Tracking 1785261900"
+	expectedMessage := "วันเวลาที่ชำระเงิน 1/3/2563 13:30:00 หมายเลขคำสั่งซื้อ 8004359103 คุณสามารถติดตามสินค้าผ่านช่องทาง Kerry หมายเลข 1785261900"
 	orderID := 8004359103
 	shippingMethod := "Kerry"
 	trackingNumber := "1785261900"
