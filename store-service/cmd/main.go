@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"log"
+	"net/http"
+	"os"
 	"store-service/cmd/api"
 	"store-service/internal/healthcheck"
 	"store-service/internal/order"
@@ -17,6 +19,10 @@ import (
 )
 
 func main() {
+	var testMode bool
+	if os.Getenv("TEST_MODE") != "" {
+		testMode = true
+	}
 	connection, err := sqlx.Connect("mysql", "sealteam:sckshuhari@(store-database:3306)/toy")
 	if err != nil {
 		log.Fatalln("cannot connect to database", err)
@@ -46,7 +52,7 @@ func main() {
 		OrderRepository:    orderRepository,
 		ProductRepository:  productRepository,
 		ShippingRepository: shippingRepository,
-		Time:               time.Now(),
+		Time:               time.Now,
 	}
 	storeAPI := api.StoreAPI{
 		OrderService: &orderService,
@@ -71,6 +77,28 @@ func main() {
 			"message": user,
 		})
 	})
+	if testMode {
+		log.Println("Test mode: ", testMode)
+		route.GET("/mockTime/:time", func(context *gin.Context) {
+			fixedTime, err := time.Parse("02012006T15:04:05", context.Param("time"))
+			if err != nil {
+				context.JSON(http.StatusBadRequest, gin.H{
+					"status": "fail",
+					"masess": err,
+				})
+				return
+			}
+			now := func() time.Time {
+				return fixedTime
+			}
+			paymentService.Time = now
+			context.JSON(http.StatusOK, gin.H{
+				"status":  "ok",
+				"fixTime": fixedTime,
+			})
+		})
+	}
+
 	log.Fatal(route.Run(":8000"))
 }
 
