@@ -1,10 +1,47 @@
 {
 	"info": {
-		"_postman_id": "7d1d8dff-fa64-4a63-8822-37e77eec6555",
+		"_postman_id": "7b03cf0c-e7ba-48a7-8f3b-70bb44cc2905",
 		"name": "shopping cart success",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
+		{
+			"name": "mock time",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a9803f1c-baa3-4353-a385-15d128829983",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"time mock is 2020-03-01T13:30:00Z\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.fixTime).to.eql(\"2020-03-01T13:30:00Z\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}//mockTime/{{mockTime}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"",
+						"mockTime",
+						"{{mockTime}}"
+					]
+				}
+			},
+			"response": []
+		},
 		{
 			"name": "submit order",
 			"event": [
