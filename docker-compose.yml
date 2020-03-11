@@ -11,6 +11,8 @@ services:
     depends_on:
       - store-database
     restart: always
+    environment: 
+      - TEST_MODE=true
 
   store-database:
     image: mysql:5.7
