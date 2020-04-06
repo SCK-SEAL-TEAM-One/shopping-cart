@@ -5,12 +5,17 @@ import (
 )
 
 type ProductRepository interface {
+	GetProducts(keyword string) (ProductResult, error)
 	GetProductByID(ID int) (ProductDetail, error)
 	UpdateStock(productID, quantity int) error
 }
 
 type ProductRepositoryMySQL struct {
 	DBConnection *sqlx.DB
+}
+
+func (repository ProductRepositoryMySQL) GetProducts(keyword string) (ProductResult, error) {
+	return ProductResult{}, nil
 }
 
 func (productRepository ProductRepositoryMySQL) GetProductByID(ID int) (ProductDetail, error) {

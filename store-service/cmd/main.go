@@ -49,9 +49,9 @@ func main() {
 	paymentService := payment.PaymentService{
 		BankGateway:        &bankGateway,
 		ShippingGateway:    &shippingGateway,
-		OrderRepository:    orderRepository,
-		ProductRepository:  productRepository,
-		ShippingRepository: shippingRepository,
+		OrderRepository:    &orderRepository,
+		ProductRepository:  &productRepository,
+		ShippingRepository: &shippingRepository,
 		Time:               time.Now,
 	}
 	storeAPI := api.StoreAPI{
@@ -60,8 +60,13 @@ func main() {
 	paymentAPI := api.PaymentAPI{
 		PaymentService: &paymentService,
 	}
+	productAPI := api.ProductAPI{
+		ProductRepository: &productRepository,
+	}
 
 	route := gin.Default()
+	route.GET("/api/v1/product", productAPI.SearchHandler)
+	route.GET("/api/v1/product/:id", productAPI.GetProductHandler)
 	route.POST("/api/v1/order", storeAPI.SubmitOrderHandler)
 	route.POST("/api/v1/confirmPayment", paymentAPI.ConfirmPaymentHandler)
 

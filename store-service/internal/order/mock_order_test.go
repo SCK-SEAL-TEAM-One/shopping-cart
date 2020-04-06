@@ -45,6 +45,11 @@ type mockProductRepository struct {
 	mock.Mock
 }
 
+func (repo *mockProductRepository) GetProducts(keyword string) (product.ProductResult, error) {
+	argument := repo.Called(keyword)
+	return argument.Get(0).(product.ProductResult), argument.Error(1)
+}
+
 func (repository *mockProductRepository) GetProductByID(id int) (product.ProductDetail, error) {
 	argument := repository.Called(id)
 	return argument.Get(0).(product.ProductDetail), argument.Error(1)
