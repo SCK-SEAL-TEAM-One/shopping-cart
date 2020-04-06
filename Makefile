@@ -38,6 +38,9 @@ build_backend:
 start_service:
 	docker-compose up -d
 
+status_service:
+	docker-compose ps
+
 seed:
 	cat tearup/init.sql | docker exec -i store-database /usr/bin/mysql -u sealteam --password=sckshuhari --default-character-set=utf8  toy
 

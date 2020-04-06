@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "7b03cf0c-e7ba-48a7-8f3b-70bb44cc2905",
+		"_postman_id": "29461239-7295-47ea-9d1e-87b5092e9600",
 		"name": "shopping cart success",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -29,14 +29,100 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{url}}//mockTime/{{mockTime}}",
+					"raw": "{{url}}/mockTime/{{mockTime}}",
 					"host": [
 						"{{url}}"
 					],
 					"path": [
-						"",
 						"mockTime",
 						"{{mockTime}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "product list",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "88ae52e4-bceb-42bb-b3cf-fdd0fa5e8f06",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/api/v1/product",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"product"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "product detail",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "88ae52e4-bceb-42bb-b3cf-fdd0fa5e8f06",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Product name is \" + data[\"product_name\"], function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.product_name).to.eql(data[\"product_name\"]);",
+							"});",
+							"pm.test(\"Product price is \"+ data[\"product_price\"], function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.product_price).to.eql(data[\"product_price\"]);",
+							"});",
+							"pm.test(\"Product quantity is \" + data[\"quantity\"], function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.quantity).to.eql(data[\"quantity\"]);",
+							"});",
+							"pm.test(\"Product brand is \"+ data[\"product_brand\"], function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.product_brand).to.eql(data[\"product_brand\"]);",
+							"});",
+							"pm.test(\"Product image is \" + data[\"product_image\"], function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.product_image).to.eql(data[\"product_image\"]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/api/v1/product/{{product_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"product",
+						"{{product_id}}"
 					]
 				}
 			},
@@ -81,7 +167,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"cart\":[\n\t\t{\n\t\t\t\"product_id\": {{product_id}},\n\t\t\t\"quantity\": {{quantity}}\n\t\t}\n\t],\n\t\"shipping_method\": \"{{shipping_method}}\",\n\t\"shipping_address\": \"{{shipping_address}}\",\n\t\"shipping_sub_district\": \"{{shipping_sub_district}}\",\n\t\"shipping_district\": \"{{shipping_district}}\",\n\t\"shipping_province\": \"{{shipping_province}}\",\n\t\"shipping_zip_code\": \"{{shipping_zip_code}}\",\n\t\"recipient_name\": \"{{recipient_name}}\",\n\t\"recipient_phone_number\": \"{{recipient_phone_number}}\"\n}",
+					"raw": "{\n\t\"cart\":[\n\t\t{\n\t\t\t\"product_id\": {{product_id}},\n\t\t\t\"quantity\": {{product_quantity}}\n\t\t}\n\t],\n\t\"shipping_method\": \"{{shipping_method}}\",\n\t\"shipping_address\": \"{{shipping_address}}\",\n\t\"shipping_sub_district\": \"{{shipping_sub_district}}\",\n\t\"shipping_district\": \"{{shipping_district}}\",\n\t\"shipping_province\": \"{{shipping_province}}\",\n\t\"shipping_zip_code\": \"{{shipping_zip_code}}\",\n\t\"recipient_name\": \"{{recipient_name}}\",\n\t\"recipient_phone_number\": \"{{recipient_phone_number}}\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
