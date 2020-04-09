@@ -15,7 +15,19 @@ type ProductRepositoryMySQL struct {
 }
 
 func (repository ProductRepositoryMySQL) GetProducts(keyword string) (ProductResult, error) {
-	return ProductResult{}, nil
+	var products []Product
+	if keyword == "" {
+		err := repository.DBConnection.Select(&products, "SELECT id,product_name,product_price,image_url FROM products")
+		return ProductResult{
+			Total:    len(products),
+			Products: products,
+		}, err
+	}
+	err := repository.DBConnection.Select(&products, "SELECT id,product_name,product_price,image_url FROM products WHERE produt_name = ?%", keyword)
+	return ProductResult{
+		Total:    len(products),
+		Products: products,
+	}, err
 }
 
 func (productRepository ProductRepositoryMySQL) GetProductByID(ID int) (ProductDetail, error) {
