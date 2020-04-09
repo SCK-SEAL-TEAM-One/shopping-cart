@@ -21,7 +21,13 @@ func (api PaymentAPI) ConfirmPaymentHandler(context *gin.Context) {
 	}
 
 	paymentDetail := payment.NewShippingInfo(request)
-	payment := api.PaymentService.ConfirmPayment(request.OrderID, paymentDetail)
+	payment, err := api.PaymentService.ConfirmPayment(request.OrderID, paymentDetail)
+	if err != nil {
+		context.JSON(http.StatusInternalServerError, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
 
 	context.JSON(http.StatusOK, gin.H{
 		"notify_message": payment,

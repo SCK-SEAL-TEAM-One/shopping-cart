@@ -81,7 +81,8 @@ func Test_ConfirmPayment_Input_OrderID_8004359103_And_PaymentDetail_Should_Be_No
 		TotalPrice:   104.95,
 		MerchantID:   154124000,
 	}
-	actualMessage := paymentService.ConfirmPayment(orderId, paymentDetail)
+	actualMessage, err := paymentService.ConfirmPayment(orderId, paymentDetail)
 	assert.Equal(t, expectedMessage, actualMessage)
+	assert.Equal(t, nil, err)
 
 }

@@ -41,7 +41,7 @@ func Test_ConfirmPaymentHandler_Input_PaymentInformation_Should_Be_ResponsePayme
 		ExpiredYear:  20,
 		CardName:     "Karnwat Wongudom",
 		TotalPrice:   102.00,
-	}).Return("วันเวลาที่ชำระเงิน 1/3/2563 13:30:00 หมายเลขคำสั่งซื้อ 8004359103 คุณสามารถติดตามสินค้าผ่านช่องทาง Kerry หมายเลข Tracking 1785261900")
+	}).Return("วันเวลาที่ชำระเงิน 1/3/2563 13:30:00 หมายเลขคำสั่งซื้อ 8004359103 คุณสามารถติดตามสินค้าผ่านช่องทาง Kerry หมายเลข Tracking 1785261900", nil)
 
 	paymentAPI := api.PaymentAPI{
 		PaymentService: mockPaymentService,
