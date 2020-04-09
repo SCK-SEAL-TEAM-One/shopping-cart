@@ -1,6 +1,6 @@
 DROP DATABASE IF EXISTS toy;
 CREATE DATABASE IF NOT EXISTS toy CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE toy
+USE toy;
 
 CREATE TABLE user (
     id int,
