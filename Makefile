@@ -46,3 +46,14 @@ seed:
 
 stop_service:
 	docker-compose down
+
+deploy:
+	kubectl apply -f deploy/bank-gateway.yml
+	kubectl apply -f deploy/shipping-gateway.yml
+	kubectl apply -f deploy/mysql-service.yml
+	kubectl apply -f deploy/store-service-service.yml
+	kubectl apply -f deploy/mysql-deployment.yml
+	kubectl apply -f deploy/store-service-deployment.yml
+
+seed-k8s:
+	cat tearup/init.sql | kubectl exec -it 
