@@ -3,9 +3,11 @@ kind: Service
 metadata:
   name: store-service
 spec: 
+  type: NodePort
   selector:
     app: store-service
-  port: 
-    - protocal: TCP
+  ports: 
+    - protocol: TCP
       port: 8000
       targetPort: 8000
+      nodePort: 32300

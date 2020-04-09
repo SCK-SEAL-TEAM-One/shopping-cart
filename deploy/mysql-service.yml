@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: store-database
+spec:
+  type: NodePort
+  ports:
+  - name: "3306"
+    port: 3306
+    targetPort: 3306
+    nodePort: 32306
+  selector:
+    app: store-database-deployment
