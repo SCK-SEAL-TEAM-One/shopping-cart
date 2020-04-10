@@ -1,10 +1,11 @@
 frontend: install_dependency_frontend code_analys_frontend run_unittest_frontend build_frontend
-backend: code_analys_backend run_unittest_backend run_integratetest_backend build_backend 
+backend: code_analys_backend run_unittest_backend run_integratetest_backend build_backend start_service run_newman stop_service
 
 run_robot: 
 	robot atdd/ui/shopping_cart_success.robot
 
 run_newman: 
+	sleep 20
 	newman run atdd/api/shopping_cart_success.json -e atdd/api/environment/local_environment.json -d atdd/api/data/shopping_cart_success.json
 
 install_dependency_frontend:
@@ -48,12 +49,22 @@ stop_service:
 	docker-compose down
 
 deploy:
-	kubectl apply -f deploy/bank-gateway.yml
-	kubectl apply -f deploy/shipping-gateway.yml
 	kubectl apply -f deploy/mysql-service.yml
-	kubectl apply -f deploy/store-service-service.yml
 	kubectl apply -f deploy/mysql-deployment.yml
+	kubectl rollout status deployments/store-database-deployment
+	kubectl apply -f deploy/bank-gateway.yml
+	kubectl rollout status deployments/bank-gateway
+	kubectl apply -f deploy/shipping-gateway.yml
+	kubectl rollout status deployments/shipping-gateway
+	kubectl apply -f deploy/store-service-service.yml
 	kubectl apply -f deploy/store-service-deployment.yml
+	kubectl rollout status deployments/store-service
+	kubectl apply -f deploy/store-web-service.yml
+	kubectl apply -f deploy/store-web-deployment.yml
+	kubectl rollout status deployments/store-web
+	kubectl apply -f deploy/store-loadbalancer-service.yml
+	kubectl apply -f deploy/store-loadbalancer-deployment.yml
+	kubectl rollout status deployments/store-loadbalancer
 
 seed-k8s:
 	cat tearup/init.sql | kubectl exec -it 
