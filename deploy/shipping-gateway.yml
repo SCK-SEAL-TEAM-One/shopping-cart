@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: shipping-gateway
 spec: 
-  type: NodePort
+  type: ClusterIP
   selector:
     app: shipping-gateway
   ports: 
@@ -27,7 +27,7 @@ spec:
     spec:
       restartPolicy: Always
       containers:
-      - image: toy-store-shippinggateway:0.0.1
+      - image: sckseal/toy-store-shippinggateway:0.0.1
         name:  shipping-gateway
         ports:
         - containerPort: 8882

@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: store-loadbalancer
+  labels:
+    app: store-loadbalancer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: store-loadbalancer
+  template:
+    metadata:
+      labels:
+        app: store-loadbalancer
+    spec:
+      containers:
+      - name: store-loadbalancer
+        image: sckseal/toy-store-nginx:0.0.1
+        ports:
+        - containerPort: 80

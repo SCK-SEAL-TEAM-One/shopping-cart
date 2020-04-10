@@ -14,7 +14,7 @@ spec:
     spec:
       restartPolicy: Always
       containers:
-      - image: toy-store-service:0.0.1
+      - image: sckseal/toy-store-service:0.0.1
         name:  store-service
         ports:
         - containerPort: 8000

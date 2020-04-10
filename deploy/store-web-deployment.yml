@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: store-web
-        image: sckseal/shoppingcart-web:latest
+        image: sckseal/toy-store-web:0.0.1
         ports:
         - containerPort: 3000

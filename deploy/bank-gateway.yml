@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: bank-gateway
 spec: 
-  type: NodePort
+  type: ClusterIP
   selector:
     app: bank-gateway
   ports: 
@@ -27,7 +27,7 @@ spec:
     spec:
       restartPolicy: Always
       containers:
-      - image: toy-store-bankgateway:0.0.1
+      - image: sckseal/toy-store-bankgateway:0.0.1
         name:  bank-gateway
         ports:
         - containerPort: 8882
