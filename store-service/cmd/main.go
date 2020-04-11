@@ -23,7 +23,11 @@ func main() {
 	if os.Getenv("TEST_MODE") != "" {
 		testMode = true
 	}
-	connection, err := sqlx.Connect("mysql", "sealteam:sckshuhari@(store-database:3306)/toy")
+	dbConnecton := "sealteam:sckshuhari@(store-database:3306)/toy"
+	if os.Getenv("DBCONNECTION") != "" {
+		dbConnecton = os.Getenv("DBCONNECTION")
+	}
+	connection, err := sqlx.Connect("mysql", dbConnecton)
 	if err != nil {
 		log.Fatalln("cannot connect to database", err)
 	}
