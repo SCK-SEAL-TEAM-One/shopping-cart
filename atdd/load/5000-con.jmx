@@ -15,7 +15,7 @@
       <com.blazemeter.jmeter.threads.concurrency.ConcurrencyThreadGroup guiclass="com.blazemeter.jmeter.threads.concurrency.ConcurrencyThreadGroupGui" testclass="com.blazemeter.jmeter.threads.concurrency.ConcurrencyThreadGroup" testname="bzm - Concurrency Thread Group" enabled="true">
         <elementProp name="ThreadGroup.main_controller" elementType="com.blazemeter.jmeter.control.VirtualUserController"/>
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
-        <stringProp name="TargetLevel">5000</stringProp>
+        <stringProp name="TargetLevel">1000</stringProp>
         <stringProp name="RampUp">1</stringProp>
         <stringProp name="Steps">0</stringProp>
         <stringProp name="Hold">1</stringProp>
@@ -31,25 +31,19 @@
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">{&#xd;
-	&quot;order_id&quot;: ${order_id},&#xd;
-	&quot;payment_type&quot;: &quot;credit&quot;,&#xd;
-	&quot;type&quot;: &quot;visa&quot;,&#xd;
-	&quot;card_number&quot;: &quot;4719700591590995&quot;,&#xd;
-	&quot;cvv&quot;: &quot;752&quot;,&#xd;
-	&quot;expired_month&quot;: 7,&#xd;
-	&quot;expired_year&quot;: 20,&#xd;
-	&quot;card_name&quot;: &quot;Karnwat Wongudom&quot;,&#xd;
-	&quot;total_price&quot;: 14.95&#xd;
+  &quot;module&quot;: &quot;BIZHome&quot;,&#xd;
+  &quot;target&quot;: &quot;Header&quot;,&#xd;
+  &quot;token&quot;: &quot;eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI0NTQiLCJpYXQiOjE1ODY1ODQ4NTIsInN1YiI6InRvbjEyMyIsImlzcyI6InNhcmludGhvbm1AYXIuY28udGgifQ.3X-ebduVnfv48PnbesCR5xds2SFZG1szDdcaEp7WNlc&quot;&#xd;
 }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
             </collectionProp>
           </elementProp>
-          <stringProp name="HTTPSampler.domain">ec2-13-229-235-183.ap-southeast-1.compute.amazonaws.com</stringProp>
-          <stringProp name="HTTPSampler.port">32300</stringProp>
+          <stringProp name="HTTPSampler.domain">203.151.236.123</stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
           <stringProp name="HTTPSampler.protocol">http</stringProp>
-          <stringProp name="HTTPSampler.contentEncoding">utf-8</stringProp>
-          <stringProp name="HTTPSampler.path">/api/v1/confirmPayment</stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">service-biz/api/select</stringProp>
           <stringProp name="HTTPSampler.method">POST</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -69,6 +63,15 @@
             <boolProp name="Assertion.assume_success">false</boolProp>
             <intProp name="Assertion.test_type">8</intProp>
           </ResponseAssertion>
+          <hashTree/>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
           <hashTree/>
         </hashTree>
         <ResultCollector guiclass="SummaryReport" testclass="ResultCollector" testname="Summary Report" enabled="true">
