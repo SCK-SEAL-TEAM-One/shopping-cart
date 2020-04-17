@@ -28,6 +28,14 @@ services:
     restart: unless-stopped
     ports:
     - 9100:9100
+  mysql-exporter:
+    image: "prom/mysqld-exporter"
+    container_name: mysql-exporter
+    ports:
+      - "9104:9104"
+    environment:
+      DATA_SOURCE_NAME: "root:root@(store-database:3306)/"
+    restart: always
   cadvisor:
     image: google/cadvisor:latest
     container_name: cadvisor

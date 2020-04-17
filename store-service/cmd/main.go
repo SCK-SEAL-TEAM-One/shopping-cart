@@ -14,14 +14,18 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/go-redis/redis/v7"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
 )
 
 func main() {
-	var testMode bool
+	var testMode, useCache bool
 	if os.Getenv("TEST_MODE") != "" {
 		testMode = true
+	}
+	if os.Getenv("CACHE_ON") != "" {
+		useCache = true
 	}
 	dbConnecton := "sealteam:sckshuhari@(store-database:3306)/toy"
 	if os.Getenv("DBCONNECTION") != "" {
@@ -31,9 +35,29 @@ func main() {
 	if err != nil {
 		log.Fatalln("cannot connect to database", err)
 	}
-	productRepository := product.ProductRepositoryMySQL{
-		DBConnection: connection,
+	var productRepository product.ProductRepository
+
+	if useCache {
+		rdb := redis.NewClient(&redis.Options{
+			Addr:     "store-cache:6379", // use default Addr
+			Password: "",                 // no password set
+			DB:       0,                  // use default DB
+		})
+		_, err := rdb.Ping().Result()
+		if err != nil {
+			log.Fatalln("cannot connect to cache", err)
+		}
+		log.Println("redis connected")
+		productRepository = &product.ProductRepositoryMySQLWithCache{
+			DBConnection:    connection,
+			RedisConnection: rdb,
+		}
+	} else {
+		productRepository = &product.ProductRepositoryMySQL{
+			DBConnection: connection,
+		}
 	}
+
 	orderRepository := order.OrderRepositoryMySQL{
 		DBConnection: connection,
 	}
@@ -41,7 +65,7 @@ func main() {
 		DBConnection: connection,
 	}
 	orderService := order.OrderService{
-		ProductRepository: &productRepository,
+		ProductRepository: productRepository,
 		OrderRepository:   &orderRepository,
 	}
 	bankGateway := payment.BankGateway{
@@ -54,7 +78,7 @@ func main() {
 		BankGateway:        &bankGateway,
 		ShippingGateway:    &shippingGateway,
 		OrderRepository:    &orderRepository,
-		ProductRepository:  &productRepository,
+		ProductRepository:  productRepository,
 		ShippingRepository: &shippingRepository,
 		Time:               time.Now,
 	}
@@ -65,7 +89,7 @@ func main() {
 		PaymentService: &paymentService,
 	}
 	productAPI := api.ProductAPI{
-		ProductRepository: &productRepository,
+		ProductRepository: productRepository,
 	}
 
 	route := gin.Default()

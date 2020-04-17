@@ -1,0 +1,29 @@
+version: "3.5"
+
+services:
+  store-database-cluster-management1:
+    image: mysql/mysql-cluster:latest
+    container_name: store-database-cluster-management1
+    command: ndb_mgmd
+  
+  store-database-cluster-datanode1:
+    image: mysql/mysql-cluster:latest
+    container_name: store-database-cluster-datanode1
+    command: ndbd
+    depends_on: 
+    - store-database-cluster-management1
+
+  store-database-cluster-datanode2:
+    image: mysql/mysql-cluster:latest
+    container_name: store-database-cluster-datanode2
+    command: ndbd
+    depends_on: 
+    - store-database-cluster-management1
+
+  store-database-cluster-server:
+    image: mysql/mysql-cluster:latest
+    container_name: store-database-cluster-server
+    command: mysqld
+    depends_on: 
+    - store-database-cluster-datanode1
+    - store-database-cluster-datanode2

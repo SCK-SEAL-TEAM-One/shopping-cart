@@ -2,7 +2,7 @@ version: "3.5"
 
 services:
   store-service:
-    image: sckseal/toy-store-service:0.0.1
+    image: sckseal/toy-store-service:0.0.2
     container_name: store-service
     build:
       context: store-service
@@ -13,6 +13,13 @@ services:
     restart: always
     environment: 
       - TEST_MODE=true
+      - CACHE_ON=true
+    
+  store-cache:
+    image: redis:latest
+    container_name: store-cache
+    ports: 
+    - "6379:6379"
 
   store-database:
     image: mysql:5.7

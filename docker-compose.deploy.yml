@@ -2,7 +2,7 @@ version: "3.5"
 
 services:
   store-service:
-    image: sckseal/toy-store-service:0.0.1
+    image: sckseal/toy-store-service:0.0.2
     container_name: store-service
     ports:
       - "8000:8000"
@@ -11,6 +11,12 @@ services:
     restart: always
     environment: 
       - TEST_MODE=true
+    
+  store-cache:
+    image: redis:latest
+    container_name: store-cache
+    ports: 
+    - "6379:6379"
 
   store-database:
     image: mysql:5.7
@@ -24,6 +30,19 @@ services:
       - ./tearup/:/docker-entrypoint-initdb.d/
     ports:
       - "3306:3306"
+
+  # store-database-cluster:
+  #   image: mysql/mysql-cluster:5.7
+  #   container_name: store-database
+  #   environment:
+  #     - MYSQL_ROOT_PASSWORD=root
+  #     - MYSQL_USER=sealteam
+  #     - MYSQL_PASSWORD=sckshuhari
+  #     - MYSQL_DATABASE=toy
+  #   volumes:
+  #     - ./tearup/:/docker-entrypoint-initdb.d/
+  #   ports:
+  #     - "3306:3306"
 
   store-web:
     image: sckseal/toy-store-web:0.0.1
