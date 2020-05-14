@@ -1,17 +1,18 @@
-frontend: install_dependency_frontend code_analys_frontend run_unittest_frontend build_frontend
-backend: code_analys_backend run_unittest_backend run_integratetest_backend build_backend start_service run_newman stop_service
+frontend: install_dependency_frontend code_analysis_frontend run_unittest_frontend build_frontend
+backend: code_analysis_backend run_unittest_backend run_integratetest_backend build_backend start_service run_newman stop_service
 
 run_robot: 
 	robot atdd/ui/shopping_cart_success.robot
 
 run_newman: 
-	sleep 20
+	sleep 15
+	cat tearup/init.sql | docker exec -i store-database /usr/bin/mysql -u sealteam --password=sckshuhari --default-character-set=utf8  toy
 	newman run atdd/api/shopping_cart_success.json -e atdd/api/environment/local_environment.json -d atdd/api/data/shopping_cart_success.json
 
 install_dependency_frontend:
 	cd store-web && npm install
 
-code_analys_frontend:
+code_analysis_frontend:
 	cd store-web && npm run lint
 
 run_unittest_frontend:
@@ -20,15 +21,15 @@ run_unittest_frontend:
 build_frontend:
 	docker-compose build store-web
 
-code_analys_backend:
+code_analysis_backend:
 	cd store-service && go vet ./...
 
 run_unittest_backend:
-	cd store-service && go test ./...
+	cd store-service && go test ./... -v
 
 run_integratetest_backend:
 	docker-compose up -d store-database bank-gateway shipping-gateway
-	sleep 15
+	sleep 12
 	cat tearup/init.sql | docker exec -i store-database /usr/bin/mysql -u sealteam --password=sckshuhari --default-character-set=utf8  toy
 	cd store-service && go test -tags=integration ./...
 	docker-compose down
