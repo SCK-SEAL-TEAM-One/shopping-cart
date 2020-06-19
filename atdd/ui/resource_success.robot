@@ -1,16 +1,19 @@
 *** Variable ***
-${url}   http://localhost/Confirm-order
+${url}   http://localhost/Product-list
 
 *** Keywords ***
+ดูรายละเอียดสินค้า
+    Click Element    id=productName-1
 ตรวจสอบข้อมูลสินค้า 
     [Arguments]    ${productName}    ${productPrice}    ${productQuantity}    ${productBrand}
-    Element Text Should Be       id=productName     ${productName}
-    Element Text Should Be       id=productPrice     ${productPrice}
-    Element Text Should Be       id=productQuantity     ${productQuantity}
+    Sleep   0.3
+    Element Text Should Be       id=productName-1     ${productName}
+    Element Text Should Be       id=productPrice-1     ${productPrice}
+    Input Text      id=productQuantity     ${productQuantity}
     Element Text Should Be       id=productBrand     ${productBrand}
 
 เพิ่มสินค้าในตะกร้า
-    Click Element        id=addCart
+    Click Element        id=addToCart
 
 กรอกที่อยู่จัดส่ง
     [Arguments]    ${recipientName}    ${shippingAddress}    ${shippingSubDistrict}    ${shippingDistrict}    ${shippingProvince}    ${shippingZipCode}    ${recipientPhoneNumber}
@@ -26,14 +29,11 @@ ${url}   http://localhost/Confirm-order
     Click Element        id=verifyOrder
 
 ตรวจสอบที่อยู่ในการจัดส่ง
-    [Arguments]    ${recipientName}    ${shippingAddress}    ${shippingSubDistrict}    ${shippingDistrict}    ${shippingProvince}    ${shippingZipCode}    ${recipientPhoneNumber}
-    Element Text Should Be     id=recipientName        ${recipientName}
-    Element Text Should Be     id=shippingAddress        ${shippingAddress}
-    Element Text Should Be     id=shippingSubDistrict        ${shippingSubDistrict}
-    Element Text Should Be     id=shippingDistrict        ${shippingDistrict}
-    Element Text Should Be     id=shippingProvince        ${shippingProvince}
-    Element Text Should Be     id=shippingZipCode        ${shippingZipCode}
-    Element Text Should Be     id=recipientPhoneNumber        ${recipientPhoneNumber}
+    [Arguments]    ${recipientName}    ${shippingAddress}    ${recipientPhoneNumber}
+    Sleep   0.3
+    Element Text Should Be     id=receiverName        ${recipientName}
+    Element Text Should Be     id=recevierAddress        ${shippingAddress}
+    Element Text Should Be     id=recevierPhonenumber        ${recipientPhoneNumber}
 
 ตรวจสอบสรุปรายการสั่งซื้อ
     [Arguments]    ${totalProductPrice}    ${totalShippingCharge}    ${totalAmount}
@@ -43,25 +43,25 @@ ${url}   http://localhost/Confirm-order
 
 ตรวจสอบตะกร้าสินค้า
     [Arguments]    ${productName}    ${productPrice}    ${productQuantity}    ${productBrand}
-    Element Text Should Be       id=cartProductName     ${productName}
-    Element Text Should Be       id=cartProductPrice     ${productPrice}
-    Element Text Should Be       id=cartProductQuantity     ${productQuantity}
-    Element Text Should Be       id=cartProductBrand     ${productBrand}
+    Element Text Should Be       id=productName-1     ${productName}
+    Element Text Should Be       id=productPrice-1     ${productPrice}
+    Element Text Should Be       id=productQuantity-1     ${productQuantity}
 
 ยืนยันคำสั่งซื้อ
     Click Element        id=confirmPayment
 
 ชำระค่าสินค้า
     [Arguments]    ${cardNumber}    ${expiredMonth}    ${expiredYear}    ${cvv}    ${cardName}    ${totalPrice}
-    Click Element    id=paymentType
-    Input Text    id=cardNumber    ${cardNumber}
+    Sleep    0.5
+    Input Text    id=cardNumber    ${cardNumber} 
     Input Text    id=expiredMonth    ${expiredMonth}
     Input Text    id=expiredYear    ${expiredYear}
     Input Text    id=cvv    ${cvv}
     Input Text    id=cardName    ${cardName}
     Element Text Should Be    id=totalPrice    ${totalPrice}
+     Click Button    id=Payment
 
 ได้รับการแจ้งเตือน
     [Arguments]    ${notify}
+    Element Text Should Be    id=title    ชำระเงินสำเร็จ
     Element Text Should Be    id=notify    ${notify}
-    Click Button    id=buttonClose
