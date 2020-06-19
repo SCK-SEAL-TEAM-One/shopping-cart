@@ -16,7 +16,7 @@ export default class ConfirmOrder extends React.Component {
   createCookies() {
     const cart = [{
       id: 1,
-      productName: '43 Piecee Dinner Set',
+      productName: '43 Piece dinner Set',
       productPrice: 12.95,
       productImage: 'https://i.pinimg.com/474x/17/43/2f/17432f12ec88c0d0ea3d0cffc69d25ce.jpg',
       quantity: 1,
