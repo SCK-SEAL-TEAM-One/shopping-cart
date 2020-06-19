@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "29461239-7295-47ea-9d1e-87b5092e9600",
+		"_postman_id": "7802ea08-dcad-43bd-87d4-43bd7a771123",
 		"name": "shopping cart success",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -11,7 +11,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "a9803f1c-baa3-4353-a385-15d128829983",
+						"id": "038507be-1bd1-44f4-ba4c-b5653f311c73",
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
@@ -47,10 +47,22 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "88ae52e4-bceb-42bb-b3cf-fdd0fa5e8f06",
+						"id": "2b5b020b-0697-4c07-a251-75134f2e7e66",
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"product total display shoudl be 2\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.total).to.eql(2);",
+							"});",
+							"",
+							"pm.test(\"product list include product name 43 Piece dinner Set\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    _.each(jsonData.product,(p) => {",
+							"        pm.expect(p.name).to.include(\"43 Piece dinner Set\");",
+							"    });",
 							"});"
 						],
 						"type": "text/javascript"
@@ -80,7 +92,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "88ae52e4-bceb-42bb-b3cf-fdd0fa5e8f06",
+						"id": "436be900-2118-4316-95f8-0fbbac508402",
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
@@ -134,7 +146,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "88ae52e4-bceb-42bb-b3cf-fdd0fa5e8f06",
+						"id": "10f5b372-febe-4cad-9dfb-60653d93494f",
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
@@ -194,7 +206,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "88ae52e4-bceb-42bb-b3cf-fdd0fa5e8f06",
+						"id": "73920f1a-fb04-46e9-ac55-d5900de9c392",
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
