@@ -1,8 +1,9 @@
 import React from 'react'
-import { Container, Row } from 'react-bootstrap'
+import { Container, Row,Button } from 'react-bootstrap'
 import fetch from 'isomorphic-unfetch'
 import Cookies from 'js-cookie'
 import checkPaymentMethod from '../ecommerce/payment'
+import Route from 'next/router'
 
 export default class Payment extends React.Component {
   constructor(props) {
@@ -76,7 +77,9 @@ export default class Payment extends React.Component {
   handleChangeCardName(event) {
     this.setState({ cardName: event.target.value })
   }
-
+  payment(){
+    Route.push("/Payment-success")
+  }
   render() {
     const {
       cardNumber, expiredMonth, expiredYear, cvv, cardName,
@@ -130,7 +133,7 @@ export default class Payment extends React.Component {
                 </span>
               </label>
             </div>
-            <input id="confirmPayment" type="submit" value="ยืนยันการชำระเงิน" />
+            <Button id="Payment" onClick={()=>{this.payment()}} > ยืนยันการชำระเงิน</Button>
           </form>
         </Row>
       </Container>
