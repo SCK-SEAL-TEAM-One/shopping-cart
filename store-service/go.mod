@@ -18,6 +18,7 @@ require (
 	github.com/stretchr/testify v1.5.1
 	golang.org/x/sys v0.0.0-20200223170610-d5e6a3e2c0ae // indirect
 	google.golang.org/appengine v1.6.5 // indirect
+	gopkg.in/go-playground/assert.v1 v1.2.1
 	gopkg.in/go-playground/validator.v9 v9.31.0 // indirect
 	gopkg.in/yaml.v2 v2.2.8 // indirect
 )
