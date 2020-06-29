@@ -4,6 +4,7 @@ ${url}   http://localhost/Product-list
 *** Keywords ***
 ดูรายละเอียดสินค้า
     Click Element    id=productName-1
+    
 ตรวจสอบข้อมูลสินค้า 
     [Arguments]    ${productName}    ${productPrice}    ${productQuantity}    ${productBrand}
     Sleep   0.3
