@@ -5,8 +5,7 @@ Resource    resource_success.robot
 
 *** Test Cases ***
 ซื้อสินค้า 1 ชิ้น เลือกจัดส่งแบบ kerry เลือกตัดเงินผ่าน บัตรเครดิต visa ได้รับ notofication ผ่าน in-app
-    Open Browser    about:blank    chrome
-    Go To           ${url}
+    Open Browser    ${url}    chrome           
     ดูรายละเอียดสินค้า
     ตรวจสอบข้อมูลสินค้า     43 Piece dinner Set       12.95 USD       1       CoolKidz
     เพิ่มสินค้าในตะกร้า
