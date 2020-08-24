@@ -63,6 +63,7 @@ ${url}   http://localhost/Product-list
      Click Button    id=Payment
 
 ได้รับการแจ้งเตือน
+    Set Selenium Speed     0.5
     [Arguments]    ${notify}
     Element Text Should Be    id=title    ชำระเงินสำเร็จ
     Element Text Should Be    id=notify    ${notify}
