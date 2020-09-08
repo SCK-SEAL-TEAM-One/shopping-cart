@@ -2,7 +2,6 @@ import React from 'react'
 import { Container, Button } from 'react-bootstrap'
 import Route from 'next/router'
 
-
 export default class ProductDetail extends React.Component {
   addToCart() {
     Route.push('/Confirm-order')
@@ -12,7 +11,7 @@ export default class ProductDetail extends React.Component {
     return (
       <Container>
         <dev>
-          <img src="https://i.pinimg.com/474x/17/43/2f/17432f12ec88c0d0ea3d0cffc69d25ce.jpg" width="20%" />
+          <img src="https://i.pinimg.com/474x/17/43/2f/17432f12ec88c0d0ea3d0cffc69d25ce.jpg" alt="product" width="20%" />
         </dev>
         <div>
           <h3 id="productName-1">43 Piece dinner Set</h3>

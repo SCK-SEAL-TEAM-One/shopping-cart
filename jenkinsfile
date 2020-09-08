@@ -10,12 +10,12 @@ pipeline {
       parallel {
         stage('code analysis frontend') {
           steps {
-            sh 'make code_analys_frontend' 
+            sh 'make code_analysis_frontend' 
           }
         }
         stage('code analysis backend') {
           steps {
-            sh 'make code_analys_backend' 
+            sh 'make code_analysis_backend' 
           }
         }
       }
