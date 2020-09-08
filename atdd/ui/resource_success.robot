@@ -7,7 +7,6 @@ ${url}   http://localhost/Product-list
     
 ตรวจสอบข้อมูลสินค้า 
     [Arguments]    ${productName}    ${productPrice}    ${productQuantity}    ${productBrand}
-    Sleep   0.3
     Element Text Should Be       id=productName-1     ${productName}
     Element Text Should Be       id=productPrice-1     ${productPrice}
     Input Text      id=productQuantity     ${productQuantity}
@@ -31,7 +30,7 @@ ${url}   http://localhost/Product-list
 
 ตรวจสอบที่อยู่ในการจัดส่ง
     [Arguments]    ${recipientName}    ${shippingAddress}    ${recipientPhoneNumber}
-    Sleep   0.3
+    Set Selenium Speed     0.1
     Element Text Should Be     id=receiverName        ${recipientName}
     Element Text Should Be     id=recevierAddress        ${shippingAddress}
     Element Text Should Be     id=recevierPhonenumber        ${recipientPhoneNumber}
@@ -53,7 +52,7 @@ ${url}   http://localhost/Product-list
 
 ชำระค่าสินค้า
     [Arguments]    ${cardNumber}    ${expiredMonth}    ${expiredYear}    ${cvv}    ${cardName}    ${totalPrice}
-    Sleep    0.5
+    Set Selenium Speed     0.1
     Input Text    id=cardNumber    ${cardNumber} 
     Input Text    id=expiredMonth    ${expiredMonth}
     Input Text    id=expiredYear    ${expiredYear}
