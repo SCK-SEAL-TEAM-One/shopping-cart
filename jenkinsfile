@@ -2,8 +2,8 @@ pipeline {
   agent any
 
   environment {
-    GOPATH = "/usr/local/go"
-    PATH = "$GOPATH/bin:$PATH"
+    GOPATH = "/home/ubuntu/go"
+    PATH = "/usr/local/go/bin/:$GOPATH/bin:$PATH"
   }
 
   stages {
