@@ -1,6 +1,11 @@
 pipeline {
   agent any
 
+  environment {
+    GOPATH = "/usr/local/go"
+    PATH = "$GOPATH/bin:$PATH"
+  }
+
   stages {
     stage('install dependency') {
       steps {
@@ -16,7 +21,6 @@ pipeline {
         }
         stage('code analysis backend') {
           steps {
-            sh 'export PATH=$PATH:/usr/local/go/bin' 
             sh 'make code_analysis_backend' 
           }
         }
@@ -31,7 +35,6 @@ pipeline {
         }
         stage('code analysis backend') {
           steps {
-            sh 'export PATH=$PATH:/usr/local/go/bin' 
             sh 'make run_unittest_backend'
           }
         }
@@ -39,7 +42,6 @@ pipeline {
     }
     stage('run integration test') {
       steps {
-        sh 'export PATH=$PATH:/usr/local/go/bin' 
         sh 'make run_integratetest_backend'
       }
     }
