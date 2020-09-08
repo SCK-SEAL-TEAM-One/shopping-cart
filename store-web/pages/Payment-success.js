@@ -4,7 +4,8 @@ import Route from 'next/router'
 
 
 export default class PaymentSucess extends React.Component {
-  componentWillMount() {
+  constructor() {
+    super()
     this.message = 'วันเวลาที่ชำระเงิน 1/3/2563 13:30:00 หมายเลขคำสั่งซื้อ 8004359103 คุณสามารถติดตามสินค้าผ่านช่องทาง Kerry ด้วยหมายเลข 1785261900'
   }
 
