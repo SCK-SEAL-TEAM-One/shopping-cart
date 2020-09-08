@@ -1,6 +1,6 @@
 *** Settings ***
 Library    SeleniumLibrary
-Suite Setup     Open Browser  ${url}    chromeheadless
+Suite Setup     Open Browser  ${url}    headlesschrome
 Suite Teardown  Close Browser
 
 Resource    resource_success.robot
