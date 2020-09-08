@@ -3,7 +3,7 @@ pipeline {
 
   environment {
     GOPATH = "/home/ubuntu/go"
-    PATH = "/usr/local/go/bin/:$GOPATH/bin:$PATH"
+    PATH = "/home/ubuntu/.local/bin:/usr/local/go/bin/:$GOPATH/bin:$PATH"
   }
 
   stages {
