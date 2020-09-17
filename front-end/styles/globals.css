@@ -1,0 +1,32 @@
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.btn-custom {
+  margin-top: 32px;
+}
+.card-img > img {
+  height: auto;
+}
+.card-img {
+  height: 300px;
+}
+.items-product {
+  margin-bottom: 20px;
+}
+.product-image {
+  width: 100%;
+}
