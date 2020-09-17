@@ -3,12 +3,12 @@ ${url}   http://localhost/Product-list
 
 *** Keywords ***
 ดูรายละเอียดสินค้า
-    Click Element    id=productName-1
+    Click Element    id=viewMore-1
     
 ตรวจสอบข้อมูลสินค้า 
     [Arguments]    ${productName}    ${productPrice}    ${productQuantity}    ${productBrand}
-    Element Text Should Be       id=productName-1     ${productName}
-    Element Text Should Be       id=productPrice-1     ${productPrice}
+    Element Text Should Be       id=productName     ${productName}
+    Element Text Should Be       id=productPrice     ${productPrice}
     Input Text      id=productQuantity     ${productQuantity}
     Element Text Should Be       id=productBrand     ${productBrand}
 
@@ -45,7 +45,7 @@ ${url}   http://localhost/Product-list
     [Arguments]    ${productName}    ${productPrice}    ${productQuantity}    ${productBrand}
     Element Text Should Be       id=productName-1     ${productName}
     Element Text Should Be       id=productPrice-1     ${productPrice}
-    Element Text Should Be       id=productQuantity-1     ${productQuantity}
+    Textfield Value Should Be       id=productQuantity-1     ${productQuantity}
 
 ยืนยันคำสั่งซื้อ
     Click Element        id=confirmPayment
