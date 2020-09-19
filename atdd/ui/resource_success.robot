@@ -7,6 +7,7 @@ ${url}   http://localhost/Product-list
     
 ตรวจสอบข้อมูลสินค้า 
     [Arguments]    ${productName}    ${productPrice}    ${productQuantity}    ${productBrand}
+    Wait Until Element Contains    id=productName    ${productName}
     Element Text Should Be       id=productName     ${productName}
     Element Text Should Be       id=productPrice     ${productPrice}
     Input Text      id=productQuantity     ${productQuantity}
@@ -17,6 +18,7 @@ ${url}   http://localhost/Product-list
 
 กรอกที่อยู่จัดส่ง
     [Arguments]    ${recipientName}    ${shippingAddress}    ${shippingSubDistrict}    ${shippingDistrict}    ${shippingProvince}    ${shippingZipCode}    ${recipientPhoneNumber}
+    Set Selenium Speed     0.1
     Input Text     id=recipientName        ${recipientName}
     Input Text     id=shippingAddress        ${shippingAddress}
     Input Text     id=shippingSubDistrict        ${shippingSubDistrict}
@@ -31,6 +33,7 @@ ${url}   http://localhost/Product-list
 ตรวจสอบที่อยู่ในการจัดส่ง
     [Arguments]    ${recipientName}    ${shippingAddress}    ${recipientPhoneNumber}
     Set Selenium Speed     0.1
+    Wait Until Element Contains    id=receiverName    ${recipientName}  
     Element Text Should Be     id=receiverName        ${recipientName}
     Element Text Should Be     id=recevierAddress        ${shippingAddress}
     Element Text Should Be     id=recevierPhonenumber        ${recipientPhoneNumber}
