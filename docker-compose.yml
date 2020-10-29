@@ -22,7 +22,7 @@ services:
     - "6379:6379"
 
   store-database:
-    image: mysql:5.7
+    image: mysql:8.0.22
     container_name: store-database
     environment:
       - MYSQL_ROOT_PASSWORD=root
