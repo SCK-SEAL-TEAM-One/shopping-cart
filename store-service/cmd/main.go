@@ -27,6 +27,17 @@ func main() {
 	if os.Getenv("CACHE_ON") != "" {
 		useCache = true
 	}
+
+	bankGatewayEndpoint := "bank-gateway:8882"
+	shippingGatewayEndpoint := "shipping-gateway:8882"
+
+	if os.Getenv("BANK_GATEWAY") != "" {
+		bankGatewayEndpoint = os.Getenv("BANK_GATEWAY")
+	}
+	if os.Getenv("SHIPPING_GATEWAY") != "" {
+		shippingGatewayEndpoint = os.Getenv("SHIPPING_GATEWAY")
+	}
+
 	dbConnecton := "sealteam:sckshuhari@(store-database:3306)/toy"
 	if os.Getenv("DBCONNECTION") != "" {
 		dbConnecton = os.Getenv("DBCONNECTION")
@@ -69,10 +80,10 @@ func main() {
 		OrderRepository:   &orderRepository,
 	}
 	bankGateway := payment.BankGateway{
-		BankEndpoint: "http://bank-gateway:8882",
+		BankEndpoint: "http://" + bankGatewayEndpoint,
 	}
 	shippingGateway := shipping.ShippingGateway{
-		KerryEndpoint: "http://shipping-gateway:8882",
+		KerryEndpoint: "http://" + shippingGatewayEndpoint,
 	}
 	paymentService := payment.PaymentService{
 		BankGateway:        &bankGateway,
