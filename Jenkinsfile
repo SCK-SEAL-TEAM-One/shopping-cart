@@ -31,6 +31,7 @@ pipeline {
         stage('code analysis backend') {
           steps {
             sh 'make run_unittest_backend'
+            junit '*.xml'
           }
         }
       }
