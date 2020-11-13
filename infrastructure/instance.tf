@@ -41,14 +41,14 @@ module "security_group" {
 resource "aws_internet_gateway" "performance_vpc_gw" {
   vpc_id = aws_vpc.performance_vpc.id
   tags = {
-          Name = "Performance VPC Internet Gateway"
+    Name = "Performance VPC Internet Gateway"
   }
 } 
 
 resource "aws_route_table" "performance_route_table" {
   vpc_id = aws_vpc.performance_vpc.id
   tags = {
-          Name = "Performance VPC Route Table"
+    Name = "Performance VPC Route Table"
   }
 } 
 
@@ -147,4 +147,20 @@ module "j_meter" {
   tags = {
     Type = "jmeter"
   }
+}
+
+output "kube_master_private_ip" {
+  value = module.kube_master.private_ip[0]
+}
+
+output "kube_master_dns" {
+  value = module.kube_master.public_dns[*]
+}
+
+output "kube_slave_dns" {
+  value = module.kube_slave.public_dns[*]
+}
+
+output "jmeter_dns" {
+  value = module.j_meter.public_dns[*]
 }
