@@ -1,0 +1,14 @@
+{
+	"id": "a0bc9e2f-20d2-4947-a997-46947b3d5868",
+	"name": "aws",
+	"values": [
+		{
+			"key": "url",
+			"value": "http://ec2-52-221-243-22.ap-southeast-1.compute.amazonaws.com:8000",
+			"enabled": true
+		}
+	],
+	"_postman_variable_scope": "environment",
+	"_postman_exported_at": "2020-03-02T10:47:45.500Z",
+	"_postman_exported_using": "Postman/7.17.0"
+}
