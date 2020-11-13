@@ -3,13 +3,13 @@ ${url}   http://localhost/Product-list
 
 *** Keywords ***
 ดูรายละเอียดสินค้า
-    Click Element    id=productName-1
+    Click Element    id=viewMore-1
     
 ตรวจสอบข้อมูลสินค้า 
     [Arguments]    ${productName}    ${productPrice}    ${productQuantity}    ${productBrand}
-    Wait Until Element Contains    id=productName-1    ${productName}    
-    Element Text Should Be       id=productName-1     ${productName}
-    Element Text Should Be       id=productPrice-1     ${productPrice}
+    Wait Until Element Contains    id=productName    ${productName}
+    Element Text Should Be       id=productName     ${productName}
+    Element Text Should Be       id=productPrice     ${productPrice}
     Input Text      id=productQuantity     ${productQuantity}
     Element Text Should Be       id=productBrand     ${productBrand}
 
@@ -48,7 +48,7 @@ ${url}   http://localhost/Product-list
     [Arguments]    ${productName}    ${productPrice}    ${productQuantity}    ${productBrand}
     Element Text Should Be       id=productName-1     ${productName}
     Element Text Should Be       id=productPrice-1     ${productPrice}
-    Element Text Should Be       id=productQuantity-1     ${productQuantity}
+    Textfield Value Should Be       id=productQuantity-1     ${productQuantity}
 
 ยืนยันคำสั่งซื้อ
     Click Element        id=confirmPayment
@@ -69,3 +69,9 @@ ${url}   http://localhost/Product-list
     [Arguments]    ${notify}
     Element Text Should Be    id=title    ชำระเงินสำเร็จ
     Element Text Should Be    id=notify    ${notify}
+
+คำสั่งซื้อมีจำนวนทั้งหมดเท่ากับ
+    [Arguments]    ${expected_rows}
+    Connect To Database     pymysql   toy     sealteam    sckshuhari    localhost     3306    
+    Row Count Is Equal To X     Select * From orders    ${expected_rows}
+    Disconnect from Database

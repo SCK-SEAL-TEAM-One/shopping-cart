@@ -22,7 +22,7 @@ services:
     - "6379:6379"
 
   store-database:
-    image: mysql:5.7
+    image: mysql:8.0.22
     container_name: store-database
     environment:
       - MYSQL_ROOT_PASSWORD=root
@@ -35,10 +35,11 @@ services:
       - "3306:3306"
 
   store-web:
-    image: sckseal/toy-store-web:0.0.2
+    #image: sckseal/toy-store-web:0.0.1
+    image: toy-store-web:0.0.1
     container_name: store-web
     build:
-      context: store-web
+      context: front-end
     ports:
       - "3000:3000"
 
