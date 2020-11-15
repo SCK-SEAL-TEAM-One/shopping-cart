@@ -41,14 +41,14 @@ module "security_group" {
 resource "aws_internet_gateway" "performance_vpc_gw" {
   vpc_id = aws_vpc.performance_vpc.id
   tags = {
-          Name = "Performance VPC Internet Gateway"
+    Name = "Performance VPC Internet Gateway"
   }
 } 
 
 resource "aws_route_table" "performance_route_table" {
   vpc_id = aws_vpc.performance_vpc.id
   tags = {
-          Name = "Performance VPC Route Table"
+    Name = "Performance VPC Route Table"
   }
 } 
 
@@ -61,6 +61,23 @@ resource "aws_route" "performance_vpc_internet_access" {
 resource "aws_route_table_association" "performance_vpc_association" {
   subnet_id      = aws_subnet.performance_subnet.id
   route_table_id = aws_route_table.performance_route_table.id
+}
+
+
+resource "random_string" "token_id" {
+  length  = 6
+  special = false
+  upper   = false
+}
+
+resource "random_string" "token_secret" {
+  length  = 16
+  special = false
+  upper   = false
+}
+
+locals {
+  token = "${random_string.token_id.result}.${random_string.token_secret.result}"
 }
 
 # kubectl-ready
@@ -90,6 +107,25 @@ module "kube_master" {
   tags = {
     "Type" = "kubernetes"
   }
+
+  user_data = <<-EOF
+  #!/bin/bash
+  # Install kubeadm and Docker
+  sudo ufw disable
+  sudo systemctl disable ufw
+  # Run kubeadm
+  sudo kubeadm init \
+    --token "${local.token}" \
+    --token-ttl 15m 
+    --kubernetes-version v1.13.0 
+    --ignore-preflight-errors=all
+  # Prepare kubeconfig file for download to local machine
+  mkdir -p $HOME/.kube
+  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+  sudo chown $(id -u):$(id -g) $HOME/.kube/config
+  # Indicate completion of bootstrapping on this node
+  touch /home/ubuntu/done
+  EOF
 }
 
 # kubectl-ready
@@ -119,6 +155,17 @@ module "kube_slave" {
   tags = {
     Type = "kubernetes"
   }
+
+  user_data = <<-EOF
+  #!/bin/bash
+  # Install kubeadm and Docker
+  sudo ufw disable
+  sudo systemctl disable ufw
+  sudo kubeadm join ${module.kube_master.private_ip[0]}:6443 \
+    --token ${local.token} \
+    --discovery-token-unsafe-skip-ca-verification
+  touch /home/ubuntu/done
+  EOF
 }
 
 module "j_meter" {
@@ -147,4 +194,51 @@ module "j_meter" {
   tags = {
     Type = "jmeter"
   }
+}
+
+resource "null_resource" "wait_for_bootstrap_to_finish" {
+  provisioner "local-exec" {
+    command = <<-EOF
+    alias ssh='ssh -q -i ${abspath(path.module)}/sck_default.pem -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'
+    while true; do
+      sleep 2
+      ! ssh ubuntu@${module.kube_master.public_ip[0]} [[ -f /home/ubuntu/done ]] >/dev/null && continue
+      %{for worker_public_ip in module.kube_slave.public_ip[*]~}
+      ! ssh ubuntu@${worker_public_ip} [[ -f /home/ubuntu/done ]] >/dev/null && continue
+      %{endfor~}
+      break
+    done
+    EOF
+  }
+  triggers = {
+    instance_ids = join(",", concat(module.kube_master.id[*], module.kube_slave.id[*]))
+  }
+}
+
+resource "null_resource" "install_coredns" {
+  provisioner "local-exec" {
+    command = <<-EOF
+    alias ssh='ssh -q -i ${abspath(path.module)}/sck_default.pem -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'
+    ssh ubuntu@${module.kube_master.public_ip[0]} "source /home/ubuntu/.bashrc; mkdir -p ~/.kube; sudo cp -i /etc/kubernetes/admin.conf ~/.kube/config; sudo chown ubuntu:ubuntu ~/.kube/config; kubectl apply -f https://docs.projectcalico.org/v3.4/getting-started/kubernetes/installation/hosted/etcd.yaml; kubectl apply -f https://docs.projectcalico.org/v3.4/getting-started/kubernetes/installation/hosted/calico.yaml"
+    EOF
+  }
+  triggers = {
+    wait_for_bootstrap_to_finish = null_resource.wait_for_bootstrap_to_finish.id
+  }
+}
+
+output "kube_master_private_ip" {
+  value = module.kube_master.private_ip[0]
+}
+
+output "kube_master_dns" {
+  value = module.kube_master.public_dns[*]
+}
+
+output "kube_slave_dns" {
+  value = module.kube_slave.public_dns[*]
+}
+
+output "jmeter_dns" {
+  value = module.j_meter.public_dns[*]
 }

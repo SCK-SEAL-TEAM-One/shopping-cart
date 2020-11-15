@@ -3,10 +3,12 @@ kind: Service
 metadata:
   name: store-web
 spec: 
-  type: ClusterIP
+  type: NodePort
   selector:
     app: store-web
   ports: 
     - protocol: TCP
       port: 3000
       targetPort: 3000
+      nodePort: 30000
+    

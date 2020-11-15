@@ -2,7 +2,7 @@ version: "3.5"
 
 services:
   store-service:
-    image: sckseal/toy-store-service:0.0.2
+    image: sckseal/toy-store-service:0.0.3
     container_name: store-service
     ports:
       - "8000:8000"
@@ -45,13 +45,13 @@ services:
   #     - "3306:3306"
 
   store-web:
-    image: sckseal/toy-store-web:0.0.1
+    image: sckseal/toy-store-web:0.0.2
     container_name: store-web
     ports:
       - "3000:3000"
 
   store-nginx:
-    image: sckseal/toy-store-nginx:0.0.1
+    image: sckseal/toy-store-nginx:0.0.2
     container_name: store-nginx
     restart: always
     depends_on:

@@ -12,14 +12,14 @@ export default class ProductList extends React.Component {
     const item = [
       {
         productImage:
-          "https://i.pinimg.com/474x/17/43/2f/17432f12ec88c0d0ea3d0cffc69d25ce.jpg",
+          "17432f12ec88c0d0ea3d0cffc69d25ce.jpg",
         productName: "43 Piece Dinner Set",
         productPrice: "12.95 USD",
         getProductDetail: this.getProductDetail.bind(this),
       },
       {
         productImage:
-          "https://images-na.ssl-images-amazon.com/images/I/61uc4bgUPlL._AC_SL1500_.jpg",
+          "61uc4bgUPlL._AC_SL1500_.jpg",
         productName: "Balance Training Bicycle",
         productPrice: "119.95 USD",
         getProductDetail: this.getProductDetail.bind(this),

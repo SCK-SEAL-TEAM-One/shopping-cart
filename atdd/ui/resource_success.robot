@@ -69,3 +69,9 @@ ${url}   http://localhost/Product-list
     [Arguments]    ${notify}
     Element Text Should Be    id=title    ชำระเงินสำเร็จ
     Element Text Should Be    id=notify    ${notify}
+
+คำสั่งซื้อมีจำนวนทั้งหมดเท่ากับ
+    [Arguments]    ${expected_rows}
+    Connect To Database     pymysql   toy     sealteam    sckshuhari    localhost     3306    
+    Row Count Is Equal To X     Select * From orders    ${expected_rows}
+    Disconnect from Database
