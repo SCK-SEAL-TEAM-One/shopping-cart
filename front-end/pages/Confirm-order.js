@@ -3,14 +3,21 @@ import { Container, Row, Button } from 'react-bootstrap'
 import fetch from 'isomorphic-unfetch'
 import Cookies from 'js-cookie'
 import Route from 'next/router'
+import { withTranslation } from '../i18n'
 import CartItem from '../components/CartItem'
 
 
-export default class ConfirmOrder extends React.Component {
+class ConfirmOrder extends React.Component {
   constructor(props) {
     super(props)
 
     this.submitOrder = this.submitOrder.bind(this)
+  } 
+  
+  async getInitialProps() {
+    return ({
+      namespacesRequired: ['common'],
+    })  
   }
 
   createCookies() {
@@ -106,3 +113,6 @@ export default class ConfirmOrder extends React.Component {
     )
   }
 }
+
+
+export default withTranslation('common')(ConfirmOrder)

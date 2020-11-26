@@ -17,6 +17,7 @@
     "js-cookie": "^2.2.1",
     "newsapi": "^2.4.1",
     "next": "9.5.4",
+    "next-i18next": "^7.0.1",
     "react": "16.13.1",
     "react-bootstrap": "^1.3.0",
     "react-dom": "16.13.1"

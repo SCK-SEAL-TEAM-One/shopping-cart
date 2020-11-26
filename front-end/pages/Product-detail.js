@@ -1,10 +1,17 @@
 import React from "react";
 import { Container, Button, Form, Row, Col } from "react-bootstrap";
 import Route from "next/router";
+import { withTranslation } from '../i18n'
 
-export default class ProductDetail extends React.Component {
+class ProductDetail extends React.Component {
   addToCart() {
     Route.push("/Confirm-order");
+  }
+
+  async getInitialProps() {
+    return ({
+      namespacesRequired: ['common'],
+    })  
   }
 
   render() {
@@ -74,3 +81,5 @@ export default class ProductDetail extends React.Component {
     );
   }
 }
+
+export default withTranslation('common')(ProductDetail)

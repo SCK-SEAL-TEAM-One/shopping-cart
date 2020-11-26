@@ -1,0 +1,7 @@
+{
+  "h1": "ตัวอย่างเรียบง่าย",
+  "change-locale": "เปลี่ยนภาษา",
+  "to-second-page": "ไปหน้าสอง",
+  "error-with-status": "เกิด error บนเซิฟเวอร์ รหัส HTTP {{statusCode}} ",
+  "error-without-status": "เกิด error บนเซิฟเวอร์ "
+}

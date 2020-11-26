@@ -1,12 +1,19 @@
 import React from 'react'
 import { Container, Button, Image } from 'react-bootstrap'
 import Route from 'next/router'
+import { withTranslation } from '../i18n'
 
 
-export default class PaymentSucess extends React.Component {
+class PaymentSucess extends React.Component {
   constructor() {
     super()
     this.message = 'วันเวลาที่ชำระเงิน 1/3/2563 13:30:00 หมายเลขคำสั่งซื้อ 8004359103 คุณสามารถติดตามสินค้าผ่านช่องทาง Kerry ด้วยหมายเลข 1785261900'
+  }
+
+  async getInitialProps() {
+    return ({
+      namespacesRequired: ['common'],
+    })  
   }
 
   goHome() {
@@ -28,3 +35,5 @@ export default class PaymentSucess extends React.Component {
     )
   }
 }
+
+export default withTranslation('common')(PaymentSucess)

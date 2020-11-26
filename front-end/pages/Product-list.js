@@ -2,10 +2,17 @@ import React from "react";
 import { Container, Form, Row, Col, Button, CardDeck } from "react-bootstrap";
 import Route from "next/router";
 import ProductCard from "../components/ProductCard";
+import { withTranslation } from '../i18n'
 
-export default class ProductList extends React.Component {
+class ProductList extends React.Component {
   getProductDetail() {
     Route.push("/Product-detail");
+  }
+
+  async getInitialProps() {
+    return ({
+      namespacesRequired: ['common'],
+    })  
   }
 
   render() {
@@ -75,3 +82,5 @@ export default class ProductList extends React.Component {
     );
   }
 }
+
+export default withTranslation('common')(ProductList)

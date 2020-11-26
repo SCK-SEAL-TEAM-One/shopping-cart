@@ -4,8 +4,9 @@ import fetch from 'isomorphic-unfetch'
 import Cookies from 'js-cookie'
 import Route from 'next/router'
 import checkPaymentMethod from '../ecommerce/payment'
+import { withTranslation } from '../i18n'
 
-export default class Payment extends React.Component {
+class Payment extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -22,6 +23,12 @@ export default class Payment extends React.Component {
     this.handleChangeExpiredYear = this.handleChangeExpiredYear.bind(this)
     this.handleChangeCVV = this.handleChangeCVV.bind(this)
     this.handleChangeCardName = this.handleChangeCardName.bind(this)
+  }
+
+  async getInitialProps() {
+    return ({
+      namespacesRequired: ['common'],
+    })  
   }
 
   confrimPayment() {
@@ -142,3 +149,4 @@ export default class Payment extends React.Component {
     )
   }
 }
+export default withTranslation('common')(Payment)
