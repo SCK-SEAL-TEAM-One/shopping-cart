@@ -166,25 +166,22 @@ make run_newman
 ### UI test
 1. ติดตั้ง Robot framework
 ```
-download Python2.7.xx (www.python.org)
+download Python2.7.xx (www.python.org) or Python3.x.x 
+except 3.7.x (have bug)
 ```
-2. ติดตั้ง PIP
-```
-sudo easy_install pip
-```
-3. ติดตั้ง Robot framework
+2. ติดตั้ง Robot framework
 ```
 pip install robotframework
 ```
-4. ติดตั้ง selenium2library
+3. ติดตั้ง seleniumlibrary
 ```
-pip install robotframework-selenium2library
+pip install robotframework-seleniumlibrary
 ```
-5. ติดตั้ง chrome driver
+4. ติดตั้ง chrome driver
 ```
-brew install chromedriver
+brew --cask install chromedriver
 ```
-6. run robot framework
+5. run robot framework
 ```
 robot atdd/ui/shopping_cart_success.robot
 ```
