@@ -35,16 +35,23 @@ pipeline {
         stage('code analysis backend') {
           steps {
             sh 'make run_unittest_backend'
-            junit '*.xml'
+            junit 'store-service/*.xml'
           }
         }
 
       }
     }
 
+    stage('setup test fixtures') {
+      steps {
+        sh 'docker-compose up -d store-database bank-gateway shipping-gateway'
+      }
+    }
+
     stage('run integration test') {
       steps {
-        sh 'make run_integratetest_backend'
+        // sh 'make run_integratetest_backend'
+        sh 'cd store-service && go test -tags=integration ./...'
       }
     }
 

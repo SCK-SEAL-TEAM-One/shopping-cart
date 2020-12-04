@@ -17,6 +17,8 @@ import (
 	"github.com/go-redis/redis/v7"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
+
+	"go.elastic.co/apm/module/apmgin"
 )
 
 func main() {
@@ -104,6 +106,7 @@ func main() {
 	}
 
 	route := gin.Default()
+	route.Use(apmgin.Middleware(route))
 	route.GET("/api/v1/product", productAPI.SearchHandler)
 	route.GET("/api/v1/product/:id", productAPI.GetProductHandler)
 	route.POST("/api/v1/order", storeAPI.SubmitOrderHandler)
