@@ -82,8 +82,7 @@ pipeline {
       steps {
         sh 'make start_service'
         sh 'make run_newman'
-        sh 'cd atdd/api-robot && robot checkout-product-success.robot'
-        sh 'cd atdd/ui && robot shopping_cart_success.robot'
+        sh 'make run_robot'
         sh 'make stop_service'
       }
     }
@@ -91,8 +90,7 @@ pipeline {
   }
   post {
     always {
-      robot outputPath: 'atdd/api-robot/', passThreshold: 100.0
-      robot outputPath: 'atdd/ui/', passThreshold: 100.0
+      robot outputPath: './', passThreshold: 100.0
       sh 'make stop_service'
       sh 'docker volume prune -f'
     }
