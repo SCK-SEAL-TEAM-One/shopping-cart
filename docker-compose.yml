@@ -11,17 +11,17 @@ services:
     depends_on:
       - store-database
     restart: always
-    environment: 
+    environment:
       - TEST_MODE=true
       - CACHE_ON=true
       - ELASTIC_APM_SERVER_URL=http://host.docker.internal:8200
       - ELASTIC_APM_SERVICE_NAME=shopping-cart
-    
+
   store-cache:
     image: redis:latest
     container_name: store-cache
-    ports: 
-    - "6379:6379"
+    ports:
+      - "6379:6379"
 
   store-database:
     image: mysql:8.0.22
@@ -50,8 +50,7 @@ services:
     container_name: store-nginx
     restart: always
     build:
-      context: .
-      dockerfile: Dockerfile.nginx
+      context: nginx
     depends_on:
       - store-service
       - store-web
@@ -60,7 +59,7 @@ services:
 
   bank-gateway:
     image: sckseal/toy-store-bankgateway:0.0.1
-    build: 
+    build:
       context: thirdparty/bank-gateway
     container_name: bank-gateway
     restart: always
