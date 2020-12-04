@@ -135,7 +135,7 @@ export default class Payment extends React.Component {
                 </span>
               </label>
             </div>
-            <Button id="Payment" onClick={() => { this.payment() }}> ยืนยันการชำระเงิน</Button>
+            <Button id="payment" onClick={() => { this.payment() }}> ยืนยันการชำระเงิน</Button>
           </form>
         </Row>
       </Container>
