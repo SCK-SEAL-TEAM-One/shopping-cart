@@ -41,7 +41,7 @@ services:
     image: toy-store-web:0.0.1
     container_name: store-web
     build:
-      context: store-web
+      context: front-end
     ports:
       - "3000:3000"
 
