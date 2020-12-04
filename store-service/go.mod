@@ -10,6 +10,7 @@ require (
 	github.com/golang/protobuf v1.3.4 // indirect
 	github.com/jmoiron/sqlx v1.2.0
 	github.com/json-iterator/go v1.1.9 // indirect
+	github.com/jstemmer/go-junit-report v0.9.1 // indirect
 	github.com/kr/pretty v0.2.0 // indirect
 	github.com/leodido/go-urn v1.2.0 // indirect
 	github.com/mattn/go-isatty v0.0.12 // indirect
@@ -22,5 +23,4 @@ require (
 	gopkg.in/go-playground/assert.v1 v1.2.1
 	gopkg.in/go-playground/validator.v9 v9.31.0 // indirect
 	gopkg.in/yaml.v2 v2.2.8 // indirect
-	github.com/jstemmer/go-junit-report
 )
