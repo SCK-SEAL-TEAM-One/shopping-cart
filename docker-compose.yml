@@ -14,6 +14,8 @@ services:
     environment: 
       - TEST_MODE=true
       - CACHE_ON=true
+      - ELASTIC_APM_SERVER_URL=http://host.docker.internal:8200
+      - ELASTIC_APM_SERVICE_NAME=shopping-cart
     
   store-cache:
     image: redis:latest
@@ -39,7 +41,7 @@ services:
     image: toy-store-web:0.0.1
     container_name: store-web
     build:
-      context: front-end
+      context: store-web
     ports:
       - "3000:3000"
 
