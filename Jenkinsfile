@@ -34,7 +34,6 @@ pipeline {
 
         stage('code analysis backend') {
           steps {
-            sh 'go get -u github.com/jstemmer/go-junit-report'
             sh 'make run_unittest_backend'
             junit 'store-service/*.xml'
             script{
