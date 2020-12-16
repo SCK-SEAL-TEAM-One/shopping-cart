@@ -2,7 +2,8 @@ frontend: install_dependency_frontend code_analysis_frontend run_unittest_fronte
 backend: code_analysis_backend run_unittest_backend run_integratetest_backend build_backend start_service run_newman stop_service
 
 run_robot: 
-	robot atdd/ui/shopping_cart_success.robot
+	curl http://localhost:8000/mockTime/01032020T13:30:00
+	robot atdd
 
 run_newman: 
 	#sleep 15
