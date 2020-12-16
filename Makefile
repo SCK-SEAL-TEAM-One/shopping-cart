@@ -31,11 +31,11 @@ run_unittest_backend:
 	cd store-service && go test -v -coverprofile=coverage.out ./... 2>&1 | go-junit-report > coverage.xml
 
 run_integratetest_backend:
-	docker-compose up -d store-database bank-gateway shipping-gateway
-	sleep 60
-	cat tearup/init.sql | docker exec -i store-database /usr/bin/mysql -u sealteam --password=sckshuhari --default-character-set=utf8  toy
+	# docker-compose up -d store-database bank-gateway shipping-gateway
+	sleep 30
+	# cat tearup/init.sql | docker exec -i store-database /usr/bin/mysql -u sealteam --password=sckshuhari --default-character-set=utf8  toy
 	cd store-service && go test -tags=integration ./...
-	#docker-compose down
+	# docker-compose down
 
 build_backend:
 	docker-compose build store-service

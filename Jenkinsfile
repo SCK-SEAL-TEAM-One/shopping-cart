@@ -50,8 +50,8 @@ pipeline {
 
     stage('run integration test') {
       steps {
-        // sh 'make run_integratetest_backend'
-        sh 'cd store-service && go test -tags=integration ./...'
+        sh 'make run_integratetest_backend'
+        // sh 'cd store-service && go test -tags=integration ./...'
       }
     }
 
