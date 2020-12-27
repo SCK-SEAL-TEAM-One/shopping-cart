@@ -24,7 +24,7 @@ services:
       - "6379:6379"
 
   store-database:
-    image: mysql:8.0.22
+    image: mariadb:10.4.17
     container_name: store-database
     environment:
       - MYSQL_ROOT_PASSWORD=root
