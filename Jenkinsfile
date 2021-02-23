@@ -17,12 +17,7 @@ pipeline {
 
         stage('code analysis backend') {
           steps {
-            script {
-              def root = tool type: 'go', name: 'Go1.15.6'
-              withEnv(["GOROOT=${root}", "PATH+GO=${root}/bin"]){
-                sh 'make code_analysis_backend'
-              }
-            }
+            sh 'make code_analysis_backend'
           }
         }
 
@@ -39,26 +34,14 @@ pipeline {
 
         stage('code analysis backend') {
           steps {
+            sh 'make run_unittest_backend'
+            junit 'store-service/*.xml'
             script{
-              def root = tool type: 'go', name: 'Go1.15.6'
-              withEnv(["GOROOT=${root}", "PATH+GO=${root}/bin"]){
-                sh 'go get github.com/jstemmer/go-junit-report'
-                sh 'cd store-service && go test -v -coverprofile=coverage.out ./... 2>&1 | /var/lib/jenkins/go/bin/go-junit-report > coverage.xml'
-                junit 'store-service/*.xml'
-              }
-              def scannerHome = tool 'SonarQubeScanner';
-              withSonarQubeEnv('SonarQubeScanner'){
-                sh "${scannerHome}/bin/sonar-scanner"
-              }
+                def scannerHome = tool 'SonarQubeScanner';
+                withSonarQubeEnv('SonarQubeScanner'){
+                    sh "${scannerHome}/bin/sonar-scanner"
+                }
             }
-            // sh 'make run_unittest_backend'
-            // junit 'store-service/*.xml'
-            // script{
-            //     def scannerHome = tool 'SonarQubeScanner';
-            //     withSonarQubeEnv('SonarQubeScanner'){
-            //         sh "${scannerHome}/bin/sonar-scanner"
-            //     }
-            // }
           }
         }
 
@@ -73,12 +56,8 @@ pipeline {
 
     stage('run integration test') {
       steps {
-        script{
-          def root = tool type: 'go', name: 'Go1.15.6'
-          withEnv(["GOROOT=${root}", "PATH+GO=${root}/bin"]){
-            sh 'make run_integratetest_backend'
-          }
-        }
+        sh 'make run_integratetest_backend'
+        // sh 'cd store-service && go test -tags=integration ./...'
       }
     }
 
