@@ -104,7 +104,13 @@ pipeline {
         sh 'make start_service'
         sh 'make run_newman'
         sh 'make run_robot'
-        sh 'make stop_service'
+        // sh 'make stop_service'
+      }
+    }
+
+    stage('run Performance Testing') {
+      steps {
+        sh 'make run_performance_test_k6'
       }
     }
 
