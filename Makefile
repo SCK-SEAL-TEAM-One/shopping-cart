@@ -44,7 +44,6 @@ start_service:
 	docker-compose up -d
 	sleep 45
 	cat tearup/init.sql | docker exec -i store-database /usr/bin/mysql -u sealteam --password=sckshuhari --default-character-set=utf8  toy
-	sleep 15
 	
 status_service:
 	docker-compose ps
