@@ -36,12 +36,12 @@ pipeline {
           steps {
             sh 'make run_unittest_backend'
             junit 'store-service/*.xml'
-            script{
-                def scannerHome = tool 'SonarQubeScanner';
-                withSonarQubeEnv('SonarQubeScanner'){
-                    sh "${scannerHome}/bin/sonar-scanner"
-                }
-            }
+            //script{
+            //    def scannerHome = tool 'SonarQubeScanner';
+            //    withSonarQubeEnv('SonarQubeScanner'){
+            //        sh "${scannerHome}/bin/sonar-scanner"
+            //    }
+            //}
           }
         }
 
