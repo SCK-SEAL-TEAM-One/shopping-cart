@@ -7,7 +7,6 @@ run_robot:
 
 run_newman: 
 	#sleep 15
-	#cat tearup/init.sql | docker exec -i store-database /usr/bin/mysql -u sealteam --password=sckshuhari --default-character-set=utf8  toy
 	newman run atdd/api/shopping_cart_success.json -e atdd/api/environment/local_environment.json -d atdd/api/data/shopping_cart_success.json
 
 aws_test:
@@ -32,18 +31,21 @@ run_unittest_backend:
 	cd store-service && go test -v -coverprofile=coverage.out ./... 2>&1 | go-junit-report > coverage.xml
 
 run_integratetest_backend:
-	# docker-compose up -d store-database bank-gateway shipping-gateway
+	docker-compose up -d store-database bank-gateway shipping-gateway
 	sleep 45
 	cat tearup/init.sql | docker exec -i store-database /usr/bin/mysql -u sealteam --password=sckshuhari --default-character-set=utf8  toy
 	cd store-service && go test -tags=integration ./...
-	# docker-compose down
+	docker-compose down
 
 build_backend:
 	docker-compose build store-service
 
 start_service:
 	docker-compose up -d
-
+	sleep 45
+	cat tearup/init.sql | docker exec -i store-database /usr/bin/mysql -u sealteam --password=sckshuhari --default-character-set=utf8  toy
+	sleep 15
+	
 status_service:
 	docker-compose ps
 
