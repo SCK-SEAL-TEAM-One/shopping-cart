@@ -32,7 +32,7 @@ run_unittest_backend:
 
 run_integratetest_backend:
 	docker-compose up -d store-database bank-gateway shipping-gateway
-	sleep 20
+	sleep 15
 	cat tearup/init.sql | docker exec -i store-database /usr/bin/mysql -u sealteam --password=sckshuhari --default-character-set=utf8  toy
 	cd store-service && go test -tags=integration ./...
 	docker-compose down
@@ -42,7 +42,7 @@ build_backend:
 
 start_service:
 	docker-compose up -d
-	sleep 20
+	sleep 30
 	cat tearup/init.sql | docker exec -i store-database /usr/bin/mysql -u sealteam --password=sckshuhari --default-character-set=utf8  toy
 	
 status_service:
