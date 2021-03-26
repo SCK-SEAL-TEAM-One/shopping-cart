@@ -11,8 +11,8 @@ run_newman:
 	newman run atdd/api/shopping_cart_success.json -e atdd/api/environment/local_environment.json -d atdd/api/data/shopping_cart_success.json
 
 run_performance_test_k6:
-	k6 run --summary-trend-stats="avg,min,med,max,p(99),p(95),p(99.9),count" --summary-time-unit=ms -q atdd/load/k6-scripts/producct-list.js --out influxdb=http://54.254.108.7:38086/k6
-
+	# k6 run --summary-trend-stats="avg,min,med,max,p(99),p(95),p(99.9),count" --summary-time-unit=ms -q atdd/load/k6-scripts/producct-list.js  --out influxdb=http://54.254.108.7:38086/k6
+	k6 run --summary-trend-stats="avg,min,med,max,p(99),p(95),p(99.9),count" --summary-time-unit=ms -q atdd/load/k6-scripts/producct-list.js
 aws_test:
 	newman run atdd/api/shopping_cart_success.json -e atdd/api/environment/aws_environment.json -d atdd/api/data/shopping_cart_success.json
 
