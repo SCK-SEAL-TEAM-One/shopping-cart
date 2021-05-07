@@ -1,21 +1,21 @@
 pipeline {
   agent any
   stages {
-    stage('install dependency') {
+    stage('Install Dependency') {
       steps {
         sh 'make install_dependency_frontend'
       }
     }
 
-    stage('code analysis') {
+    stage('Code Analysis') {
       parallel {
-        stage('code analysis frontend') {
+        stage('Frontend') {
           steps {
             sh 'make code_analysis_frontend'
           }
         }
 
-        stage('code analysis backend') {
+        stage('Backend') {
           steps {
             script {
               def root = tool type: 'go', name: 'Go1.15.6'
@@ -29,15 +29,15 @@ pipeline {
       }
     }
 
-    stage('run unit test') {
+    stage('Run Unit Testing') {
       parallel {
-        stage('code analysis frontend') {
+        stage('Frontend') {
           steps {
             sh 'make run_unittest_frontend'
           }
         }
 
-        stage('code analysis backend') {
+        stage('Backend') {
           steps {
             script{
               def root = tool type: 'go', name: 'Go1.15.6'
@@ -65,13 +65,13 @@ pipeline {
       }
     }
 
-    stage('setup test fixtures') {
+    stage('Setup Test Fixtures') {
       steps {
         sh 'docker-compose up -d store-database bank-gateway shipping-gateway'
       }
     }
 
-    stage('run integration test') {
+    stage('Run Integration Testing') {
       steps {
         script{
           def root = tool type: 'go', name: 'Go1.15.6'
@@ -82,15 +82,15 @@ pipeline {
       }
     }
 
-    stage('build') {
+    stage('Build Docker Images') {
       parallel {
-        stage('build frontend') {
+        stage('Build Frontend') {
           steps {
             sh 'make build_frontend'
           }
         }
 
-        stage('build backend') {
+        stage('Build Backend') {
           steps {
             sh 'make build_backend'
           }
@@ -99,7 +99,7 @@ pipeline {
       }
     }
 
-    stage('run ATDD') {
+    stage('Run ATDD') {
       steps {
         sh 'make start_service'
         sh 'make run_newman'
@@ -108,7 +108,7 @@ pipeline {
       }
     }
 
-    stage('run Performance Testing') {
+    stage('Run Performance Testing') {
       steps {
         sh 'make run_performance_test_k6'
       }
