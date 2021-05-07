@@ -58,7 +58,7 @@ Checkout Product
 Get Product List
     ${productList}=   Get Request    ${toy_store}    /api/v1/product    headers=&{ACCEPT}
     Status Should Be  200            ${productList}
-    Should Be Equal     ${productList.json()["total"]}     ${31}
+    Should Be Equal     ${productList.json()["total"]}     ${10031}
     ${products}=    Get From Dictionary     ${productList.json()}    products
     Set Test Variable    ${products}    ${products}
     
