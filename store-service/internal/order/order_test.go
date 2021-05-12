@@ -1,6 +1,7 @@
 package order_test
 
 import (
+	"errors"
 	"store-service/internal/order"
 	"store-service/internal/product"
 	"testing"
@@ -65,6 +66,176 @@ func Test_CreateOrder_Input_Submitted_Order_Should_be_OrderID_8004359103_TotalPr
 		RecipientPhoneNumber: "0970809292",
 	}
 	mockOrderRepository.On("CreateShipping", orderID, shippingInfo).Return(1, nil)
+
+	orderService := order.OrderService{
+		ProductRepository: mockProductRepository,
+		OrderRepository:   mockOrderRepository,
+	}
+
+	actual := orderService.CreateOrder(submittedOrder)
+
+	assert.Equal(t, expected, actual)
+}
+
+func Test_CreateOrder_Input_Submitted_Order_Should_be_Return_Create_Order_Error(t *testing.T) {
+	expected := order.Order{}
+
+	submittedOrder := order.SubmitedOrder{
+		Cart: []order.OrderProduct{
+			{
+				ProductID: 2,
+				Quantity:  1,
+			},
+		},
+		ShippingMethod:       "Kerry",
+		ShippingAddress:      "405/37 ถ.มหิดล",
+		ShippingSubDistrict:  "ท่าศาลา",
+		ShippingDistrict:     "เมือง",
+		ShippingProvince:     "เชียงใหม่",
+		ShippingZipCode:      "50000",
+		RecipientName:        "ณัฐญา ชุติบุตร",
+		RecipientPhoneNumber: "0970809292",
+	}
+
+	mockProductRepository := new(mockProductRepository)
+	mockProductRepository.On("GetProductByID", 2).Return(product.ProductDetail{
+		ID:       2,
+		Name:     "43 Piece dinner Set",
+		Price:    12.95,
+		Quantity: 1,
+		Brand:    "Coolkidz",
+		Image:    "43_Piece_Dinner_Set.jpg",
+	}, nil)
+
+	mockOrderRepository := new(mockOrderRepository)
+	orderID := 0
+	totalPrice := 14.95
+	shippingMethod := "Kerry"
+
+	mockOrderRepository.On("CreateOrder", totalPrice, shippingMethod).Return(orderID, errors.New("CreateOrder Error"))
+
+	orderService := order.OrderService{
+		ProductRepository: mockProductRepository,
+		OrderRepository:   mockOrderRepository,
+	}
+
+	actual := orderService.CreateOrder(submittedOrder)
+
+	assert.Equal(t, expected, actual)
+}
+
+func Test_CreateOrder_Input_Submitted_Order_Should_be_Return_CreateShipping_Error(t *testing.T) {
+	expected := order.Order{}
+
+	submittedOrder := order.SubmitedOrder{
+		Cart: []order.OrderProduct{
+			{
+				ProductID: 2,
+				Quantity:  1,
+			},
+		},
+		ShippingMethod:       "Kerry",
+		ShippingAddress:      "405/37 ถ.มหิดล",
+		ShippingSubDistrict:  "ท่าศาลา",
+		ShippingDistrict:     "เมือง",
+		ShippingProvince:     "เชียงใหม่",
+		ShippingZipCode:      "50000",
+		RecipientName:        "ณัฐญา ชุติบุตร",
+		RecipientPhoneNumber: "0970809292",
+	}
+
+	mockProductRepository := new(mockProductRepository)
+	mockProductRepository.On("GetProductByID", 2).Return(product.ProductDetail{
+		ID:       2,
+		Name:     "43 Piece dinner Set",
+		Price:    12.95,
+		Quantity: 1,
+		Brand:    "Coolkidz",
+		Image:    "43_Piece_Dinner_Set.jpg",
+	}, nil)
+
+	mockOrderRepository := new(mockOrderRepository)
+	orderID := 8004359103
+	totalPrice := 14.95
+	shippingMethod := "Kerry"
+
+	mockOrderRepository.On("CreateOrder", totalPrice, shippingMethod).Return(orderID, nil)
+
+	shippingInfo := order.ShippingInfo{
+		ShippingMethod:       "Kerry",
+		ShippingAddress:      "405/37 ถ.มหิดล",
+		ShippingSubDistrict:  "ท่าศาลา",
+		ShippingDistrict:     "เมือง",
+		ShippingProvince:     "เชียงใหม่",
+		ShippingZipCode:      "50000",
+		RecipientName:        "ณัฐญา ชุติบุตร",
+		RecipientPhoneNumber: "0970809292",
+	}
+	mockOrderRepository.On("CreateShipping", orderID, shippingInfo).Return(0, errors.New("CreateShipping Error"))
+
+	orderService := order.OrderService{
+		ProductRepository: mockProductRepository,
+		OrderRepository:   mockOrderRepository,
+	}
+
+	actual := orderService.CreateOrder(submittedOrder)
+
+	assert.Equal(t, expected, actual)
+}
+
+func Test_CreateOrder_Input_Submitted_Order_Should_be_Return_CreateOrderProduct_Error(t *testing.T) {
+	expected := order.Order{}
+
+	submittedOrder := order.SubmitedOrder{
+		Cart: []order.OrderProduct{
+			{
+				ProductID: 2,
+				Quantity:  1,
+			},
+		},
+		ShippingMethod:       "Kerry",
+		ShippingAddress:      "405/37 ถ.มหิดล",
+		ShippingSubDistrict:  "ท่าศาลา",
+		ShippingDistrict:     "เมือง",
+		ShippingProvince:     "เชียงใหม่",
+		ShippingZipCode:      "50000",
+		RecipientName:        "ณัฐญา ชุติบุตร",
+		RecipientPhoneNumber: "0970809292",
+	}
+
+	mockProductRepository := new(mockProductRepository)
+	mockProductRepository.On("GetProductByID", 2).Return(product.ProductDetail{
+		ID:       2,
+		Name:     "43 Piece dinner Set",
+		Price:    12.95,
+		Quantity: 1,
+		Brand:    "Coolkidz",
+		Image:    "43_Piece_Dinner_Set.jpg",
+	}, nil)
+
+	mockOrderRepository := new(mockOrderRepository)
+	orderID := 8004359103
+	productID := 2
+	quantity := 1
+	totalPrice := 14.95
+	productPrice := 12.95
+	shippingMethod := "Kerry"
+
+	mockOrderRepository.On("CreateOrder", totalPrice, shippingMethod).Return(orderID, nil)
+
+	shippingInfo := order.ShippingInfo{
+		ShippingMethod:       "Kerry",
+		ShippingAddress:      "405/37 ถ.มหิดล",
+		ShippingSubDistrict:  "ท่าศาลา",
+		ShippingDistrict:     "เมือง",
+		ShippingProvince:     "เชียงใหม่",
+		ShippingZipCode:      "50000",
+		RecipientName:        "ณัฐญา ชุติบุตร",
+		RecipientPhoneNumber: "0970809292",
+	}
+	mockOrderRepository.On("CreateShipping", orderID, shippingInfo).Return(1, nil)
+
+	mockOrderRepository.On("CreateOrderProduct", orderID, productID, quantity, productPrice).Return(errors.New("CreateOrderProduct Error"))
 
 	orderService := order.OrderService{
 		ProductRepository: mockProductRepository,

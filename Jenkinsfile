@@ -1,46 +1,27 @@
 pipeline {
   agent any
   stages {
-    stage('install dependency') {
+    stage('Install Dependency') {
       steps {
         sh 'make install_dependency_frontend'
       }
     }
 
-    stage('code analysis') {
+    stage('Code Analysis') {
       parallel {
-        stage('code analysis frontend') {
+        stage('Frontend') {
           steps {
             sh 'make code_analysis_frontend'
           }
         }
 
-        stage('code analysis backend') {
+        stage('Backend') {
           steps {
-            sh 'make code_analysis_backend'
-          }
-        }
-
-      }
-    }
-
-    stage('run unit test') {
-      parallel {
-        stage('code analysis frontend') {
-          steps {
-            sh 'make run_unittest_frontend'
-          }
-        }
-
-        stage('code analysis backend') {
-          steps {
-            sh 'make run_unittest_backend'
-            junit 'store-service/*.xml'
-            script{
-                def scannerHome = tool 'SonarQubeScanner';
-                withSonarQubeEnv('SonarQubeScanner'){
-                    sh "${scannerHome}/bin/sonar-scanner"
-                }
+            script {
+              def root = tool type: 'go', name: 'Go1.15.6'
+              withEnv(["GOROOT=${root}", "PATH+GO=${root}/bin"]){
+                sh 'make code_analysis_backend'
+              }
             }
           }
         }
@@ -48,28 +29,68 @@ pipeline {
       }
     }
 
-    stage('setup test fixtures') {
+    stage('Run Unit Testing') {
+      parallel {
+        stage('Frontend') {
+          steps {
+            sh 'make run_unittest_frontend'
+          }
+        }
+
+        stage('Backend') {
+          steps {
+            script{
+              def root = tool type: 'go', name: 'Go1.15.6'
+              withEnv(["GOROOT=${root}", "PATH+GO=${root}/bin"]){
+                sh 'go get github.com/jstemmer/go-junit-report'
+                sh 'cd store-service && go test -v -coverprofile=coverage.out ./... 2>&1 | /var/lib/jenkins/go/bin/go-junit-report > coverage.xml'
+                junit 'store-service/*.xml'
+              }
+              def scannerHome = tool 'SonarQubeScanner';
+              withSonarQubeEnv('SonarQubeScanner'){
+                sh "${scannerHome}/bin/sonar-scanner"
+              }
+            }
+            // sh 'make run_unittest_backend'
+            // junit 'store-service/*.xml'
+            // script{
+            //     def scannerHome = tool 'SonarQubeScanner';
+            //     withSonarQubeEnv('SonarQubeScanner'){
+            //         sh "${scannerHome}/bin/sonar-scanner"
+            //     }
+            // }
+          }
+        }
+
+      }
+    }
+
+    stage('Setup Test Fixtures') {
       steps {
         sh 'docker-compose up -d store-database bank-gateway shipping-gateway'
       }
     }
 
-    stage('run integration test') {
+    stage('Run Integration Testing') {
       steps {
-        sh 'make run_integratetest_backend'
-        // sh 'cd store-service && go test -tags=integration ./...'
+        script{
+          def root = tool type: 'go', name: 'Go1.15.6'
+          withEnv(["GOROOT=${root}", "PATH+GO=${root}/bin"]){
+            sh 'make run_integratetest_backend'
+          }
+        }
       }
     }
 
-    stage('build') {
+    stage('Build Docker Images') {
       parallel {
-        stage('build frontend') {
+        stage('Build Frontend') {
           steps {
             sh 'make build_frontend'
           }
         }
 
-        stage('build backend') {
+        stage('Build Backend') {
           steps {
             sh 'make build_backend'
           }
@@ -78,12 +99,18 @@ pipeline {
       }
     }
 
-    stage('run ATDD') {
+    stage('Run ATDD') {
       steps {
         sh 'make start_service'
         sh 'make run_newman'
         sh 'make run_robot'
-        sh 'make stop_service'
+        // sh 'make stop_service'
+      }
+    }
+
+    stage('Run Performance Testing') {
+      steps {
+        sh 'make run_performance_test_k6'
       }
     }
 

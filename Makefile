@@ -3,13 +3,16 @@ backend: code_analysis_backend run_unittest_backend run_integratetest_backend bu
 
 run_robot: 
 	curl http://localhost:8000/mockTime/01032020T13:30:00
-	robot atdd
+	python3 -m robot atdd
 
 run_newman: 
 	#sleep 15
-	#cat tearup/init.sql | docker exec -i store-database /usr/bin/mysql -u sealteam --password=sckshuhari --default-character-set=utf8  toy
+	cat tearup/init.sql | docker exec -i store-database /usr/bin/mysql -u sealteam --password=sckshuhari --default-character-set=utf8  toy
 	newman run atdd/api/shopping_cart_success.json -e atdd/api/environment/local_environment.json -d atdd/api/data/shopping_cart_success.json
 
+run_performance_test_k6:
+	# k6 run --summary-trend-stats="avg,min,med,max,p(99),p(95),p(99.9),count" --summary-time-unit=ms -q atdd/load/k6-scripts/producct-list.js  --out influxdb=http://54.254.108.7:38086/k6
+	k6 run --summary-trend-stats="avg,min,med,max,p(99),p(95),p(99.9),count" --summary-time-unit=ms -q atdd/load/k6-scripts/producct-list.js
 aws_test:
 	newman run atdd/api/shopping_cart_success.json -e atdd/api/environment/aws_environment.json -d atdd/api/data/shopping_cart_success.json
 
@@ -33,7 +36,7 @@ run_unittest_backend:
 
 run_integratetest_backend:
 	# docker-compose up -d store-database bank-gateway shipping-gateway
-	sleep 45
+	sleep 20
 	cat tearup/init.sql | docker exec -i store-database /usr/bin/mysql -u sealteam --password=sckshuhari --default-character-set=utf8  toy
 	cd store-service && go test -tags=integration ./...
 	# docker-compose down

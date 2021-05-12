@@ -3,7 +3,7 @@ ${url}   http://localhost/Product-list
 
 *** Keywords ***
 ดูรายละเอียดสินค้า
-    Wait Until Element Contains    id=productName-1    43 Piece Dinner Set
+    Wait Until Element Contains    id=productName-2    43 Piece dinner Set
     Click Element    id=viewMore-1
     
 ตรวจสอบข้อมูลสินค้า 
