@@ -1,6 +1,7 @@
 package payment_test
 
 import (
+	"errors"
 	"store-service/internal/order"
 	"store-service/internal/payment"
 	"testing"
@@ -70,4 +71,30 @@ func Test_ConfirmPayment_Input_OrderID_8004359103_And_PaymentDetail_Should_Be_No
 	actualMessage, err := paymentService.ConfirmPayment(orderId, paymentDetail)
 	assert.Equal(t, expectedMessage, actualMessage)
 	assert.Equal(t, nil, err)
+}
+
+func Test_ConfirmPayment_Input_OrderID_8004359103_And_PaymentDetail_Should_Be_BankGateway_Return_Error(t *testing.T) {
+	expectedMessage := ""
+
+	orderId := 8004359103
+	paymentDetail := payment.PaymentDetail{
+		CardNumber:   "4719700591590995",
+		CVV:          "752",
+		ExpiredMonth: 7,
+		ExpiredYear:  20,
+		CardName:     "Karnwat Wongudom",
+		TotalPrice:   104.95,
+		MerchantID:   154124000,
+	}
+
+	mockBankGateway := new(mockBankGateway)
+	mockBankGateway.On("Payment", paymentDetail).Return("", errors.New("BankGateway Error"))
+
+	paymentService := payment.PaymentService{
+		BankGateway: mockBankGateway,
+	}
+
+	actualMessage, err := paymentService.ConfirmPayment(orderId, paymentDetail)
+	assert.Equal(t, expectedMessage, actualMessage)
+	assert.Equal(t, errors.New("BankGateway Error"), err)
 }
