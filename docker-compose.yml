@@ -14,8 +14,9 @@ services:
     environment:
       - TEST_MODE=true
       - CACHE_ON=true
-      - ELASTIC_APM_SERVER_URL=http://host.docker.internal:8200
-      - ELASTIC_APM_SERVICE_NAME=shopping-cart
+      # - ELASTIC_APM_SERVER_URL=http://host.docker.internal:8200
+      - ELASTIC_APM_SERVER_URL=http://54.254.108.7:38200
+      - ELASTIC_APM_SERVICE_NAME=Shopping-Cart-Jenkins
 
   store-cache:
     image: redis:latest

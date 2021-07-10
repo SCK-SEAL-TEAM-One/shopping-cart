@@ -1,30 +1,32 @@
 import React from "react";
 import { Container, Form, Row, Col, Button, CardDeck } from "react-bootstrap";
-import Route from "next/router";
 import ProductCard from "../components/ProductCard";
 
 export default class ProductList extends React.Component {
-  getProductDetail() {
-    Route.push("/Product-detail");
+  constructor(props) {
+    super(props);
+    this.state = {
+      item: [],
+    };
+  }
+
+  componentDidMount() {
+    this.getProductList();
+  }
+
+  getProductList() {
+    fetch("/api/v1/product", {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((response) => response.json())
+      .then((products) => {
+        this.setState({ item: products.products });
+      });
   }
 
   render() {
-    const item = [
-      {
-        productImage:
-          "17432f12ec88c0d0ea3d0cffc69d25ce.jpg",
-        productName: "43 Piece Dinner Set",
-        productPrice: "12.95 USD",
-        getProductDetail: this.getProductDetail.bind(this),
-      },
-      {
-        productImage:
-          "61uc4bgUPlL._AC_SL1500_.jpg",
-        productName: "Balance Training Bicycle",
-        productPrice: "119.95 USD",
-        getProductDetail: this.getProductDetail.bind(this),
-      },
-    ];
+    const item = this.state.item;
     return (
       <Container>
         <Form>

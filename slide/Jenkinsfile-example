@@ -1,0 +1,34 @@
+pipeline {
+    agent any
+    parameters {
+        string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
+    }
+    stages {
+        stage('unit-test') {
+            steps {
+                echo "Hello ${params.PERSON}"
+                sh 'npm test'
+            }
+        }
+    }
+    stages {
+        stage('static-analysis') {
+            steps {
+                sh 'sonar-scanner -Dsonar.projectKey=NodeJS-Application -Dsonar.sources=. -Dsonar.host.url=http://localhost:9000 -Dsonar.qualitygate.wait=true'
+            }
+        }
+    }
+    stages {
+        stage('publish') {
+            steps {
+                sh 'npm publish'
+            }
+        }
+    }
+    post {
+        alway {
+            echo 'do something'
+            junit 'report/*.xml'
+        }
+    }
+}
