@@ -3,11 +3,10 @@ kind: Service
 metadata:
   name: store-loadbalancer
 spec: 
-  type: NodePort
+  type: LoadBalancer
   selector:
     app: store-loadbalancer
   ports: 
     - protocol: TCP
       port: 80
       targetPort: 80
-      nodePort: 31080
