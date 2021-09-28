@@ -185,7 +185,7 @@ kubectl create namespace prometheus
 helm install shopping-cart prometheus-community/kube-prometheus-stack --namespace prometheus
 ```
 
-### Verify that the pods and services are installed correctly.
+### Verify that the pods and services are installed correctly
 
 ```cmd
 kubectl --namespace prometheus get pods -l "release=shopping-cart"
