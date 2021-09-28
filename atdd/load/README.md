@@ -15,7 +15,7 @@ Check : https://jmeter.apache.org/usermanual/best-practices.html
 
 ## MYSQL MAX CONNECTION
 
-https://stackoverflow.com/questions/14331032/mysql-error-1040-too-many-connection
+[](https://stackoverflow.com/questions/14331032/mysql-error-1040-too-many-connection)
 
 echo "set global max_connections = 500;" | kubectl exec -it $(kubectl get pods | grep store-database-deployment| awk '{print $1}') -- /usr/bin/mysql -u root --password=root --default-character-set=utf8  toy
 
@@ -23,7 +23,7 @@ echo "show variables like 'max_connections';" | kubectl exec -it $(kubectl get p
 
 ## How do I troubleshoot DNS failures with Amazon EKS?
 
- kubectl edit deployment coredns -n kube-system 
+ kubectl edit deployment coredns -n kube-system
 
  set replica to 4
 
