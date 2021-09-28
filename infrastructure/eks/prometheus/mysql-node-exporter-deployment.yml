@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: mysqld-exporter
+spec: 
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysqld-exporter
+  template:
+    metadata: 
+      labels: 
+        app: mysqld-exporter
+    spec:
+      restartPolicy: Always
+      containers:
+      - image: prom/mysqld-exporter
+        name:  mysqld-exporter
+        env:
+        - name: DATA_SOURCE_NAME
+          value: "root:root@(store-database:3306)/"
+        ports:
+        - containerPort: 9104

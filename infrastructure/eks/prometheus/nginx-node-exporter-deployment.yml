@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: nginx-exporter
+spec: 
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx-exporter
+  template:
+    metadata: 
+      labels: 
+        app: nginx-exporter
+    spec:
+      restartPolicy: Always
+      containers:
+      - image: nginx/nginx-prometheus-exporter:0.9.0
+        name:  nginx-exporter
+        args: ["-nginx.scrape-uri=http://store-loadbalancer/basic_status"]
+        ports:
+        - containerPort: 9113
