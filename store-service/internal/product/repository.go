@@ -23,7 +23,7 @@ type ProductRepositoryMySQL struct {
 func (repository ProductRepositoryMySQL) GetProducts(keyword string) (ProductResult, error) {
 	var products []Product
 	if keyword == "" {
-		err := repository.DBConnection.Select(&products, "SELECT id,product_name,product_price,image_url FROM products")
+		err := repository.DBConnection.Select(&products, "SELECT id,product_name,product_price,image_url FROM products limit 30")
 		return ProductResult{
 			Total:    len(products),
 			Products: products,
@@ -66,7 +66,7 @@ func (repository ProductRepositoryMySQLWithCache) GetProducts(keyword string) (P
 	}
 
 	if keyword == "" {
-		err := repository.DBConnection.Select(&products, "SELECT id,product_name,product_price,image_url FROM products")
+		err := repository.DBConnection.Select(&products, "SELECT id,product_name,product_price,image_url FROM products limit 30")
 		if err == nil {
 			data, _ := json.Marshal(products)
 			err = repository.RedisConnection.Set(keyword, string(data), time.Hour).Err()
