@@ -16,7 +16,7 @@ spec:
         app: store-database-deployment
     spec:
       containers:
-      - image: mysql:5.7
+      - image: mysql:8.0.22
         name: store-database-deployment
         env:
         - name: MYSQL_ROOT_PASSWORD
@@ -32,4 +32,4 @@ spec:
             port: 3306
         ports:
         - containerPort: 3306
-
+        #args: ["--max-connections=500"]
