@@ -22,6 +22,14 @@ services:
     - ./infrastructure/monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
     depends_on:
     - cadvisor
+  nginx-exporter:
+    image: nginx/nginx-prometheus-exporter:0.9.0 
+    command:
+      - -nginx.scrape-uri=http://store-nginx/basic_status
+    ports:
+    - 9113:9113
+    depends_on:
+    - store-nginx
   node-exporter:
     image: prom/node-exporter:latest
     container_name: monitoring_node_exporter
