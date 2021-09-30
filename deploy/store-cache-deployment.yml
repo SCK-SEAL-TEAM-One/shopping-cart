@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: store-cache
+spec: 
+  replicas: 1
+  selector:
+    matchLabels:
+      app: store-cache
+  template:
+    metadata: 
+      labels: 
+        app: store-cache
+    spec:
+      restartPolicy: Always
+      containers:
+      - image: redis:latest
+        name:  store-cache
+        ports:
+        - containerPort: 6379
