@@ -14,11 +14,12 @@ spec:
     spec:
       restartPolicy: Always
       containers:
-      - image: sckseal/toy-store-service:0.0.1
+      - image: sckseal/toy-store-service:0.0.4
         name:  store-service
         ports:
         - containerPort: 8000
         env:
         - name: TEST_MODE
           value: "true"
-      
+        #- name: CACHE_ON
+        #  value: "true"

@@ -11,6 +11,7 @@ services:
     environment: 
     - INFLUXDB_DB=db0
     - INFLUXDB_ADMIN_PASSWORD=admin
+
   prometheus:
     image: prom/prometheus:latest
     container_name: prometheus
@@ -22,6 +23,7 @@ services:
     - ./infrastructure/monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
     depends_on:
     - cadvisor
+
   nginx-exporter:
     image: nginx/nginx-prometheus-exporter:0.9.0 
     command:
@@ -29,13 +31,15 @@ services:
     ports:
     - 9113:9113
     depends_on:
-    - store-nginx
+    - load-balancer
+
   node-exporter:
     image: prom/node-exporter:latest
     container_name: monitoring_node_exporter
     restart: unless-stopped
     ports:
     - 9100:9100
+
   mysql-exporter:
     image: "prom/mysqld-exporter"
     container_name: mysql-exporter
@@ -44,6 +48,7 @@ services:
     environment:
       DATA_SOURCE_NAME: "root:root@(store-database:3306)/"
     restart: always
+
   cadvisor:
     image: google/cadvisor:latest
     container_name: cadvisor
@@ -54,6 +59,7 @@ services:
     - /var/run:/var/run:rw
     - /sys:/sys:ro
     - /var/lib/docker/:/var/lib/docker:ro
+    
   grafana:
     image: grafana/grafana:6.7.2
     container_name: monitoring_grafana

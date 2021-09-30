@@ -1,8 +1,29 @@
 version: "3.5"
 
 services:
+  load-balancer:
+    image: sckseal/toy-store-nginx:0.0.4
+    container_name: store-nginx
+    restart: always
+    build:
+      context: nginx
+    depends_on:
+      - store-service
+      - store-web
+    ports:
+      - "80:80"
+
+  store-web:
+    image: sckseal/toy-store-web:0.0.1
+    #image: toy-store-web:0.0.1
+    container_name: store-web
+    build:
+      context: front-end
+    ports:
+      - "3000:3000"
+
   store-service:
-    image: sckseal/toy-store-service:0.0.3
+    image: sckseal/toy-store-service:0.0.4
     container_name: store-service
     build:
       context: store-service
@@ -37,27 +58,6 @@ services:
       - ./tearup/:/docker-entrypoint-initdb.d/
     ports:
       - "3306:3306"
-
-  store-web:
-    #image: sckseal/toy-store-web:0.0.1
-    image: toy-store-web:0.0.1
-    container_name: store-web
-    build:
-      context: front-end
-    ports:
-      - "3000:3000"
-
-  store-nginx:
-    image: sckseal/toy-store-nginx:0.0.2
-    container_name: store-nginx
-    restart: always
-    build:
-      context: nginx
-    depends_on:
-      - store-service
-      - store-web
-    ports:
-      - "80:80"
 
   bank-gateway:
     image: sckseal/toy-store-bankgateway:0.0.1
