@@ -77,7 +77,7 @@ scp -i sck_default.pem ../../atdd/load/flow-ramp-1min-to-100con.jmx ubuntu@$JMET
 cd apache-jmeter-5.3/bin/
 
 java -jar ApacheJMeter.jar -n -t flow-ramp-1min-to-100con.jmx -l flow-ramp-1min-to-100con.jtl -e -o flow-ramp-1min-to-100con
-
+java -jar ApacheJMeter.jar -n -t flow-ramp-1min-to-100con.jmx -l flow-ramp-1min-to-100con.jtl -e -o flow-ramp-1min-to-100con -Dhost=a2dbbec4988744ca29d16c438d471528-421367058.ap-southeast-1.elb.amazonaws.com
 ```
 
 ### Step 7 - Get Jmeter Report
@@ -104,7 +104,7 @@ scp -i sck_default.pem ../../atdd/load/flow-ramp-1min-to-300con.jmx ubuntu@$JMET
 ```cmd
 cd apache-jmeter-5.3/bin/
 
-java -jar ApacheJMeter.jar -n -t flow-ramp-1min-to-300con.jmx -l flow-ramp-1min-to-300con.jtl -e -o flow-ramp-1min-to-300con
+java -jar ApacheJMeter.jar -n -t flow-ramp-1min-to-300con.jmx -l flow-ramp-1min-to-300con.jtl -e -o flow-ramp-1min-to-300con -Dhost=a2dbbec4988744ca29d16c438d471528-421367058.ap-southeast-1.elb.amazonaws.com
 
 ```
 
