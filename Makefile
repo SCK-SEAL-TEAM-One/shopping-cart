@@ -3,7 +3,8 @@ backend: code_analysis_backend run_unittest_backend run_integratetest_backend bu
 
 run_robot: 
 	curl http://localhost:8000/mockTime/01032020T13:30:00
-	python3 -m robot atdd
+	cat tearup/init.sql | docker exec -i store-database /usr/bin/mysql -u sealteam --password=sckshuhari --default-character-set=utf8  toy
+	robot atdd
 
 run_newman: 
 	#sleep 15
