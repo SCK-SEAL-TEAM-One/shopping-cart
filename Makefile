@@ -30,7 +30,7 @@ build_frontend:
 	docker-compose build store-web
 
 code_analysis_backend:
-	cd store-service && go vet ./...
+	cd store-service && go mod download && go vet ./...
 
 run_unittest_backend:
 	cd store-service && go test -v -coverprofile=coverage.out ./... 2>&1 | go-junit-report > coverage.xml
