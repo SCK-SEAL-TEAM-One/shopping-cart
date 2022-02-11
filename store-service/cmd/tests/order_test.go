@@ -14,8 +14,7 @@ import (
 )
 
 func Test_SubmitOrderHandler_Input_Order_One_Piece_Should_Be_Order_ID_1337620837_And_14_Dot_95(t *testing.T) {
-	expected := `{"order_id":1337620837,"total_price":14.95}
-`
+	expected := `{"order_id":1337620837,"total_price":14.95}`
 
 	submittedOrder := order.SubmitedOrder{
 		Cart: []order.OrderProduct{

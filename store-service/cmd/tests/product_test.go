@@ -13,8 +13,7 @@ import (
 )
 
 func Test_ProductSearchHandler_Should_Be_ProductResult(t *testing.T) {
-	expected := `{"total":1,"products":[{"id":1,"product_name":"43 Piece Dinner Set","product_price":10,"product_image":"/43-piece-dinner-set.png"}]}
-`
+	expected := `{"total":1,"products":[{"id":1,"product_name":"43 Piece Dinner Set","product_price":10,"product_image":"/43-piece-dinner-set.png"}]}`
 
 	request := httptest.NewRequest("GET", "/api/v1/product", nil)
 	write := httptest.NewRecorder()
@@ -48,8 +47,7 @@ func Test_ProductSearchHandler_Should_Be_ProductResult(t *testing.T) {
 }
 
 func Test_ProductGetProductHandler_Should_Be_ProductResult(t *testing.T) {
-	expected := `{"id":1,"product_name":"43 Piece Dinner Set","product_price":10,"product_image":"/43-piece-dinner-set.png","quantity":2,"product_brand":"CoolKidz"}
-`
+	expected := `{"id":1,"product_name":"43 Piece Dinner Set","product_price":10,"product_image":"/43-piece-dinner-set.png","quantity":2,"product_brand":"CoolKidz"}`
 
 	request := httptest.NewRequest("GET", "/api/v1/product/1", nil)
 	write := httptest.NewRecorder()

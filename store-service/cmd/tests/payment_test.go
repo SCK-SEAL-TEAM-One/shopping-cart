@@ -14,8 +14,7 @@ import (
 )
 
 func Test_ConfirmPaymentHandler_Input_PaymentInformation_Should_Be_ResponsePayment(t *testing.T) {
-	expected := `{"notify_message":"วันเวลาที่ชำระเงิน 1/3/2563 13:30:00 หมายเลขคำสั่งซื้อ 8004359103 คุณสามารถติดตามสินค้าผ่านช่องทาง Kerry หมายเลข Tracking 1785261900"}
-`
+	expected := `{"notify_message":"วันเวลาที่ชำระเงิน 1/3/2563 13:30:00 หมายเลขคำสั่งซื้อ 8004359103 คุณสามารถติดตามสินค้าผ่านช่องทาง Kerry หมายเลข Tracking 1785261900"}`
 	paymentInformation := payment.PaymentInformation{
 		OrderID:      1337620837,
 		PaymentType:  "credit",
