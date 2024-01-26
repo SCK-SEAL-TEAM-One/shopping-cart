@@ -14,7 +14,10 @@ type ProductAPI struct {
 
 func (api ProductAPI) SearchHandler(context *gin.Context) {
 	keyword := context.DefaultQuery("q", "")
-	productResult, err := api.ProductRepository.GetProducts(keyword)
+	limit := context.DefaultQuery("limit", "30")
+	offset := context.DefaultQuery("offset", "0")
+
+	productResult, err := api.ProductRepository.GetProducts(keyword, limit, offset)
 
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{

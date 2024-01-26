@@ -19,7 +19,7 @@ func Test_ProductSearchHandler_Should_Be_ProductResult(t *testing.T) {
 	write := httptest.NewRecorder()
 
 	mockProductRepository := new(mockProductRepository)
-	mockProductRepository.On("GetProducts", "").Return(product.ProductResult{
+	mockProductRepository.On("GetProducts", "", "30", "0").Return(product.ProductResult{
 		Total: 1,
 		Products: []product.Product{
 			{

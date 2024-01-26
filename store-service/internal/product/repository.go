@@ -11,7 +11,7 @@ import (
 )
 
 type ProductRepository interface {
-	GetProducts(keyword string) (ProductResult, error)
+	GetProducts(keyword string, limit string, offset string) (ProductResult, error)
 	GetProductByID(ID int) (ProductDetail, error)
 	UpdateStock(productID, quantity int) error
 }
@@ -20,18 +20,27 @@ type ProductRepositoryMySQL struct {
 	DBConnection *sqlx.DB
 }
 
-func (repository ProductRepositoryMySQL) GetProducts(keyword string) (ProductResult, error) {
+func (repository ProductRepositoryMySQL) GetProducts(keyword string, limit string, offset string) (ProductResult, error) {
 	var products []Product
+	var total int
 	if keyword == "" {
-		err := repository.DBConnection.Select(&products, "SELECT id,product_name,product_price,image_url FROM products limit 30")
+		err := repository.DBConnection.Select(&products, "SELECT id,product_name,product_price,image_url FROM products LIMIT ? OFFSET ?", limit, offset)
+		if err == nil {
+			err = repository.DBConnection.Get(&total, "SELECT count(*) FROM products")
+		}
+
 		return ProductResult{
-			Total:    len(products),
+			Total:    total,
 			Products: products,
 		}, err
 	}
-	err := repository.DBConnection.Select(&products, "SELECT id,product_name,product_price,image_url FROM products WHERE produt_name = ?%", keyword)
+	err := repository.DBConnection.Select(&products, "SELECT id,product_name,product_price,image_url FROM products WHERE product_name LIKE ? LIMIT ? OFFSET ?", "%"+keyword+"%", limit, offset)
+	if err == nil {
+		err = repository.DBConnection.Get(&total, "SELECT count(*) FROM products WHERE product_name LIKE ?", "%"+keyword+"%")
+	}
+
 	return ProductResult{
-		Total:    len(products),
+		Total:    total,
 		Products: products,
 	}, err
 }
@@ -52,41 +61,57 @@ type ProductRepositoryMySQLWithCache struct {
 	DBConnection    *sqlx.DB
 }
 
-func (repository ProductRepositoryMySQLWithCache) GetProducts(keyword string) (ProductResult, error) {
+func (repository ProductRepositoryMySQLWithCache) GetProducts(keyword string, limit string, offset string) (ProductResult, error) {
 	var products []Product
+	var total int
 
-	value, err := repository.RedisConnection.Get(keyword).Result()
+	value, err := repository.RedisConnection.Get(fmt.Sprintf("keyword-%s-%d-%d", keyword, limit, offset)).Result()
 	log.Printf("keyword %s value %s error %s", keyword, value, err)
 	if err == nil && value != "" {
-		err = json.Unmarshal([]byte(value), &products)
+		var productResult ProductResult
+		err = json.Unmarshal([]byte(value), &productResult)
 		return ProductResult{
-			Total:    len(products),
-			Products: products,
+			Total:    productResult.Total,
+			Products: productResult.Products,
 		}, err
 	}
 
 	if keyword == "" {
-		err := repository.DBConnection.Select(&products, "SELECT id,product_name,product_price,image_url FROM products limit 30")
+		err := repository.DBConnection.Select(&products, "SELECT id,product_name,product_price,image_url FROM products LIMIT ? OFFSET ?", limit, offset)
 		if err == nil {
-			data, _ := json.Marshal(products)
-			err = repository.RedisConnection.Set(keyword, string(data), time.Hour).Err()
+			err = repository.DBConnection.Get(&total, "SELECT count(*) FROM products")
+		}
+
+		if err == nil {
+			data, _ := json.Marshal(ProductResult{
+				Total:    total,
+				Products: products,
+			})
+			err = repository.RedisConnection.Set(fmt.Sprintf("keyword-%s-%d-%d", keyword, limit, offset), string(data), time.Hour).Err()
 			log.Print("set cache", err)
 		}
 		log.Print("after query", err)
 		return ProductResult{
-			Total:    len(products),
+			Total:    total,
 			Products: products,
 		}, err
 	}
-	err = repository.DBConnection.Select(&products, "SELECT id,product_name,product_price,image_url FROM products WHERE produt_name = ?%", keyword)
+	err = repository.DBConnection.Select(&products, "SELECT id,product_name,product_price,image_url FROM products WHERE product_name LIKE ? LIMIT ? OFFSET ?", "%"+keyword+"%", limit, offset)
 	if err == nil {
-		data, _ := json.Marshal(products)
-		err = repository.RedisConnection.Set(keyword, string(data), time.Hour).Err()
+		err = repository.DBConnection.Get(&total, "SELECT count(*) FROM products WHERE product_name LIKE ?", "%"+keyword+"%")
+	}
+
+	if err == nil {
+		data, _ := json.Marshal(ProductResult{
+			Total:    total,
+			Products: products,
+		})
+		err = repository.RedisConnection.Set(fmt.Sprintf("keyword-%s-%d-%d", keyword, limit, offset), string(data), time.Hour).Err()
 		log.Print("set cache", err)
 	}
 	log.Print("after query", err)
 	return ProductResult{
-		Total:    len(products),
+		Total:    total,
 		Products: products,
 	}, err
 }
