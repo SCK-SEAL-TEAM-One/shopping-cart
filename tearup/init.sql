@@ -14,7 +14,7 @@ CREATE TABLE products (
     id BIGINT AUTO_INCREMENT,
     product_name varchar(255),
     product_brand varchar(255),
-    quantity int,
+    stock int,
     product_price double,
     image_url varchar(255),
     updated timestamp DEFAULT current_timestamp,
@@ -22,7 +22,7 @@ CREATE TABLE products (
     PRIMARY KEY (id)
 ) CHARACTER SET utf8 COLLATE utf8_general_ci;
 
-INSERT INTO products (id,product_name,product_brand,quantity,product_price,image_url) VALUE 
+INSERT INTO products (id,product_name,product_brand,stock,product_price,image_url) VALUE 
 (1,"Balance Training Bicycle","SportsFun",5,119.95,"/Balance_Training_Bicycle.png"),
 (2,"43 Piece dinner Set","CoolKidz",10,12.95,"/43_Piece_dinner_Set.png"),
 (3,"Horses and Unicorns Set","CoolKidZ",3,24.95,"/Horses_and_Unicorns_Set.png"),

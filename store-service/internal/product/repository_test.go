@@ -1,4 +1,5 @@
-//+build integration
+//go:build integration
+// +build integration
 
 package product_test
 
@@ -22,12 +23,12 @@ func Test_ProductRepository(t *testing.T) {
 
 	t.Run("GetProductByID_Input_ID_2_Should_Be_Product_Detail_No_Error", func(t *testing.T) {
 		expected := product.ProductDetail{
-			ID:       2,
-			Name:     "43 Piece dinner Set",
-			Price:    12.95,
-			Quantity: 10,
-			Brand:    "CoolKidz",
-			Image:    "/43_Piece_dinner_Set.png",
+			ID:    2,
+			Name:  "43 Piece dinner Set",
+			Price: 12.95,
+			Stock: 10,
+			Brand: "CoolKidz",
+			Image: "/43_Piece_dinner_Set.png",
 		}
 		ID := 2
 

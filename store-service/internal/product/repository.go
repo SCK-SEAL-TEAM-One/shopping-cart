@@ -47,7 +47,7 @@ func (repository ProductRepositoryMySQL) GetProducts(keyword string, limit strin
 
 func (productRepository ProductRepositoryMySQL) GetProductByID(ID int) (ProductDetail, error) {
 	result := ProductDetail{}
-	err := productRepository.DBConnection.Get(&result, "SELECT id,product_name,product_price,quantity,image_url,product_brand FROM products WHERE id=?", ID)
+	err := productRepository.DBConnection.Get(&result, "SELECT id,product_name,product_price,stock,image_url,product_brand FROM products WHERE id=?", ID)
 	return result, err
 }
 
@@ -126,7 +126,7 @@ func (repository ProductRepositoryMySQLWithCache) GetProductByID(ID int) (Produc
 		return result, err
 	}
 
-	err = repository.DBConnection.Get(&result, "SELECT id,product_name,product_price,quantity,image_url,product_brand FROM products WHERE id=?", ID)
+	err = repository.DBConnection.Get(&result, "SELECT id,product_name,product_price,stock,image_url,product_brand FROM products WHERE id=?", ID)
 	if err == nil {
 		data, _ := json.Marshal(result)
 		err = repository.RedisConnection.Set(fmt.Sprintf("id-%d", ID), string(data), time.Hour).Err()
