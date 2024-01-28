@@ -10061,8 +10061,8 @@ CREATE TABLE carts (
     user_id int,
     product_id BIGINT,
     quantity int,
-    updated timestamp DEFAULT current_timestamp,
-    created timestamp DEFAULT current_timestamp ON UPDATE current_timestamp,
+    created timestamp DEFAULT current_timestamp,
+    updated timestamp DEFAULT current_timestamp ON UPDATE current_timestamp,
     PRIMARY KEY (id),
     FOREIGN KEY (user_id) REFERENCES user(id),
     FOREIGN KEY (product_id) REFERENCES products(id)
