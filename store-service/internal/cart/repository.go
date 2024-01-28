@@ -7,6 +7,7 @@ import (
 )
 
 type CartRepository interface {
+	GetCartDetail(userID int) ([]CartDetail, error)
 	GetCartByProductID(userID int, productID int) (Cart, error)
 	CreateCart(userID int, productID int, quantity int) (int, error)
 	UpdateCart(userID int, productID int, quantity int) error
@@ -15,6 +16,17 @@ type CartRepository interface {
 
 type CartRepositoryMySQL struct {
 	DBConnection *sqlx.DB
+}
+
+func (repository CartRepositoryMySQL) GetCartDetail(userID int) ([]CartDetail, error) {
+	var carts []CartDetail
+	err := repository.DBConnection.Select(&carts, `
+		SELECT c.id, c.user_id, c.product_id, c.quantity, p.product_name, p.product_brand, p.stock, p.product_price, p.image_url
+		FROM carts c 
+		LEFT JOIN products p ON c.product_id  = p.id
+		WHERE  c.user_id = ?
+	`, userID)
+	return carts, err
 }
 
 func (repository CartRepositoryMySQL) GetCartByProductID(userID int, productID int) (Cart, error) {

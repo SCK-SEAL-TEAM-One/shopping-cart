@@ -138,6 +138,7 @@ func main() {
 	route.GET("/api/v1/product/:id", productAPI.GetProductHandler)
 	route.POST("/api/v1/order", storeAPI.SubmitOrderHandler)
 	route.POST("/api/v1/confirmPayment", paymentAPI.ConfirmPaymentHandler)
+	route.GET("/api/v1/cart", cartAPI.GetCartHandler)
 	route.PUT("/api/v1/addCart", cartAPI.AddCartHandler)
 	route.PUT("/api/v1/updateCart", cartAPI.UpdateCartHandler)
 

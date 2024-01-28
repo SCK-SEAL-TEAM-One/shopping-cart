@@ -13,10 +13,18 @@ type CartAPI struct {
 	CartService cart.CartService
 }
 
-// type OrderConfirmation struct {
-// 	OrderID    int     `json:"order_id"`
-// 	TotalPrice float64 `json:"total_price"`
-// }
+func (api CartAPI) GetCartHandler(context *gin.Context) {
+	uid := 1
+	cart, err := api.CartService.GetCart(uid)
+
+	if err != nil {
+		context.JSON(http.StatusInternalServerError, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+	context.JSON(http.StatusOK, cart)
+}
 
 func (api CartAPI) AddCartHandler(context *gin.Context) {
 	var request cart.SubmitedCart
