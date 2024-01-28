@@ -35,12 +35,12 @@ func Test_CreateOrder_Input_Submitted_Order_Should_be_OrderID_8004359103_TotalPr
 
 	mockProductRepository := new(mockProductRepository)
 	mockProductRepository.On("GetProductByID", 2).Return(product.ProductDetail{
-		ID:       2,
-		Name:     "43 Piece dinner Set",
-		Price:    12.95,
-		Quantity: 1,
-		Brand:    "Coolkidz",
-		Image:    "43_Piece_Dinner_Set.jpg",
+		ID:    2,
+		Name:  "43 Piece dinner Set",
+		Price: 12.95,
+		Stock: 1,
+		Brand: "Coolkidz",
+		Image: "43_Piece_Dinner_Set.jpg",
 	}, nil)
 
 	mockOrderRepository := new(mockOrderRepository)
@@ -99,12 +99,12 @@ func Test_CreateOrder_Input_Submitted_Order_Should_be_Return_Create_Order_Error(
 
 	mockProductRepository := new(mockProductRepository)
 	mockProductRepository.On("GetProductByID", 2).Return(product.ProductDetail{
-		ID:       2,
-		Name:     "43 Piece dinner Set",
-		Price:    12.95,
-		Quantity: 1,
-		Brand:    "Coolkidz",
-		Image:    "43_Piece_Dinner_Set.jpg",
+		ID:    2,
+		Name:  "43 Piece dinner Set",
+		Price: 12.95,
+		Stock: 1,
+		Brand: "Coolkidz",
+		Image: "43_Piece_Dinner_Set.jpg",
 	}, nil)
 
 	mockOrderRepository := new(mockOrderRepository)
@@ -146,12 +146,12 @@ func Test_CreateOrder_Input_Submitted_Order_Should_be_Return_CreateShipping_Erro
 
 	mockProductRepository := new(mockProductRepository)
 	mockProductRepository.On("GetProductByID", 2).Return(product.ProductDetail{
-		ID:       2,
-		Name:     "43 Piece dinner Set",
-		Price:    12.95,
-		Quantity: 1,
-		Brand:    "Coolkidz",
-		Image:    "43_Piece_Dinner_Set.jpg",
+		ID:    2,
+		Name:  "43 Piece dinner Set",
+		Price: 12.95,
+		Stock: 1,
+		Brand: "Coolkidz",
+		Image: "43_Piece_Dinner_Set.jpg",
 	}, nil)
 
 	mockOrderRepository := new(mockOrderRepository)
@@ -205,12 +205,12 @@ func Test_CreateOrder_Input_Submitted_Order_Should_be_Return_CreateOrderProduct_
 
 	mockProductRepository := new(mockProductRepository)
 	mockProductRepository.On("GetProductByID", 2).Return(product.ProductDetail{
-		ID:       2,
-		Name:     "43 Piece dinner Set",
-		Price:    12.95,
-		Quantity: 1,
-		Brand:    "Coolkidz",
-		Image:    "43_Piece_Dinner_Set.jpg",
+		ID:    2,
+		Name:  "43 Piece dinner Set",
+		Price: 12.95,
+		Stock: 1,
+		Brand: "Coolkidz",
+		Image: "43_Piece_Dinner_Set.jpg",
 	}, nil)
 
 	mockOrderRepository := new(mockOrderRepository)
@@ -261,11 +261,11 @@ func Test_GetTotalProductPrice_Input_SummitedOrder_Cart_ProductID_2_Quantity_1_S
 
 	mockProductRepository := new(mockProductRepository)
 	mockProductRepository.On("GetProductByID", 2).Return(product.ProductDetail{
-		ID:       2,
-		Name:     "43 Piece dinner Set",
-		Price:    12.95,
-		Quantity: 1,
-		Brand:    "Coolkidz",
+		ID:    2,
+		Name:  "43 Piece dinner Set",
+		Price: 12.95,
+		Stock: 1,
+		Brand: "Coolkidz",
 	}, nil)
 
 	orderService := order.OrderService{
@@ -299,11 +299,11 @@ func Test_GetTotalAmount_Input_SubmittedOrder_ProductID_2_Quantity_1_Should_Be_T
 
 	mockProductRepository := new(mockProductRepository)
 	mockProductRepository.On("GetProductByID", 2).Return(product.ProductDetail{
-		ID:       2,
-		Name:     "43 Piece dinner Set",
-		Price:    12.95,
-		Quantity: 1,
-		Brand:    "Coolkidz",
+		ID:    2,
+		Name:  "43 Piece dinner Set",
+		Price: 12.95,
+		Stock: 1,
+		Brand: "Coolkidz",
 	}, nil)
 
 	orderService := order.OrderService{

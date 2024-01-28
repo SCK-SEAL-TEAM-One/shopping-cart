@@ -39,8 +39,8 @@ func Test_ProductRepository(t *testing.T) {
 
 	t.Run("UpdateStock_Input_Product_ID_2_No_Error", func(t *testing.T) {
 		productID := 2
-		quantity := 1
-		err := repository.UpdateStock(productID, quantity)
+		stock := 1
+		err := repository.UpdateStock(productID, stock)
 
 		assert.Equal(t, nil, err)
 	})

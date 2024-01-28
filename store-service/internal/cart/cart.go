@@ -14,12 +14,17 @@ func (cartService CartService) GetCart(uid int) ([]CartDetail, error) {
 	if err != nil {
 		log.Printf("CartRepository.GetCartDetail internal error %s", err.Error())
 	}
+
+	if len(carts) == 0 {
+		return []CartDetail{}, err
+	}
 	return carts, err
 }
 
 func (cartService CartService) AddCart(uid int, submitedCart SubmitedCart) (string, error) {
 	cart, err := cartService.CartRepository.GetCartByProductID(uid, submitedCart.ProductID)
 	act := "updated"
+
 	if err == sql.ErrNoRows {
 		act = "added"
 		cartService.CartRepository.CreateCart(uid, submitedCart.ProductID, submitedCart.Quantity)
@@ -35,7 +40,7 @@ func (cartService CartService) AddCart(uid int, submitedCart SubmitedCart) (stri
 
 func (cartService CartService) UpdateCart(uid int, submitedCart SubmitedCart) (string, error) {
 	act := "updated"
-	if submitedCart.Quantity == 0 {
+	if submitedCart.Quantity <= 0 {
 		act = "deleted"
 		err := cartService.CartRepository.DeleteCart(uid, submitedCart.ProductID)
 		if err != nil {

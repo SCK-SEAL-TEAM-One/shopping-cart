@@ -7,14 +7,14 @@ type SubmitedCart struct {
 
 type Cart struct {
 	ID        int `json:"id" db:"id"`
-	UsertID   int `json:"user_id" db:"user_id"`
+	UserID    int `json:"user_id" db:"user_id"`
 	ProductID int `json:"product_id" db:"product_id"`
 	Quantity  int `json:"quantity" db:"quantity"`
 }
 
 type CartDetail struct {
 	ID        int     `json:"id" db:"id"`
-	UsertID   int     `json:"user_id" db:"user_id"`
+	UserID    int     `json:"user_id" db:"user_id"`
 	ProductID int     `json:"product_id" db:"product_id"`
 	Quantity  int     `json:"quantity" db:"quantity"`
 	Name      string  `json:"product_name" db:"product_name"`

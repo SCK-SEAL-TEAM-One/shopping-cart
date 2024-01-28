@@ -51,8 +51,8 @@ func (productRepository ProductRepositoryMySQL) GetProductByID(ID int) (ProductD
 	return result, err
 }
 
-func (productRepository ProductRepositoryMySQL) UpdateStock(productID, quantity int) error {
-	_, err := productRepository.DBConnection.Exec(`UPDATE products SET quantity = quantity-? WHERE id=?`, quantity, productID)
+func (productRepository ProductRepositoryMySQL) UpdateStock(productID, stock int) error {
+	_, err := productRepository.DBConnection.Exec(`UPDATE products SET stock = stock-? WHERE id=?`, stock, productID)
 	return err
 }
 
@@ -65,7 +65,7 @@ func (repository ProductRepositoryMySQLWithCache) GetProducts(keyword string, li
 	var products []Product
 	var total int
 
-	value, err := repository.RedisConnection.Get(fmt.Sprintf("keyword-%s-%d-%d", keyword, limit, offset)).Result()
+	value, err := repository.RedisConnection.Get(fmt.Sprintf("keyword-%s-%s-%s", keyword, limit, offset)).Result()
 	log.Printf("keyword %s value %s error %s", keyword, value, err)
 	if err == nil && value != "" {
 		var productResult ProductResult
@@ -87,7 +87,7 @@ func (repository ProductRepositoryMySQLWithCache) GetProducts(keyword string, li
 				Total:    total,
 				Products: products,
 			})
-			err = repository.RedisConnection.Set(fmt.Sprintf("keyword-%s-%d-%d", keyword, limit, offset), string(data), time.Hour).Err()
+			err = repository.RedisConnection.Set(fmt.Sprintf("keyword-%s-%s-%s", keyword, limit, offset), string(data), time.Hour).Err()
 			log.Print("set cache", err)
 		}
 		log.Print("after query", err)
@@ -106,7 +106,7 @@ func (repository ProductRepositoryMySQLWithCache) GetProducts(keyword string, li
 			Total:    total,
 			Products: products,
 		})
-		err = repository.RedisConnection.Set(fmt.Sprintf("keyword-%s-%d-%d", keyword, limit, offset), string(data), time.Hour).Err()
+		err = repository.RedisConnection.Set(fmt.Sprintf("keyword-%s-%s-%s", keyword, limit, offset), string(data), time.Hour).Err()
 		log.Print("set cache", err)
 	}
 	log.Print("after query", err)
