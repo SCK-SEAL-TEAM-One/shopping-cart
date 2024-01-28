@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 	"store-service/cmd/api"
+	"store-service/internal/cart"
 	"store-service/internal/healthcheck"
 	"store-service/internal/order"
 	"store-service/internal/payment"
@@ -79,6 +80,9 @@ func main() {
 	shippingRepository := shipping.ShippingRepositoryMySQL{
 		DBConnection: connection,
 	}
+	cartRepository := cart.CartRepositoryMySQL{
+		DBConnection: connection,
+	}
 	orderService := order.OrderService{
 		ProductRepository: productRepository,
 		OrderRepository:   &orderRepository,
@@ -97,6 +101,9 @@ func main() {
 		ShippingRepository: &shippingRepository,
 		Time:               time.Now,
 	}
+	cartService := cart.CartService{
+		CartRepository: &cartRepository,
+	}
 	storeAPI := api.StoreAPI{
 		OrderService: &orderService,
 	}
@@ -105,6 +112,9 @@ func main() {
 	}
 	productAPI := api.ProductAPI{
 		ProductRepository: productRepository,
+	}
+	cartAPI := api.CartAPI{
+		CartService: cartService,
 	}
 
 	route := gin.Default()
@@ -128,6 +138,7 @@ func main() {
 	route.GET("/api/v1/product/:id", productAPI.GetProductHandler)
 	route.POST("/api/v1/order", storeAPI.SubmitOrderHandler)
 	route.POST("/api/v1/confirmPayment", paymentAPI.ConfirmPaymentHandler)
+	route.PUT("/api/v1/addCart", cartAPI.AddCartHandler)
 
 	route.GET("/api/v1/health", func(context *gin.Context) {
 		user, err := healthcheck.GetUserNameFromDB(connection)

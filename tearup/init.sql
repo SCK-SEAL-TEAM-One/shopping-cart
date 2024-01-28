@@ -4,7 +4,8 @@ USE toy;
 
 CREATE TABLE user (
     id int,
-    name varchar(255)
+    name varchar(255),
+    PRIMARY KEY (id)
 ) CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 INSERT INTO user VALUE (1,"sckshuhari");
@@ -10054,6 +10055,18 @@ INSERT INTO products (id,product_name,product_brand,stock,product_price,image_ur
 (10029,"Defiance Lawkeeper Metal Badge Prop Replica","Defiance Lawkeeper Metal Badge Prop Replica",3,"43.99","/Snoopy_Sno_Cone_Machine.png"),
 (10030,"Justice League of America Series 3 Green Lantern Action Figure","Justice League of America Series 3 Green Lantern Action Figure",3,"49.81","/Snoopy_Sno_Cone_Machine.png"),
 (10031,"Star Wars 1/72 Y-Wing Starfighter","Star Wars 1/72 Y-Wing Starfighter",31,"21.20","/Snoopy_Sno_Cone_Machine.png");
+
+CREATE TABLE carts (
+    id BIGINT AUTO_INCREMENT,
+    user_id int,
+    product_id BIGINT,
+    quantity int,
+    updated timestamp DEFAULT current_timestamp,
+    created timestamp DEFAULT current_timestamp ON UPDATE current_timestamp,
+    PRIMARY KEY (id),
+    FOREIGN KEY (user_id) REFERENCES user(id),
+    FOREIGN KEY (product_id) REFERENCES products(id)
+) CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 CREATE TABLE orders (
     id BIGINT AUTO_INCREMENT,
