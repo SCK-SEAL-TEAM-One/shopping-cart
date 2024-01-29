@@ -10112,3 +10112,13 @@ CREATE TABLE shipping (
 ) CHARACTER SET utf8 COLLATE utf8_general_ci;
 INSERT INTO shipping (id,order_id,address,sub_district,district,province,zip_code,recipient,phone_number) 
 VALUE (1,1,"405/37 ถ.มหิดล", "ท่าศาลา", "เมือง", "เชียงใหม่", "50000", "ณัฐญา ชุติบุตร", "0970809292");
+
+CREATE TABLE points (
+    id BIGINT AUTO_INCREMENT,
+    user_id int,
+    amount int,
+    created timestamp DEFAULT current_timestamp,
+    updated timestamp DEFAULT current_timestamp ON UPDATE current_timestamp,
+    PRIMARY KEY (id),
+    FOREIGN KEY (user_id) REFERENCES user(id)
+) CHARACTER SET utf8 COLLATE utf8_general_ci;
