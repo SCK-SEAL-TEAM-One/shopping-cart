@@ -1,6 +1,7 @@
 package point
 
 import (
+	"fmt"
 	"log"
 )
 
@@ -9,13 +10,22 @@ type PointService struct {
 }
 
 func (pointService PointService) DeductPoint(uid int, submitedPoint SubmitedPoint) (TotalPoint, error) {
-	_, err := pointService.PointRepository.CreatePoint(uid, submitedPoint.Amount)
+	total, err := pointService.TotalPoint(uid)
 	if err != nil {
-		log.Printf("PointRepository.CreatePoint internal error %s", err.Error())
+		log.Printf("pointService.TotalPoint internal error %s", err.Error())
 		return TotalPoint{}, err
 	}
-	res, err_ := pointService.TotalPoint(uid)
-	return res, err_
+
+	if submitedPoint.Amount+total.Point < 0 {
+		return TotalPoint{}, fmt.Errorf("points are not enough, please try again")
+	}
+
+	_, err_ := pointService.PointRepository.CreatePoint(uid, submitedPoint.Amount)
+	if err_ != nil {
+		log.Printf("PointRepository.CreatePoint internal error %s", err.Error())
+		return TotalPoint{}, err_
+	}
+	return pointService.TotalPoint(uid)
 }
 
 func (pointService PointService) TotalPoint(uid int) (TotalPoint, error) {
