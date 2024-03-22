@@ -22,7 +22,7 @@
     "assert": {
       "product_name": "43 Piece dinner Set",
       "product_price": 12.95,
-      "quantity": 10,
+      "stock": 5,
       "product_brand": "CoolKidz",
       "product_image": "/43_Piece_dinner_Set.png",
       "total_price_order": 14.95,

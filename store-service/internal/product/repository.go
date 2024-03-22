@@ -137,6 +137,6 @@ func (repository ProductRepositoryMySQLWithCache) GetProductByID(ID int) (Produc
 }
 
 func (productRepository ProductRepositoryMySQLWithCache) UpdateStock(productID, quantity int) error {
-	_, err := productRepository.DBConnection.Exec(`UPDATE products SET quantity = quantity-? WHERE id=?`, quantity, productID)
+	_, err := productRepository.DBConnection.Exec(`UPDATE products SET stock = stock-? WHERE id=?`, quantity, productID)
 	return err
 }

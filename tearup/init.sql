@@ -25,7 +25,7 @@ CREATE TABLE products (
 
 INSERT INTO products (id,product_name,product_brand,stock,product_price,image_url) VALUE 
 (1,"Balance Training Bicycle","SportsFun",5,119.95,"/Balance_Training_Bicycle.png"),
-(2,"43 Piece dinner Set","CoolKidz",10,12.95,"/43_Piece_dinner_Set.png"),
+(2,"43 Piece dinner Set","CoolKidz",5,12.95,"/43_Piece_dinner_Set.png"),
 (3,"Horses and Unicorns Set","CoolKidZ",3,24.95,"/Horses_and_Unicorns_Set.png"),
 (4,"Hoppity Ball 26 inch","SportsFun",12,29.95,"/Hoppity_Ball_26_inch.png"),
 (5,"Sleeping Queens Board Game","CoolKidZ",0,12.95,"/Sleeping_Queens_Board_Game.png"),
