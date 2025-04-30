@@ -26,7 +26,7 @@ func Test_ProductRepository(t *testing.T) {
 			ID:    2,
 			Name:  "43 Piece dinner Set",
 			Price: 12.95,
-			Stock: 10,
+			Stock: 5,
 			Brand: "CoolKidz",
 			Image: "/43_Piece_dinner_Set.png",
 		}
